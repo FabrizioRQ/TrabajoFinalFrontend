@@ -1,13 +1,12 @@
-body {
-  font-family: 'Nunito', system-ui, Arial, sans-serif;
-  line-height: 1.5;
+:host {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding-top: 50px;
   background-color: #F8FAFC;
-  margin: 0;
   height: 100vh;
+  font-family: 'Nunito', system-ui, Arial, sans-serif;
+  line-height: 1.5;
 }
 
 .login-container {
@@ -100,7 +99,7 @@ input:focus {
 }
 
 .login-button:hover {
-  background-color:#69ee97;
+  background-color: #69ee97;
 }
 
 .forgot-password {
