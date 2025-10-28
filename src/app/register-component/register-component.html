@@ -1,1 +1,40 @@
-<p>register-component works!</p>
+<div class="register-container">
+  <form [formGroup]="registerForm" (ngSubmit)="enviarDatos()" class="form">
+    <div class="header">
+      <div class="icon"><span>🤖</span></div>
+      <h1 class="app-name">Monstruos Amigos</h1>
+    </div>
+    <h2 class="title">Registrarse</h2>
+    <label class="form_label">
+      Nombre completo
+      <input class="form_input" type="text" formControlName="nombre" required />
+    </label>
+
+    <label class="form_label">
+      Correo electrónico
+      <input class="form_input" type="email" formControlName="email" required />
+    </label>
+
+    <label class="form_label">
+      Contraseña
+      <input class="form_input" type="password" formControlName="password" required />
+    </label>
+
+    <p class="form-parrafo">
+      Mínimo 8 caracteres, con al menos una mayúscula, una minúscula y un número.
+    </p>
+
+    <div class="contenedor">
+      <div class="div1">
+        <button class="form_button" type="submit" [disabled]="registerForm.invalid">
+          REGISTRARSE
+        </button>
+      </div>
+      <div class="div2">
+        <p>¿Ya tienes una cuenta?
+          <a routerLink="/login">Inicia sesión</a>
+        </p>
+      </div>
+    </div>
+  </form>
+</div>
