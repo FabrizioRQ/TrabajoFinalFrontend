@@ -6,16 +6,10 @@ import {LandingPageComponent} from './landing-page-component/landing-page-compon
 
 
 export const routes: Routes = [
-
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
-
-
   { path: 'landing', component: LandingPageComponent },
-
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recuperacion', component: ForgotPasswordComponent },
-
-
   { path: '**', redirectTo: 'landing' }
 ];

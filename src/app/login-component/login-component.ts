@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login-component',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './login-component.html',
   styleUrl: './login-component.css',
@@ -28,4 +30,6 @@ export class LoginComponent implements OnInit {
       console.log('Formulario inválido');
     }
   }
+
+  protected readonly RouterLink = RouterLink;
 }

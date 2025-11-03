@@ -35,8 +35,10 @@
       Iniciar sesión
     </button>
   </form>
-
-  <a routerLink="/forgot-password" class="forgot-password">
+  <a [routerLink]="'/register'" class="forgot-password">
+    Aun no tienes tu cuenta? REGISTRATE
+  </a>
+  <a  [routerLink]="'/forgot-password'" class="forgot-password">
     ¿Olvidaste tu contraseña?
   </a>
 </div>
