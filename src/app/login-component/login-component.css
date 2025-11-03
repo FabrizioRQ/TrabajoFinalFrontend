@@ -114,3 +114,11 @@ input:focus {
 .forgot-password:hover {
   text-decoration: underline;
 }
+
+.error-message {
+  color: #e53935;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+}

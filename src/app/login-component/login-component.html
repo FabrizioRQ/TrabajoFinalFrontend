@@ -41,4 +41,10 @@
   <a  [routerLink]="'/forgot-password'" class="forgot-password">
     ¿Olvidaste tu contraseña?
   </a>
+  <!-- Mensaje de error -->
+  <p *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </p>
 </div>
+
+
