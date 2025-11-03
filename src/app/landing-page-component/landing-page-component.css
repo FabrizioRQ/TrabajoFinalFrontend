@@ -1,0 +1,328 @@
+/* ==============================
+   Variables (Web Style Guidelines)
+============================== */
+:root {
+  /* Paleta */
+  --primary: #2D7FF9;         /* Azul Cielo */
+  --success: #69EE97;         /* Verde Tranquilo */
+  --warning: #FFD13B;         /* Amarillo Brillo */
+  --support: #7E57C2;         /* Morado Amable */
+  --danger: #E53935;          /* Rojo Claro */
+
+  --text-main: #0F172A;       /* Texto principal */
+  --text-secondary: #64748B;  /* Texto secundario */
+
+  --bg-soft: #F8FAFC;
+  --bg-white: #FFFFFF;
+
+  /* Tipografía */
+  --font-primary: "Nunito", "Poppins", system-ui, Arial, sans-serif;
+
+  /* Ritmo y radios */
+  --r-8: 8px;
+  --r-12: 12px;
+  --r-16: 16px;
+
+  /* Sombra suave tarjetas */
+  --shadow-card: 0 6px 18px rgba(2, 8, 23, 0.06);
+
+  /* Alturas componentes */
+  --h-control: 52px; /* entre 48–56px */
+
+  /* Altura del header/navbar (ajústala si tu barra mide diferente) */
+  --header-h: 64px;
+}
+
+/* ==============================
+   Reset y base
+============================== */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  color: var(--text-main);
+  background: var(--bg-soft);
+  font-family: var(--font-primary);
+  line-height: 1.5;
+}
+
+/* ==============================
+   Header (navbar)
+============================== */
+header {
+  position: sticky;     /* usa fixed si así lo tenías; sticky evita superposición en iOS */
+  top: 0;
+  z-index: 1000;
+}
+
+/* Deja espacio para que el contenido no quede debajo del navbar */
+.landing {
+  padding-top: var(--header-h);
+}
+
+/* ==============================
+   Contenedor y tipografías
+============================== */
+.container {
+  width: min(1120px, 92%);
+  margin-inline: auto;
+  padding-block: 24px; /* 24–32 */
+}
+
+h1, h2, h3 { margin: 0 0 12px; letter-spacing: 0.2px; }
+.lead { color: var(--text-secondary); }
+
+h1 {
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1.2;
+  max-width: 22ch; /* 40–70 caracteres aprox. */
+}
+h2 { font-size: clamp(24px, 3.5vw, 32px); }
+h3 { font-size: clamp(20px, 2.5vw, 28px); }
+p  { font-size: clamp(16px, 1.8vw, 18px); }
+
+/* ==============================
+   Botones (CTA): accesibles AA
+============================== */
+.btn {
+  --btn-bg: var(--bg-white);
+  --btn-fg: var(--text-main);
+  --btn-bd: transparent;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--h-control);
+  padding: 0 20px;
+  border-radius: var(--r-12);
+  border: 2px solid var(--btn-bd);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: clamp(16px, 1.8vw, 18px);
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: capitalize; /* SOLO inicial en mayúscula */
+  transition: transform .04s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+  outline-offset: 2px;
+  cursor: pointer;
+}
+.btn:focus-visible { outline: 2px solid var(--primary); }
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Variantes */
+.btn-primary {
+  --btn-bg: var(--warning);
+  --btn-fg: #1B1B1B; /* contraste sobre amarillo */
+}
+.btn-primary:hover { filter: saturate(1.05) brightness(0.98); }
+
+.btn-secondary {
+  --btn-bg: var(--primary);
+  --btn-fg: #FFFFFF;
+}
+.btn-secondary:hover { filter: brightness(0.95); }
+
+.btn-success {
+  --btn-bg: #0E9F6E;  /* más contrastado que #69EE97 en texto blanco */
+  --btn-fg: #FFFFFF;
+}
+.btn-success:hover { filter: brightness(0.95); }
+
+/* ==============================
+   Tarjetas
+============================== */
+.card {
+  background: var(--bg-white);
+  border-radius: var(--r-16);
+  box-shadow: var(--shadow-card);
+  padding: 16px; /* 16–24 */
+}
+
+/* ==============================
+   HERO (con banda full‑bleed)
+============================== */
+/* La banda full-bleed lleva el degradado a todo el ancho */
+.hero-bleed {
+  width: 100%;
+  background: linear-gradient(180deg, #EAF2FF 0%, #FFFFFF 100%);
+}
+
+/* El contenido del hero va en container */
+.hero.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: center;
+  padding-block: clamp(32px, 8vw, 64px);
+  padding-inline: min(4vw, 32px);
+  background: transparent; /* el fondo ahora está en .hero-bleed */
+  border-radius: 0;
+}
+
+.hero__actions { margin-top: 16px; }
+
+.hero__art {
+  position: relative;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+}
+.hero__img {
+  width: clamp(140px, 26vw, 240px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
+}
+.hero__img--1 { z-index: 3; }
+.hero__img--2 { position: absolute; left: 6%; bottom: 0; z-index: 2; }
+.hero__img--3 { position: absolute; right: 6%; bottom: 0; z-index: 2; }
+
+/* ==============================
+   Separador suave
+============================== */
+.divider {
+  height: 24px;
+  background: linear-gradient(180deg, #EDE7F6 0%, rgba(237,231,246,0) 100%);
+  margin-block: 16px 8px;
+  border-radius: var(--r-12);
+}
+
+/* ==============================
+   Sobre Nosotros
+============================== */
+.about {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+.about__text p { color: var(--text-secondary); }
+.about__media { padding: 0; overflow: hidden; }
+.about__img { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+/* ==============================
+   Steps / Features
+============================== */
+.steps {
+  display: grid;
+  gap: 16px;           /* grid 8pt */
+  grid-template-columns: 1fr;
+  margin-top: 16px;
+}
+.step {
+  display: grid;
+  gap: 8px;
+  padding: 20px;
+}
+.step h3 { margin-top: 4px; }
+.step__icon {
+  width: 48px; height: 48px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: #FFF7E0; /* suave para ícono */
+}
+.step__icon img { width: 24px; height: 24px; object-fit: contain; }
+
+/* ==============================
+   Testimonio + CTAs
+============================== */
+.cta-band {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+  align-items: start;
+  margin-top: 16px;
+}
+.testimonial {
+  margin: 0;
+  padding: 20px;
+  background: var(--bg-white);
+  border-radius: var(--r-16);
+  box-shadow: var(--shadow-card);
+}
+.testimonial p { font-style: italic; }
+.testimonial footer { color: var(--text-secondary); margin-top: 8px; }
+
+.cta-band__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ==============================
+   Footer ligero
+============================== */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 24px 40px;
+}
+.footer-links {
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.footer-links a,
+.social a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+}
+.footer-links a:hover { color: var(--text-main); text-decoration: underline; }
+.social { display: flex; gap: 12px; }
+
+/* ==============================
+   Inputs y estados
+============================== */
+.input,
+select,
+textarea {
+  height: var(--h-control);
+  width: 100%;
+  padding: 0 14px;
+  border-radius: var(--r-12);
+  border: 2px solid #E2E8F0;
+  background: var(--bg-white);
+  font-size: 16px;
+}
+.input::placeholder { color: #94A3B8; }
+.input:focus-visible {
+  outline: 2px solid var(--primary);
+  border-color: var(--primary);
+}
+.form-error {
+  color: var(--danger);
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* ==============================
+   Responsive
+============================== */
+@media (min-width: 880px) {
+  .hero.container {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+  .about {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+  }
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .cta-band {
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+  }
+}
+
+/* ==============================
+   Pequeños fixes
+============================== */
+/* Evita colapso de márgenes al inicio del hero */
+.hero.container > *:first-child { margin-top: 0; }
+
+/* Asegura que las imágenes no rompan el layout si las dejas vacías inicialmente */
+img { max-width: 100%; height: auto; display: block; }
