@@ -1,0 +1,38 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+a[mat-button] {
+  color: white;
+  font-weight: 500;
+  text-transform: none;
+}
+
+.hero {
+  margin-top: 64px; /* altura aproximada de la toolbar */
+  text-align: center;
+}
+
+.hero img {
+  width: 80%;
+  max-width: 800px;
+  border-radius: 12px;
+  margin-top: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
