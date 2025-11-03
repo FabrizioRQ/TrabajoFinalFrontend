@@ -1,27 +1,32 @@
-import { Component } from '@angular/core';
-import {RouterLink} from '@angular/router';
-import {MatSlideToggle} from '@angular/material/slide-toggle';
-import {MatToolbar} from '@angular/material/toolbar';
-import {MatButton} from '@angular/material/button';
-import {Navbar} from '../navbar/navbar';
-
-
+import { Component, AfterViewInit, ElementRef } from '@angular/core';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-landing-page-component',
-  imports: [
-    RouterLink,
-    MatSlideToggle,
-    MatToolbar,
-    MatButton,
-    Navbar
-  ],
   templateUrl: './landing-page-component.html',
-  styleUrl: './landing-page-component.css',
+  styleUrls: ['./landing-page-component.css'],
+  standalone: true,
+  imports: [Navbar]
 })
+export class LandingPageComponent implements AfterViewInit {
 
+  constructor(private el: ElementRef) {}
 
-export class LandingPageComponent {
+  ngAfterViewInit(): void {
+    const elements = this.el.nativeElement.querySelectorAll('.animate-on-scroll');
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    elements.forEach((s: Element) => observer.observe(s));
+  }
 }
-
