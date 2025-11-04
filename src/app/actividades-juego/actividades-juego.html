@@ -1,1 +1,52 @@
-<p>actividades-juego works!</p>
+<section class="game-activities">
+  <header class="header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">🧩</div>
+      <h1 class="brand-name">Monstruos Amigos</h1>
+    </div>
+    <h2 class="title">Actividades de Juego</h2>
+  </header>
+
+  <div class="input-section">
+    <label for="childId" class="label">ID del niño (UUID)</label>
+    <input
+      id="childId"
+      type="text"
+      placeholder="Ej: 123e4567-e89b-12d3-a456-426614174000"
+      aria-label="ID del niño"
+      [(ngModel)]="childId"
+    />
+  </div>
+
+  <div class="results">
+    <h3 class="subtitle">Resultados:</h3>
+
+    <table class="results-table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Juego</th>
+        <th>Fecha</th>
+        <th>Progreso</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let juego of actividades">
+        <td>{{ juego.id }}</td>
+        <td>{{ juego.nombre }}</td>
+        <td>
+          <a href="#" class="link">{{ juego.fecha }}</a>
+        </td>
+        <td>{{ juego.progreso }}</td>
+      </tr>
+
+      <tr *ngIf="actividades.length === 0">
+        <td colspan="4" class="empty">
+          No se encontraron actividades.
+          <span class="admin">ADMIN</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

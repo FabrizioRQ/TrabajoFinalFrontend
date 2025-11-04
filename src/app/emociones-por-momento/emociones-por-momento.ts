@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './emociones-por-momento.css',
 })
 export class EmocionesPorMomento {
+  title = 'Revisión de Emociones Según Momento del Día';
+  subtitle = 'Historial de emociones del día';
 
 }

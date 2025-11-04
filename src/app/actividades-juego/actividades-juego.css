@@ -1,0 +1,149 @@
+:host {
+  --color-primary: #2D7FF9;
+  --color-accent: #FFD13B;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --bg-surface: #FFFFFF;
+  --bg-table: #E0F2FF;
+
+  display: block;
+  background: #F8FAFC;
+  font-family: 'Nunito', 'Poppins', system-ui, sans-serif;
+  color: var(--text-primary);
+  padding: 32px;
+}
+
+/* =============================
+   Encabezado
+   ============================= */
+
+.header {
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  background: #E0F2FF;
+  border-radius: 12px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 8px 0 0;
+}
+
+/* =============================
+   Campo de entrada
+   ============================= */
+
+.input-section {
+  margin: 16px 0 24px;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 14px;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/* =============================
+   Tabla de resultados
+   ============================= */
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-surface);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.results-table th {
+  background: var(--bg-table);
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.results-table td {
+  padding: 12px 16px;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  font-size: 15px;
+}
+
+.link {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.admin {
+  margin-left: 8px;
+  color: var(--color-primary);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* =============================
+   Responsividad
+   ============================= */
+
+@media (max-width: 600px) {
+  .results-table th,
+  .results-table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+}

@@ -1,1 +1,59 @@
-<p>lista-ninos works!</p>
+<div class="main-container">
+  <header class="header">
+    <div class="header-container">
+      <div class="brand">
+        <svg viewBox="0 0 24 24" width="32" height="32" stroke="#2D7FF9" fill="none" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9 10h.01M15 10h.01M8 14c1.2 1 2.4 1.5 4 1.5s2.8-.5 4-1.5"/>
+        </svg>
+        <h1>Monstruos Amigos</h1>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <h2>Niños Asociados</h2>
+
+    <section class="card">
+      <form class="form">
+        <div class="form-group">
+          <label for="uuid">ID del niño (UUID)</label>
+          <input type="text" id="uuid" name="uuid" placeholder="Ej: 123e4567-e89b..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="fecha">Fecha de inicio</label>
+          <input type="date" id="fecha" name="fecha" required>
+        </div>
+
+        <button type="submit" class="btn">Consultar</button>
+      </form>
+    </section>
+
+    <h3>Resultados:</h3>
+
+    <section class="card">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Emoción</th>
+          <th>Comentario</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>12/09/2025</td>
+          <td>Feliz</td>
+          <td>Hoy jugué con mis amigos</td>
+        </tr>
+        <tr>
+          <td>14/09/2025</td>
+          <td>Triste</td>
+          <td>No pude ver a mis papás</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>

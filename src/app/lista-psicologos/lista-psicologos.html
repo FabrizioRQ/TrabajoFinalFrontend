@@ -1,1 +1,60 @@
-<p>lista-psicologos works!</p>
+<header class="header">
+  <div class="header-container">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" width="32" height="32" stroke="#2D7FF9" fill="none" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M9 10h.01M15 10h.01M8 14c1.2 1 2.4 1.5 4 1.5s2.8-.5 4-1.5"/>
+      </svg>
+      <h1>Monstruos Amigos</h1>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <h2>Lista de Psicólogos</h2>
+
+  <!-- Filtro -->
+  <section class="card">
+    <form class="form" (ngSubmit)="buscar()">
+      <div class="form-group full">
+        <label for="uuid">ID del padre/tutor (UUID)</label>
+        <input
+          id="uuid"
+          type="text"
+          [(ngModel)]="uuid"
+          name="uuid"
+          placeholder="Ej: 6bff2e0b-92c7-4c0b-9b3d-...."
+          required>
+      </div>
+      <button type="submit" class="btn">Buscar</button>
+    </form>
+  </section>
+
+  <h3>Resultados:</h3>
+
+  <!-- Resultados -->
+  <section class="card">
+    <div class="table-wrap" *ngIf="psicologos.length > 0; else sinResultados">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Edad</th>
+          <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let psico of psicologos">
+          <td>{{ psico.nombre }}</td>
+          <td>{{ psico.edad }}</td>
+          <td>{{ psico.estado }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #sinResultados>
+      <p class="table-note">No se encontraron psicólogos registrados.</p>
+    </ng-template>
+  </section>
+</main>

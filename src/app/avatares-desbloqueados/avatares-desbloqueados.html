@@ -1,1 +1,43 @@
-<p>avatares-desbloqueados works!</p>
+<section class="session-history">
+  <header class="header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">💬</div>
+      <h1 class="brand-name">Monstruos Amigos</h1>
+    </div>
+    <h2 class="title">Historial de Sesiones</h2>
+  </header>
+
+  <div class="input-section">
+    <label for="childId" class="label">ID del niño (UUID)</label>
+    <input
+      id="childId"
+      type="text"
+      placeholder="Ej: 123e4567-e89b-12d3-a456-426614174000"
+      [(ngModel)]="childId"
+    />
+
+    <button class="btn btn-primary" (click)="consultar()">Consultar</button>
+  </div>
+
+  <div class="results">
+    <h3 class="subtitle">Resultados:</h3>
+
+    <div class="cards">
+      <div class="session-card" *ngFor="let sesion of sesiones">
+        <div class="session-icon" aria-hidden="true">👤</div>
+        <div class="session-info">
+          <p><strong>Nombre:</strong> {{ sesion.fecha }}</p>
+          <p><strong>Duración:</strong> {{ sesion.duracion }}</p>
+          <p><strong>Nota:</strong> "{{ sesion.nota }}"</p>
+        </div>
+      </div>
+
+      <p *ngIf="sesiones.length === 0" class="empty">No se encontraron sesiones.</p>
+    </div>
+
+    <p class="auth-user">
+      🔒 Usuario autenticado:
+      <span class="role">PSICÓLOGO</span>
+    </p>
+  </div>
+</section>

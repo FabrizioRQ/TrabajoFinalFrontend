@@ -1,1 +1,59 @@
-<p>pagos-recientes works!</p>
+<header class="header">
+  <div class="header-container">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" width="32" height="32" stroke="#2D7FF9" fill="none" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M9 10h.01M15 10h.01M8 14c1.2 1 2.4 1.5 4 1.5s2.8-.5 4-1.5"/>
+      </svg>
+      <h1>Monstruos Amigos</h1>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <h2>Niños Asociados</h2>
+
+  <section class="card">
+    <form class="form" (ngSubmit)="consultar()">
+      <div class="form-group full">
+        <label for="padreID">ID del padre/tutor</label>
+        <input
+          type="text"
+          id="padreID"
+          [(ngModel)]="padreID"
+          name="padreID"
+          placeholder="Ej: 6bff2e0b-92c7-4c0b..."
+          required>
+      </div>
+
+      <button type="submit" class="btn">Consultar</button>
+    </form>
+  </section>
+
+  <h3>Resultados:</h3>
+
+  <section class="card">
+    <table class="table" *ngIf="pagos.length > 0; else sinPagos">
+      <thead>
+      <tr>
+        <th>Monto</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let pago of pagos">
+        <td>{{ pago.monto }}</td>
+        <td>{{ pago.fecha }}</td>
+        <td>{{ pago.estado }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <ng-template #sinPagos>
+      <p style="text-align:center; padding:12px; color:#64748B;">
+        No se registraron pagos en el último mes.
+      </p>
+    </ng-template>
+  </section>
+</main>

@@ -1,0 +1,137 @@
+:host {
+  --color-primary: #2D7FF9; /* Azul cielo (confianza) */
+  --color-success: #69ee97; /* Verde tranquilo */
+  --color-accent: #FFD13B; /* Amarillo brillo */
+  --color-support: #7E57C2; /* Morado amable */
+  --color-danger: #E53935; /* Rojo claro (alerta) */
+
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --bg-1: #F8FAFC;
+  --bg-2: #FFFFFF;
+
+  font-family: 'Nunito', 'Poppins', system-ui, Arial, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-1);
+  display: block;
+  padding: 32px;
+}
+
+/* ==============================
+   Sección principal
+   ============================== */
+
+.emotion-review {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+  line-height: 1.25;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ==============================
+   Tarjeta principal
+   ============================== */
+
+.card {
+  background: var(--bg-2);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  padding: 24px;
+}
+
+/* ==============================
+   Tabla de emociones
+   ============================== */
+
+.emotion-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.emotion-table th {
+  background: rgba(45, 127, 249, 0.08);
+  color: var(--color-primary);
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.emotion-table td {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  vertical-align: top;
+}
+
+.emotion-table tr:hover {
+  background: rgba(45, 127, 249, 0.04);
+  transition: background 0.2s ease;
+}
+
+/* ==============================
+   Chip de estado
+   ============================== */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  background: rgba(45, 127, 249, 0.1);
+  color: var(--color-primary);
+}
+
+.chip.estado {
+  background: rgba(255, 209, 59, 0.2);
+  color: var(--text-primary);
+}
+
+/* ==============================
+   Responsividad
+   ============================== */
+
+@media (min-width: 900px) {
+  .title {
+    font-size: 40px;
+  }
+  .subtitle {
+    font-size: 20px;
+  }
+}
+
+/* ==============================
+   Accesibilidad
+   ============================== */
+
+:focus {
+  outline: 3px solid rgba(45, 127, 249, 0.3);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

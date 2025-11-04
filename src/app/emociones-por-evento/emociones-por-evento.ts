@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './emociones-por-evento.css',
 })
 export class EmocionesPorEvento {
-
+  emotions = [
+    { evento: 'Examen', estado: 'Ansioso', explicacion: 'El examen pudo contribuir a tu aumento de ansiedad' }
+  ];
 }

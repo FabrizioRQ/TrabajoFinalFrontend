@@ -1,1 +1,26 @@
-<p>emociones-por-momento works!</p>
+<section class="emotion-moment container card">
+  <header class="section-header">
+    <h2>{{ title }}</h2>
+    <p class="lead">{{ subtitle }}</p>
+  </header>
+
+  <div class="table-wrapper">
+    <table class="emotion-table">
+      <thead>
+      <tr>
+        <th>Momento</th>
+        <th>Cambio de ánimo</th>
+        <th>Explicación</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let e of emotionsByMoment">
+        <td>{{ e.time }}</td>
+        <td class="mood mood--anxious">{{ e.mood }}</td>
+        <td>{{ e.description }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+

@@ -1,0 +1,164 @@
+:host {
+  --color-primary: #2D7FF9;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --bg-surface: #FFFFFF;
+  --bg-card: #E0F2FF;
+
+  display: block;
+  background: #F8FAFC;
+  font-family: 'Nunito', 'Poppins', system-ui, sans-serif;
+  color: var(--text-primary);
+  padding: 32px;
+}
+
+/* =============================
+   Encabezado
+   ============================= */
+.header {
+  margin-bottom: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  background: #E0F2FF;
+  border-radius: 12px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+/* =============================
+   Entrada
+   ============================= */
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  max-width: 420px;
+}
+
+.label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #1c6de0;
+}
+
+/* =============================
+   Resultados
+   ============================= */
+.results {
+  margin-top: 24px;
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.session-card {
+  display: flex;
+  align-items: flex-start;
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 260px;
+  flex: 1 1 45%;
+}
+
+.session-icon {
+  font-size: 28px;
+  margin-right: 12px;
+}
+
+.session-info p {
+  margin: 4px 0;
+  font-size: 15px;
+}
+
+.empty {
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* =============================
+   Autenticación
+   ============================= */
+.auth-user {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.role {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* =============================
+   Responsividad
+   ============================= */
+@media (max-width: 600px) {
+  .session-card {
+    flex: 1 1 100%;
+  }
+}
