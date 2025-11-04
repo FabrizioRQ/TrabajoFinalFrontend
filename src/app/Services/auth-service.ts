@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {LoginRequest} from '../../model/login-request.model';
+import {RegistroRequestDTO} from '../../model/registro-request-dto.model';
 
 interface JwtResponse {
   token: string;
@@ -50,5 +51,10 @@ export class AuthService {
   getUser() {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
+  }
+
+  // Dentro de AuthService
+  registrar(registroData: RegistroRequestDTO) {
+    return this.http.post<any>(`${this.apiURL}/registrar`, registroData);
   }
 }
