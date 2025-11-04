@@ -1,0 +1,183 @@
+/* ===== Estilos generales ===== */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+h1 {
+  font-size: 36px;
+  margin: 16px 0;
+}
+
+h2 {
+  font-size: 26px;
+  margin: 24px 0 12px;
+}
+
+p,
+label,
+input,
+button,
+th,
+td {
+  font-size: 18px;
+}
+
+/* ===== Header ===== */
+.header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.header__in {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #0f172a;
+}
+
+.brand svg {
+  width: 32px;
+  height: 32px;
+  color: #2d7ff9;
+}
+
+.brand__name {
+  font-weight: 700;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(2, 8, 23, 0.06);
+}
+
+/* ===== Form ===== */
+.grid {
+  display: grid;
+  gap: 24px;
+}
+
+.grid-2 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-weight: 700;
+}
+
+.input {
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  color: #0f172a;
+}
+
+.input::placeholder {
+  color: #94a3b8;
+}
+
+.input:focus {
+  outline: 2px solid #2d7ff9;
+  outline-offset: 2px;
+}
+
+.help {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.actions {
+  grid-column: 1 / -1;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 20px;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  background: #2d7ff9;
+  color: #fff;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.02s;
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+}
+
+.btn:focus-visible {
+  outline: 2px solid #2d7ff9;
+  outline-offset: 2px;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* ===== Tabla ===== */
+.table-wrap {
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  padding: 14px 16px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table thead th {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 700;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.table tbody tr + tr td {
+  border-top: 1px solid #e2e8f0;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}

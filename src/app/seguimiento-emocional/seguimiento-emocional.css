@@ -1,0 +1,228 @@
+/* --- Tipografía y Base --- */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #F8FAFC;
+  font-family: 'Nunito', 'Poppins', system-ui, Arial, sans-serif;
+  color: #0F172A;
+}
+
+.emotion-container {
+  padding: 32px;
+}
+
+.emotion-card {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.1);
+  padding: 32px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* --- Encabezado de la App --- */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.app-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.app-header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #7E57C2; /* Morado Amable */
+  margin: 0;
+}
+
+/* --- Títulos y Pregunta --- */
+.main-title {
+  font-size: 32px; /* H2: 32px */
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 24px;
+}
+
+.question-text {
+  font-size: 20px; /* H3: 20px */
+  font-weight: 600;
+  color: #0F172A;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+/* --- Grupos de Input --- */
+.input-group {
+  margin-bottom: 32px;
+}
+
+/* --- Input: Escala (Radio buttons) --- */
+.scale-input {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.scale-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  flex: 1; /* Distribuye el espacio equitativamente */
+  min-width: 50px;
+}
+
+.scale-option input[type="radio"] {
+  display: none; /* Ocultar el radio button real */
+}
+
+.scale-label {
+  display: block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  border: 2px solid #64748B; /* Gris Neutro */
+  margin-bottom: 4px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  color: #0F172A;
+}
+
+.scale-option input[type="radio"]:checked + .scale-label {
+  background-color: #7E57C2; /* Morado Amable */
+  border-color: #7E57C2;
+  color: #FFFFFF;
+}
+
+.scale-description {
+  font-size: 12px;
+  color: #64748B;
+  text-align: center;
+}
+
+/* --- Input: Texto Libre (Textarea) --- */
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #64748B;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 18px;
+  color: #0F172A;
+  resize: vertical;
+  min-height: 100px;
+}
+
+textarea:focus {
+  border-color: #7E57C2;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(126, 87, 194, 0.3);
+}
+
+/* --- Input: Selección Múltiple (Chips) --- */
+.multiple-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.chip-label {
+  padding: 8px 16px;
+  border: 1px solid #64748B;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #0F172A;
+}
+
+.option-chip input[type="radio"]:checked + .chip-label {
+  background-color: #7E57C2; /* Morado Amable */
+  border-color: #7E57C2;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.chip-label:hover {
+  background-color: #F8FAFC;
+}
+
+/* --- Botones de Acción --- */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.action-buttons button {
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border: none;
+  flex: 1;
+}
+
+.discard-button {
+  background-color: #F8FAFC;
+  color: #64748B;
+  border: 1px solid #64748B;
+}
+
+.discard-button:hover {
+  background-color: #E2E8F0;
+}
+
+.primary-button {
+  background-color: #7E57C2; /* Morado Amable */
+  color: #FFFFFF;
+}
+
+.primary-button:hover:not(:disabled) {
+  background-color: #5d4493;
+}
+
+.primary-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- Mensaje de Éxito --- */
+.success-message {
+  text-align: center;
+  padding: 32px;
+  border: 2px solid #69ee97; /* Verde Tranquilo */
+  background-color: rgba(105, 238, 151, 0.1);
+  border-radius: 8px;
+}
+
+.icon-success {
+  font-size: 48px;
+  color: #69ee97;
+  margin-bottom: 16px;
+}
+
+.success-message p {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.small-note {
+  font-size: 14px;
+  color: #64748B;
+  margin-top: 8px;
+}

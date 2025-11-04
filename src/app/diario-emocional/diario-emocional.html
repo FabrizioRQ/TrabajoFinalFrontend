@@ -1,1 +1,62 @@
-<p>diario-emocional works!</p>
+<!-- Header -->
+<header class="header">
+  <div class="container header__in">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
+        <path d="M9 10h.01M15 10h.01M8 14c1.2 1 2.4 1.5 4 1.5s2.8-.5 4-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <span class="brand__name">Monstruos Amigos</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <h1>Obtención de Entradas del Diario Emocional por Fecha</h1>
+
+  <section class="card">
+    <form class="grid grid-2" action="#" method="get">
+      <div class="field">
+        <label class="label" for="kidId">ID del niño</label>
+        <input id="kidId" name="kidId" class="input" type="text" placeholder="Ej: 12345" required minlength="6">
+        <p class="help">Escribe al menos 6 caracteres.</p>
+      </div>
+
+      <div class="field">
+        <label class="label" for="startDate">Fecha de inicio</label>
+        <input id="startDate" name="startDate" class="input" type="date" required>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn--primary" type="submit">Consultar</button>
+      </div>
+    </form>
+  </section>
+
+  <h2 class="mt-24">Resultados:</h2>
+  <section class="card">
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Emoción</th>
+          <th>Comentario</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>12/09/2025</td>
+          <td>Feliz</td>
+          <td>Hoy jugué con mis amigos</td>
+        </tr>
+        <tr>
+          <td>14/09/2025</td>
+          <td>Triste</td>
+          <td>No pude ver a mis papás</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
