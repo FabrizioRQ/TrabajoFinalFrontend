@@ -122,6 +122,21 @@
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
+.sidebar {
+  height: 100vh; /* altura completa */
+  overflow-y: auto; /* scroll vertical */
+  scrollbar-width: thin; /* más delgado (en Firefox) */
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #7a5af8; /* color violeta del tema */
+  border-radius: 4px;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .sidebar {
