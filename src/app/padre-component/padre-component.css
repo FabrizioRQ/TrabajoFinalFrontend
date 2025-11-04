@@ -1,0 +1,117 @@
+
+:host {
+  --azul-cielo: #2D7FF9;
+  --verde-tranquilo: #69ee97;
+  --amarillo-brillo: #FFD13B;
+  --morado-amable: #7E57C2;
+  --rojo-claro: #E53935;
+  --texto-principal: #0F172A;
+  --texto-secundario: #64748B;
+  --fondo-claro: #F8FAFC;
+  --fondo-blanco: #FFFFFF;
+}
+
+.container {
+  font-family: "Nunito", system-ui, sans-serif;
+  background-color: var(--fondo-claro);
+  color: var(--texto-principal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container .card {
+  background-color: var(--fondo-blanco);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 32px;
+  width: 340px;
+  text-align: center;
+}
+
+.container .header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.container .logo {
+  width: 28px;
+  height: 28px;
+}
+
+.container .header h1 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.container h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.container p {
+  font-size: 14px;
+  color: var(--texto-secundario);
+  margin-bottom: 24px;
+}
+
+.container form {
+  text-align: left;
+}
+
+.container label {
+  font-size: 14px;
+  color: var(--texto-principal);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.container select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #CBD5E1;
+  font-size: 16px;
+  color: var(--texto-principal);
+  background-color: var(--fondo-blanco);
+  margin-bottom: 24px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.container select:focus {
+  border-color: var(--azul-cielo);
+  box-shadow: 0 0 0 2px rgba(45,127,249,0.25);
+}
+
+.container button {
+  width: 100%;
+  background-color: var(--azul-cielo);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 0;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.container button:hover {
+  background-color: #1f6de0;
+}
+
+.container button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 400px) {
+  .container .card {
+    width: 90%;
+    padding: 24px;
+  }
+}

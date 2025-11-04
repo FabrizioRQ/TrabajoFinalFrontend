@@ -1,1 +1,20 @@
-<p>padre-component works!</p>
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="logo" class="logo">
+      <h1>Monstruos Amigos</h1>
+    </div>
+
+    <h2>Registrar como Padre/Tutor</h2>
+    <p>Confirma que deseas registrar el papel de padre/tutor en la plataforma.</p>
+
+    <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+      <label for="relacion">Relación con el niño:</label>
+      <select id="relacion" formControlName="relacion">
+        <option value="padre">Padre</option>
+        <option value="tutor">Tutor</option>
+      </select>
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+</div>
