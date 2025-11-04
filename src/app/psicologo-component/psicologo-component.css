@@ -1,0 +1,158 @@
+:host {
+  display: block;
+}
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2D7FF9 30%, #F8FAFC 70%);
+  padding: 32px;
+}
+
+.register-card {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.1);
+  padding: 24px;
+  width: 100%;
+  max-width: 450px;
+  font-family: 'Nunito', 'Poppins', system-ui, Arial, sans-serif;
+  color: #0F172A;
+}
+
+/* --- Encabezado --- */
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.app-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2D7FF9;
+  margin: 0;
+}
+
+.register-card h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 24px;
+}
+
+.register-form {
+  line-height: 1.5;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label, .subtitle {
+  display: block;
+  font-size: 18px;
+  color: #0F172A;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #64748B;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 18px;
+  color: #0F172A;
+}
+
+.id-group input {
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+input:focus, select:focus {
+  border-color: #2D7FF9;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(45, 127, 249, 0.3);
+}
+
+.additional-data-box {
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 16px 24px 24px 24px;
+  margin-bottom: 24px;
+}
+
+.additional-data-box .subtitle {
+  font-size: 18px;
+  color: #64748B;
+  font-weight: 600;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.select-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 0;
+}
+
+.select-group label {
+  grid-column: 1 / 2;
+}
+
+.select-group select {
+  grid-column: 1 / 2;
+  margin-bottom: 0;
+}
+
+.save-button {
+  grid-column: 2 / 3;
+  background-color: #2D7FF9;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  height: fit-content;
+  justify-self: end;
+}
+
+.save-button:hover {
+  background-color: #1a6ddb;
+}
+
+.message {
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-top: 24px;
+  font-weight: 600;
+}
+
+.error {
+  background-color: rgba(229, 57, 53, 0.1);
+  color: #E53935;
+  border: 1px solid #E53935;
+}
+
+.success {
+  background-color: rgba(105, 238, 151, 0.1);
+  color: #69ee97;
+  border: 1px solid #69ee97;
+}

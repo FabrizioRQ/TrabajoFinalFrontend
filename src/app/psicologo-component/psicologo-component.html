@@ -1,1 +1,79 @@
-<p>psicologo-component works!</p>
+<div class="register-container">
+  <div class="register-card">
+    <div class="header">
+      <img src="feliz.png" alt="Monstruo Amigo Icono" class="app-icon">
+      <h1>Monstruos Amigos</h1>
+    </div>
+
+    <h2>Registro de Psicólogo</h2>
+
+    <form class="register-form" (ngSubmit)="registrarPsicologo()">
+
+      <div class="form-group id-group">
+        <label for="userId">ID de usuario</label>
+        <input
+          type="text"
+          id="userId"
+          name="userId"
+          [(ngModel)]="psicologo.userId"
+          placeholder="Ej: ABC-12345"
+          required
+        >
+      </div>
+
+      <div class="additional-data-box">
+        <p class="subtitle">Datos adicionales</p>
+
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            [(ngModel)]="psicologo.nombre"
+            placeholder="Nombre completo"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="correo">Correo electrónico</label>
+          <input
+            type="email"
+            id="correo"
+            name="correo"
+            [(ngModel)]="psicologo.correo"
+            placeholder="micorreo@ejemplo.com"
+            required
+          >
+        </div>
+
+        <div class="form-group select-group">
+          <label for="sexo">Sexo</label>
+          <select
+            id="sexo"
+            name="sexo"
+            [(ngModel)]="psicologo.sexo"
+            required
+          >
+            <option value="" disabled selected>Seleccione</option>
+            <option *ngFor="let opcion of opcionesSexo" [value]="opcion">{{ opcion }}</option>
+          </select>
+          <button type="submit" class="save-button">
+            Guardar
+          </button>
+        </div>
+
+      </div>
+
+      <div
+        *ngIf="mensaje"
+        class="message"
+        [ngClass]="{'error': mensajeEsError, 'success': !mensajeEsError}"
+      >
+        {{ mensaje }}
+      </div>
+
+    </form>
+  </div>
+</div>

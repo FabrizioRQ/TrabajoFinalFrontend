@@ -1,0 +1,100 @@
+body {
+  font-family: 'Nunito', 'Poppins', system-ui, Arial, sans-serif;
+  color: #0F172A;
+  line-height: 1.5;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg,  #2D7FF9 30%, #F8FAFC 70%);
+  padding: 32px;
+}
+
+.profile-card {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.1);
+  padding: 24px;
+  width: 100%;
+  max-width: 450px;
+}
+
+
+.header {
+  display: flex;
+
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.app-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0F172A;
+  margin: 0;
+}
+
+.profile-card h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 24px;
+}
+
+.profile-form {
+  line-height: 1.5;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 18px;
+  color: #64748B;
+  margin-bottom: 4px;
+}
+
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #64748B;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 18px;
+  color: #0F172A;
+}
+
+.form-group input:focus {
+  border-color: #2D7FF9;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(45, 127, 249, 0.3);
+}
+
+.save-button {
+  background-color: #2D7FF9;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 16px;
+}
+
+.save-button:hover {
+  background-color: #1a6ddb;
+}

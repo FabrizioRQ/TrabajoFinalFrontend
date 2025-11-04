@@ -1,0 +1,162 @@
+/* --- Tipografía y Base --- */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #F8FAFC;
+  font-family: 'Nunito', 'Poppins', system-ui, Arial, sans-serif;
+  color: #0F172A;
+}
+
+.billing-container {
+  padding: 32px;
+}
+
+.billing-card {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.1);
+  padding: 32px;
+  width: 100%;
+  max-width: 800px; /* Ancho para una tabla */
+}
+
+/* --- Encabezado de la App (como en el mockup) --- */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.app-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.app-header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2D7FF9; /* Azul Cielo (Primario) */
+  margin: 0;
+}
+
+/* --- Títulos --- */
+.main-title {
+  font-size: 40px; /* H1: 40px */
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 24px;
+}
+
+.subtitle {
+  font-size: 28px; /* H3: 28px */
+  font-weight: 600;
+  color: #0F172A;
+  margin-bottom: 16px;
+}
+
+/* --- Botón Principal de Factura --- */
+.main-invoice-button {
+  background-color: #FFFFFF;
+  border: 1px solid #64748B; /* Borde Neutro (Texto Secundario) */
+  color: #0F172A; /* Texto Principal */
+  border-radius: 4px;
+  padding: 10px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 32px;
+}
+
+.main-invoice-button:hover {
+  background-color: #F8FAFC;
+  border-color: #0F172A;
+}
+
+/* --- Tabla de Historial --- */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto; /* Para responsividad si la tabla es muy ancha */
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse; /* Bordes limpios */
+}
+
+.payment-table th, .payment-table td {
+  padding: 16px;
+  text-align: left;
+  font-size: 18px; /* Párrafo */
+  vertical-align: middle;
+}
+
+/* Encabezado de la tabla */
+.payment-table thead tr {
+  background-color: #F8FAFC; /* Fondo Neutro claro */
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.payment-table th {
+  font-size: 16px;
+  color: #64748B; /* Texto Secundario */
+  font-weight: 600;
+}
+
+/* Cuerpo de la tabla */
+.payment-table tbody tr {
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.payment-table tbody tr:last-child {
+  border-bottom: none; /* Sin borde en la última fila */
+}
+
+/* --- Estilos de Estado --- */
+.status {
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #F8FAFC;
+  color: #0F172A; /* Color por defecto (como en el mockup) */
+}
+
+.status-completed {
+  color: #69ee97; /* Verde Tranquilo (Éxito) */
+  background-color: rgba(105, 238, 151, 0.1);
+}
+
+.status-rejected {
+  color: #E53935; /* Rojo Claro (Alerta) */
+  background-color: rgba(229, 57, 53, 0.1);
+}
+
+.status-pending {
+  color: #FFD13B; /* Amarillo Brillo (Resaltos) */
+  background-color: rgba(255, 209, 59, 0.1);
+}
+
+/* --- Botón Descargar Recibo (en la tabla) --- */
+.download-receipt-button {
+  background-color: #F8FAFC;
+  border: 1px solid #64748B;
+  color: #0F172A;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.download-receipt-button:hover {
+  background-color: #E2E8F0;
+}
+
+.no-action {
+  color: #64748B;
+  font-size: 18px;
+}

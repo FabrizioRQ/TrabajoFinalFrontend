@@ -1,1 +1,57 @@
-<p>metodos-pago works!</p>
+<div class="payment-container">
+  <div class="payment-card">
+
+    <h1 class="title">Métodos de Pago</h1>
+
+    <button class="add-button" (click)="anadirMetodo()">
+      <span class="plus-icon">+</span> Añadir método de pago
+    </button>
+
+    <div class="method-list">
+      <div
+        *ngFor="let metodo of metodos"
+        class="method-item"
+        [ngClass]="{'default-method': metodo.esPredeterminado}"
+      >
+        <div class="method-info">
+          <span class="icon" [ngClass]="metodo.iconoClase">
+            <ng-container *ngIf="metodo.tipo === 'Billetera Digital'">👛</ng-container>
+            <ng-container *ngIf="metodo.tipo === 'Tarjeta'">💳</ng-container>
+            <ng-container *ngIf="metodo.tipo === 'Cuenta bancaria'">🏛️</ng-container>
+          </span>
+
+          <div class="details">
+            <span class="type-name">{{ metodo.detalle }}</span>
+          </div>
+        </div>
+
+        <div class="method-actions">
+
+          <button
+            *ngIf="!metodo.esPredeterminado"
+            class="default-button"
+            (click)="establecerPredeterminado(metodo.id)"
+          >
+            Predeterminado
+          </button>
+
+          <span *ngIf="metodo.esPredeterminado" class="default-tag">
+            Predeterminado
+          </span>
+
+          <button
+            class="delete-button"
+            (click)="eliminarMetodo(metodo.id)"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <p class="security-note">
+      Los detalles de pago se procesarán de forma segura y privada
+    </p>
+
+  </div>
+</div>

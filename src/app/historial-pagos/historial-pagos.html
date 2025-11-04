@@ -1,1 +1,66 @@
-<p>historial-pagos works!</p>
+<div class="billing-container">
+  <div class="billing-card">
+
+    <div class="app-header">
+      <img src="logo.jpg" alt="Monstruo Amigo Icono" class="app-icon">
+      <h1>Monstruos Amigos</h1>
+    </div>
+
+    <h2 class="main-title">Facturación y Historial de Pagos</h2>
+
+    <button class="main-invoice-button" (click)="descargarFacturaGeneral()">
+      Descargar Factura
+    </button>
+
+    <h3 class="subtitle">Historial de Pagos</h3>
+
+    <div class="table-wrapper">
+      <table class="payment-table">
+        <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Monto</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let pago of historial">
+          <!-- Datos del pago -->
+          <td>{{ pago.fecha }}</td>
+          <td>€{{ pago.monto }}</td>
+
+          <!-- Estado con clase condicional -->
+          <td>
+              <span
+                class="status"
+                [ngClass]="{
+                  'status-completed': pago.estado === 'Completado',
+                  'status-rejected': pago.estado === 'Rechazado',
+                  'status-pending': pago.estado === 'Pendiente'
+                }"
+              >
+                {{ pago.estado }}
+              </span>
+          </td>
+
+          <!-- Acción condicional -->
+          <td>
+            <button
+              *ngIf="pago.estado === 'Completado'"
+              class="download-receipt-button"
+              (click)="descargarRecibo(pago.id)"
+            >
+              Descargar
+            </button>
+            <span *ngIf="pago.estado !== 'Completado'" class="no-action">
+                —
+              </span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

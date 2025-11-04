@@ -1,1 +1,118 @@
-<p>cancelar-suscripcion works!</p>
+<div class="subscription-management-container">
+  <div class="management-card">
+
+    <h1 class="title">Gestión de Suscripción Premium</h1>
+
+    <div class="options-grid">
+
+      <div class="option-box pause-box">
+        <h2 class="option-title">Desactivar temporalmente</h2>
+        <p class="option-subtitle">Pausar pagos hasta que regreses</p>
+
+        <button
+          class="action-button primary-button"
+          [disabled]="!suscripcionActiva"
+          (click)="iniciarPausa()"
+        >
+          Desactivar Suscripción
+        </button>
+
+        <p class="note">Mantendrás acceso hasta el...</p>
+      </div>
+
+      <div class="option-box cancel-box">
+        <h2 class="option-title warning-title">
+          <span class="alert-icon">⚠️</span> Cancelar permanentemente
+        </h2>
+        <p class="option-subtitle">Revocar el acceso premium</p>
+
+        <div class="form-group">
+          <label for="motivo">Motivo (opcional)</label>
+          <select
+            id="motivo"
+            name="motivo"
+            [(ngModel)]="motivoSeleccionado"
+          >
+            <option value="" disabled selected>Seleccione</option>
+            <option *ngFor="let motivo of motivosCancelacion" [value]="motivo">{{ motivo }}</option>
+          </select>
+        </div>
+
+        <button
+          class="action-button alert-button"
+          [disabled]="!suscripcionActiva"
+          (click)="iniciarCancelacion()"
+        >
+          Cancelar Suscripción
+        </button>
+      </div>
+
+    </div>
+
+    <button
+      *ngIf="!suscripcionActiva"
+      class="reactivate-button success-button"
+      (click)="reactivarSuscripcion()"
+    >
+      Reactivar suscripción
+    </button>
+
+    <p class="privacy-note">
+      Nos tomamos tu privacidad en serio
+      <br>
+      Cumplimos con el GDPR
+    </p>
+
+    <div
+      *ngIf="!suscripcionActiva"
+      class="status-bar inactive-bar"
+    >
+      No tienes suscripción activa
+    </div>
+
+  </div>
+
+  <div *ngIf="mostrarModalPausa" class="modal-overlay" (click)="cerrarModales()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3 class="modal-title">Confirmar</h3>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="seguro" name="seguro" [(ngModel)]="estoySeguro">
+        <label for="seguro">Estoy seguro</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="pausar" name="pausar" [(ngModel)]="pausarPagos">
+        <label for="pausar">Pausar los pagos</label>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-cancel-button" (click)="cerrarModales()">Cancelar</button>
+        <button
+          class="modal-confirm-button"
+          [disabled]="!estoySeguro"
+          (click)="confirmarPausa()"
+        >
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="mostrarModalCancelacion" class="modal-overlay" (click)="cerrarModales()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3 class="modal-title warning-title">Confirmar Cancelación</h3>
+      <p class="modal-body">¿Estás completamente seguro de revocar el acceso Premium de forma permanente? Esta acción es irreversible.</p>
+
+      <div class="modal-actions">
+        <button class="modal-cancel-button" (click)="cerrarModales()">Mantener Suscripción</button>
+        <button
+          class="modal-confirm-button alert-button"
+          (click)="confirmarCancelacion()"
+        >
+          Cancelar Acceso
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

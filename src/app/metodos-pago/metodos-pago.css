@@ -1,0 +1,155 @@
+/* --- Tipografía y Base --- */
+:host {
+  display: block;
+  font-family: 'Nunito', 'Poppins', system-ui, Arial, sans-serif;
+  color: #0F172A;
+  line-height: 1.5;
+}
+
+.payment-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #F8FAFC;
+  padding: 32px;
+}
+
+.payment-card {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.1);
+  padding: 32px;
+  width: 100%;
+  max-width: 600px; /* Ajuste para que se vea bien como una ventana de lista */
+}
+
+/* --- Título --- */
+.title {
+  font-size: 32px; /* H2: 32px (Desktop) */
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 24px;
+}
+
+/* --- Botón Añadir Método --- */
+.add-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #2D7FF9; /* Azul Cielo (Primario) */
+  font-size: 18px; /* Botones: 18px */
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 0;
+  margin-bottom: 24px;
+  transition: color 0.2s ease;
+}
+
+.add-button:hover {
+  color: #1a6ddb;
+}
+
+.plus-icon {
+  font-size: 24px;
+  line-height: 1;
+  margin-right: 8px;
+}
+
+/* --- Lista de Métodos --- */
+.method-list {
+  border: 1px solid #E2E8F0; /* Borde sutil para contener la lista */
+  border-radius: 8px;
+  overflow: hidden; /* Para que los bordes internos se vean bien */
+  margin-bottom: 24px;
+}
+
+.method-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
+}
+
+.method-item:last-child {
+  border-bottom: none;
+}
+
+.method-info {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 24px; /* Tamaño del icono */
+  margin-right: 16px;
+  /* Estilos para los iconos placeholder (emojis) */
+  line-height: 1;
+}
+
+.details .type-name {
+  font-size: 18px; /* Párrafo */
+  color: #0F172A;
+  font-weight: 500;
+}
+
+/* --- Acciones y Tags --- */
+.method-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Espacio entre acciones */
+}
+
+/* Botón de acción para marcar como Predeterminado */
+.default-button {
+  background: none;
+  border: none;
+  color: #2D7FF9; /* Azul Cielo (Primario) */
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.default-button:hover {
+  text-decoration: underline;
+}
+
+/* Tag "Predeterminado" */
+.default-tag {
+  color: #2D7FF9; /* Azul Cielo (Primario) */
+  background-color: rgba(45, 127, 249, 0.1); /* Fondo muy claro de Primario */
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Botón Eliminar */
+.delete-button {
+  background: none;
+  border: none;
+  color: #E53935; /* Rojo Claro (Alerta) */
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.delete-button:hover {
+  text-decoration: underline;
+  color: #c62828; /* Rojo más oscuro */
+}
+
+/* --- Nota de Seguridad --- */
+.security-note {
+  font-size: 16px;
+  color: #64748B; /* Texto Secundario */
+  text-align: center;
+  margin-top: 16px;
+}

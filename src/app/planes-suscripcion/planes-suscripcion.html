@@ -1,1 +1,31 @@
-<p>planes-suscripcion works!</p>
+<div class="subscription-container">
+  <div class="subscription-card-wrapper">
+
+    <h1 class="title">Planes de Suscripción</h1>
+
+    <div class="plans-grid">
+      <div
+        *ngFor="let plan of planes"
+        class="plan-card"
+        [ngClass]="{
+          'plan-standard': plan.id === 'standard',
+          'plan-vip': plan.id === 'vip',
+          'plan-gold': plan.id === 'gold',
+          'plan-platinum': plan.id === 'platinum',
+          'is-highlighted': plan.isDestacado
+        }"
+        (click)="seleccionarPlan(plan.id)"
+      >
+        <h3 class="plan-name">{{ plan.nombre }}</h3>
+        <ul class="features-list">
+          <li *ngFor="let feature of plan.caracteristicas">{{ feature }}</li>
+        </ul>
+        <p class="plan-price">{{ plan.precio }}</p>
+      </div>
+    </div>
+
+    <button class="omit-button" (click)="omitirSeleccion()">
+      Omitir
+    </button>
+  </div>
+</div>

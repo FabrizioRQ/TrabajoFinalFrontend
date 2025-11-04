@@ -1,0 +1,168 @@
+/* --- Tipografía y Base --- */
+:host {
+  display: block;
+  font-family: 'Nunito', 'Poppins', system-ui, Arial, sans-serif;
+  color: #0F172A; /* Texto principal por defecto */
+  line-height: 1.5;
+}
+
+/* --- Contenedor Principal --- */
+.subscription-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #F8FAFC; /* Fondo Neutro */
+  padding: 32px;
+}
+
+.subscription-card-wrapper {
+  background-color: #FFFFFF; /* Fondo Blanco para el contenedor principal */
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.1);
+  padding: 32px;
+  width: 100%;
+  max-width: 1000px; /* Ancho máximo para el grid de planes */
+  text-align: center;
+}
+
+/* --- Título Principal --- */
+.title {
+  font-size: 40px; /* H1: 40px (Desktop) */
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 32px; /* Separación entre módulos */
+}
+
+/* --- Grid de Planes --- */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsivo */
+  gap: 24px; /* Espaciado entre módulos */
+  margin-bottom: 32px; /* Separación antes del botón omitir */
+  justify-items: center; /* Centrar las tarjetas en el grid */
+}
+
+/* --- Tarjeta de Plan Individual --- */
+.plan-card {
+  background-color: #FFFFFF; /* Fondo Blanco */
+  border: 1px solid #E2E8F0; /* Borde neutro para los planes no destacados */
+  border-radius: 8px;
+  padding: 24px; /* Padding de tarjeta */
+  text-align: left;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  width: 100%; /* Asegura que ocupe todo el espacio asignado por el grid */
+  max-width: 240px; /* Ancho máximo para cada tarjeta */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra sutil */
+}
+
+.plan-card:hover {
+  transform: translateY(-4px); /* Efecto hover suave */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.plan-name {
+  font-size: 28px; /* H3: 28px (Desktop) */
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.features-list {
+  list-style: none; /* Quitar viñetas por defecto */
+  padding: 0;
+  margin-bottom: 24px;
+}
+
+.features-list li {
+  font-size: 18px; /* Párrafo */
+  color: #64748B; /* Texto secundario para características */
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 24px; /* Espacio para el guion personalizado */
+}
+
+.features-list li::before {
+  content: "•"; /* Guion o punto personalizado */
+  position: absolute;
+  left: 0;
+  color: #64748B; /* Color del guion/punto */
+  font-weight: bold;
+}
+
+.plan-price {
+  font-size: 28px; /* H3: 28px (Desktop) */
+  font-weight: 600;
+  color: #2D7FF9; /* Azul Cielo para el precio (Primario) */
+  margin-top: 24px;
+  text-align: center;
+}
+
+/* --- Estilos específicos para los planes destacados (Gold y Platinum) --- */
+.plan-card.is-highlighted {
+  border: 2px solid #2D7FF9; /* Borde Primario (Azul Cielo) */
+  box-shadow: 0 4px 12px rgba(45, 127, 249, 0.2); /* Sombra con color Primario */
+}
+
+/* Ajustes de color para texto en planes específicos (si se desea) */
+.plan-card.plan-gold .plan-name,
+.plan-card.plan-platinum .plan-name {
+  color: #2D7FF9; /* Nombres de planes destacados en Azul Cielo */
+}
+
+.plan-card.plan-gold .features-list li::before,
+.plan-card.plan-platinum .features-list li::before {
+  color: #2D7FF9; /* Guiones de características también en Azul Cielo */
+}
+
+
+/* --- Botón Omitir --- */
+.omit-button {
+  /* Estilo de alerta/neutro suave */
+  background-color: #F8FAFC; /* Fondo Neutro */
+  color: #E53935; /* Texto Rojo Claro (Alerta) */
+  border: 1px solid #E53935; /* Borde Rojo Claro (Alerta) */
+  border-radius: 4px;
+  padding: 10px 32px; /* Múltiplo de 8 */
+  font-size: 18px; /* Botones: 16–18 px */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 24px; /* Separación */
+}
+
+.omit-button:hover {
+  background-color: #ffebee; /* Un rojo muy claro al pasar el ratón */
+  color: #c62828; /* Rojo más oscuro para el texto en hover */
+}
+
+/* --- Responsive para móvil --- */
+@media (max-width: 768px) {
+  .subscription-card-wrapper {
+    padding: 24px;
+  }
+
+  .title {
+    font-size: 32px; /* H1: 28–32px (Móvil) */
+    margin-bottom: 24px;
+  }
+
+  .plans-grid {
+    grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+  }
+
+  .plan-name {
+    font-size: 24px; /* H2: 24px (Móvil) */
+  }
+
+  .features-list li, .plan-price {
+    font-size: 16px; /* Párrafo: 16–18px (Móvil) */
+  }
+
+  .omit-button {
+    font-size: 16px;
+    padding: 10px 24px;
+  }
+}
