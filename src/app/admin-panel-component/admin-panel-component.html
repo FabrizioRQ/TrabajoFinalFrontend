@@ -32,10 +32,7 @@
   <!-- Main content -->
   <main class="main-content">
     <header class="main-header">
-      <div class="user-info">
-        <h1>Bienvenido, Admin 👋</h1>
-        <p>Gestiona módulos y usuarios del sistema</p>
-      </div>
+      <h1>Bienvenido, Admin 👋</h1>
       <button class="logout-btn">
         <i class="fa-solid fa-right-from-bracket"></i>
         Cerrar sesión
@@ -43,44 +40,10 @@
     </header>
 
     <section class="cards-grid">
-      <div class="card" (click)="openModule('perfil')">
-        <i class="fa-solid fa-user-pen"></i>
-        <h3>Edición del perfil</h3>
-      </div>
-
-      <div class="card" (click)="openModule('psicologo')">
-        <i class="fa-solid fa-user-doctor"></i>
-        <h3>Registro de Psicólogo</h3>
-      </div>
-
-      <div class="card" (click)="openModule('nino')">
-        <i class="fa-solid fa-child-reaching"></i>
-        <h3>Registro de Niño</h3>
-      </div>
-
-      <div class="card" (click)="openModule('monitoreo')">
-        <i class="fa-solid fa-brain"></i>
-        <h3>Monitoreo Emocional</h3>
-      </div>
-
-      <div class="card" (click)="openModule('planes')">
-        <i class="fa-solid fa-layer-group"></i>
-        <h3>Planes y Suscripciones</h3>
-      </div>
-
-      <div class="card" (click)="openModule('pagos')">
-        <i class="fa-solid fa-credit-card"></i>
-        <h3>Gestión de Pagos</h3>
-      </div>
-
-      <div class="card" (click)="openModule('emociones')">
-        <i class="fa-solid fa-chart-line"></i>
-        <h3>Análisis Emocional</h3>
-      </div>
-
-      <div class="card" (click)="openModule('psicologos')">
-        <i class="fa-solid fa-user-group"></i>
-        <h3>Lista de Psicólogos</h3>
+      <!-- Cards vacías por ahora -->
+      <div class="card empty-card">
+        <h3>Área de trabajo</h3>
+        <p>Aquí se mostrarán los módulos seleccionados</p>
       </div>
     </section>
   </main>

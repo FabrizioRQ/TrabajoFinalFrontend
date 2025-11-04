@@ -9,6 +9,5 @@ import { Component } from '@angular/core';
 export class AdminPanelComponent {
   openModule(nombre: string) {
     console.log('Abriendo módulo:', nombre);
-    // Aquí luego rediriges con router.navigate([`/admin/${nombre}`])
   }
 }

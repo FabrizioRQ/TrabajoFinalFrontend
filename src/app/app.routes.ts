@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
-import {LoginComponent} from './login-component/login-component';
-import {RegisterComponent} from './register-component/register-component';
-import {ForgotPasswordComponent} from './forgot-password-component/forgot-password-component';
-import {LandingPageComponent} from './landing-page-component/landing-page-component';
-import {AdminPanelComponent} from './admin-panel-component/admin-panel-component';
-import {UserPanelComponent} from './user-panel-component/user-panel-component';
+import { LoginComponent } from './login-component/login-component';
+import { RegisterComponent } from './register-component/register-component';
+import { ForgotPasswordComponent } from './forgot-password-component/forgot-password-component';
+import { LandingPageComponent } from './landing-page-component/landing-page-component';
+import { AdminPanelComponent } from './admin-panel-component/admin-panel-component';
+import { UserPanelComponent } from './user-panel-component/user-panel-component';
+import { NotAuthorizedComponent } from './not-authorized-component/not-authorized-component';
+import {roleGuard} from './guards/role-guard';
 
 
 export const routes: Routes = [
@@ -13,7 +15,18 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recuperacion', component: ForgotPasswordComponent },
-  { path: 'admin-panel', component: AdminPanelComponent },
-  { path: 'user-panel', component: UserPanelComponent },
-  { path: '**', redirectTo: 'landing' }
+  {
+    path: 'admin-panel',
+    component: AdminPanelComponent,
+    canActivate: [roleGuard],
+    data: { role: 'ADMIN' },
+  },
+  {
+    path: 'user-panel',
+    component: UserPanelComponent,
+    canActivate: [roleGuard],
+    data: { role: 'USER' },
+  },
+  { path: 'not-authorized', component: NotAuthorizedComponent },
+  { path: '**', redirectTo: 'landing' },
 ];
