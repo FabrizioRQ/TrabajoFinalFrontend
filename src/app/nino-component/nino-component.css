@@ -1,0 +1,247 @@
+
+.topbar {
+  background-color: #2d7ff9;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 0 0 12px 12px;
+}
+
+.topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo svg {
+  display: block;
+}
+
+.brand-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .topbar-inner {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .brand-title {
+    font-size: 1rem;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+
+:host .page {
+  display: flex;
+  justify-content: center;
+  padding: 32px 24px;
+  font-family: "Nunito", system-ui, Arial, sans-serif;
+  background: #F8FAFC;
+  color: #0F172A;
+  line-height: 1.45;
+}
+
+:host .card {
+  width: 720px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  padding: 24px;
+}
+
+:host .card-head {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+:host .title {
+  font-size: 28px;
+  margin: 0;
+}
+
+:host .card-body {
+  padding: 0;
+}
+
+:host .section-title {
+  font-size: 20px;
+  margin: 6px 0 18px 0;
+}
+
+:host .form {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px 24px;
+  align-items: start;
+}
+
+:host .form-row {
+  display: contents;
+}
+
+:host .form-label {
+  grid-column: 1 / 2;
+  align-self: center;
+  font-size: 14px;
+  color: #0F172A;
+  padding-top: 12px;
+}
+
+:host .form-input,
+:host .form-textarea,
+:host select {
+  grid-column: 2 / 3;
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: #FFFFFF;
+  font-size: 15px;
+  color: #0F172A;
+  outline: none;
+  transition: box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+:host .form-textarea {
+  min-height: 112px;
+  resize: vertical;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+:host .form-input:focus,
+:host .form-textarea:focus,
+:host select:focus {
+  border-color: #2D7FF9;
+  box-shadow: 0 6px 18px rgba(45, 127, 249, 0.10);
+}
+
+:host .error {
+  grid-column: 2 / 3;
+  margin: 6px 0 0 0;
+  color: #E53935;
+  font-size: 13px;
+  display: none;
+}
+
+:host .form-actions {
+  grid-column: 2 / 3;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+:host .btn-primary {
+  background: linear-gradient(180deg, #2D7FF9, #1f6de0);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  height: 48px;
+  padding: 0 28px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(45, 127, 249, 0.12);
+  transition: transform 0.1s ease;
+}
+
+:host .btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+:host .btn-primary:active {
+  transform: translateY(0);
+}
+
+:host .btn-primary:focus {
+  outline: 2px solid rgba(255, 209, 59, 0.18);
+  outline-offset: 2px;
+}
+
+:host .btn-primary[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* =========================
+   Responsivo
+   ========================= */
+@media (max-width: 720px) {
+  :host .card {
+    width: 100%;
+    padding: 16px;
+  }
+
+  :host .form {
+    grid-template-columns: 1fr;
+  }
+
+  :host .form-label {
+    grid-column: 1 / 2;
+    padding-top: 0;
+    margin-top: 8px;
+  }
+
+  :host .form-input,
+  :host .form-textarea,
+  :host .error {
+    grid-column: 1 / 2;
+  }
+
+  :host .form-actions {
+    grid-column: 1 / 2;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  :host .btn-primary {
+    width: 48%;
+  }
+}
+
+/* =========================
+   Tipografías responsivas
+   ========================= */
+@media (min-width: 1000px) {
+  :host .title {
+    font-size: 32px;
+  }
+
+  :host .section-title {
+    font-size: 24px;
+  }
+}

@@ -1,1 +1,75 @@
-<p>nino-component works!</p>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <!-- Icono SVG simple -->
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Monstruos Amigos logo">
+          <rect x="0.5" y="0.5" width="23" height="23" rx="5" fill="#2D7FF9" />
+          <circle cx="12" cy="10" r="3" fill="#FFFFFF" />
+          <rect x="9" y="14" width="6" height="2" rx="1" fill="#FFFFFF" />
+        </svg>
+      </div>
+      <span class="brand-title">Monstruos Amigos</span>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn-ghost" type="button">Gestionar Niños</button>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+  <section class="card">
+    <div class="card-head">
+      <h1 class="title">Registro de Niño</h1>
+    </div>
+
+    <div class="card-body">
+      <h2 class="section-title">Registrar Nuevo Niño</h2>
+
+      <form [formGroup]="ninoForm" (ngSubmit)="onSubmit()" class="form" novalidate>
+        <!-- Nombre -->
+        <div class="form-row">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input id="nombre" formControlName="nombre" class="form-input" type="text" placeholder="Ej. Juan Pérez" />
+          <p class="error" *ngIf="nombre.invalid && nombre.touched">Escribe al menos 6 letras</p>
+        </div>
+
+        <!-- Fecha -->
+        <div class="form-row">
+          <label for="fecha" class="form-label">Fecha de Nacimiento</label>
+          <input id="fecha" formControlName="fecha" class="form-input" type="date" />
+        </div>
+
+        <!-- Género -->
+        <div class="form-row">
+          <label for="genero" class="form-label">Género</label>
+          <select id="genero" formControlName="genero" class="form-input">
+            <option value="">Seleccionar</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <!-- Notas -->
+        <div class="form-row">
+          <label for="notas" class="form-label">Notas</label>
+          <textarea id="notas" formControlName="notas" class="form-textarea" rows="4" placeholder="Información adicional (alergias, observaciones...)"></textarea>
+        </div>
+
+        <!-- Botón -->
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="ninoForm.invalid">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
