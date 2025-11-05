@@ -1,29 +1,39 @@
+<!-- Contenedor principal de toda la vista emocional -->
 <div class="emotion-container">
   <div class="emotion-card">
-
+    <!-- Encabezado de la aplicación con logo y título -->
     <div class="app-header">
       <img src="logo.jpg" alt="Monstruo Amigo Icono" class="app-icon">
       <h1>Monstruos Amigos</h1>
     </div>
-
+    <!-- Título principal dinámico -->
     <h2 class="main-title">{{ titulo }}</h2>
-
+    <!-- Sección de pregunta activa (se muestra si hay pregunta y aún no se ha enviado el registro) -->
     <div class="question-section" *ngIf="preguntaActual && !registroEnviado">
+      <!-- Texto de la pregunta actual -->
       <p class="question-text">{{ preguntaActual.texto }}</p>
-
+      <!-- Pregunta de tipo 'escala' (por ejemplo 1 a 5) -->
       <div *ngIf="preguntaActual.tipo === 'escala'" class="input-group scale-input">
+        <!-- Se recorren las opciones de la escala -->
         <label *ngFor="let opcion of preguntaActual.opciones; let i = index" class="scale-option">
+          <!-- Radio button que representa un número de la escala -->
           <input
             type="radio"
             name="escala"
             [value]="i + 1"
             [(ngModel)]="respuestaUsuario"
           >
+          <!-- Número de la escala mostrado al usuario -->
           <span class="scale-label">{{ i + 1 }}</span>
-          <span class="scale-description" *ngIf="opcion.includes('(')">{{ opcion.match("/\((.*?)\)/)?.[1]" "}}</span>
+
+          <!-- Descripción opcional dentro de paréntesis (si existe en la opción) -->
+          <!-- NOTA: Esta expresión debe corregirse, el match no funcionará así -->
+          <span class="scale-description" *ngIf="opcion.includes('(')">
+            {{ opcion.match(/\((.*?)\)/)?.[1] }}
+          </span>
         </label>
       </div>
-
+      <!-- Pregunta de tipo 'texto' -->
       <div *ngIf="preguntaActual.tipo === 'texto'" class="input-group text-input">
         <textarea
           rows="3"
@@ -31,7 +41,9 @@
           [(ngModel)]="respuestaUsuario"
         ></textarea>
       </div>
+      <!-- Pregunta de tipo 'multiple' donde solo se elige una opción -->
       <div *ngIf="preguntaActual.tipo === 'multiple'" class="input-group multiple-input">
+        <!-- Renderizado de cada opción como un chip seleccionable -->
         <div *ngFor="let opcion of preguntaActual.opciones" class="option-chip">
           <input
             type="radio"
@@ -39,17 +51,19 @@
             [value]="opcion"
             name="multiple-choice"
             [(ngModel)]="respuestaUsuario"
-
             hidden
           >
+          <!-- Chip visual que actúa como botón -->
           <label [for]="opcion" class="chip-label">
             {{ opcion }}
           </label>
         </div>
       </div>
-
+      <!-- Botones de acciones principales -->
       <div class="action-buttons">
+        <!-- Botón para descartar respuesta -->
         <button class="discard-button" (click)="descartar()">Descartar</button>
+        <!-- Botón para registrar emoción, deshabilitado si no hay respuesta -->
         <button
           class="register-button primary-button"
           (click)="registrarEmocion()"
@@ -59,12 +73,11 @@
         </button>
       </div>
     </div>
-
+    <!-- Mensaje final cuando la emoción ya se guardó -->
     <div *ngIf="registroEnviado" class="success-message">
       <div class="icon-success">✔️</div>
       <p>¡Registro guardado! Tus datos se han sincronizado.</p>
       <p class="small-note">Gracias por ayudarnos a entender tus patrones emocionales.</p>
     </div>
-
   </div>
 </div>
