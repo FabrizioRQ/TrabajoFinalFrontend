@@ -1,24 +1,29 @@
+<!-- Sección principal que muestra los momentos emocionales -->
 <section class="emotion-moment container card">
+  <!-- Encabezado de la sección con título y subtítulo -->
   <header class="section-header">
-    <h2>{{ title }}</h2>
-    <p class="lead">{{ subtitle }}</p>
+    <h2>{{ title }}</h2> <!-- Título dinámico -->
+    <p class="lead">{{ subtitle }}</p> <!-- Subtítulo dinámico -->
   </header>
-
+  <!-- Contenedor para hacer la tabla desplazable si es necesario -->
   <div class="table-wrapper">
     <table class="emotion-table">
+      <!-- Cabecera de la tabla -->
       <thead>
-      <tr>
-        <th>Momento</th>
-        <th>Cambio de ánimo</th>
-        <th>Explicación</th>
-      </tr>
+        <tr>
+          <th>Momento</th> <!-- Hora o instante -->
+          <th>Cambio de ánimo</th> <!-- Tipo de emoción -->
+          <th>Explicación</th> <!-- Descripción del por qué -->
+        </tr>
       </thead>
+      <!-- Cuerpo de la tabla con datos iterados -->
       <tbody>
-      <tr *ngFor="let e of emotionsByMoment">
-        <td>{{ e.time }}</td>
-        <td class="mood mood--anxious">{{ e.mood }}</td>
-        <td>{{ e.description }}</td>
-      </tr>
+        <!-- Iteración Angular: recorre cada emoción agrupada por momento -->
+        <tr *ngFor="let e of emotionsByMoment">
+          <td>{{ e.time }}</td> <!-- Momento registrado -->
+          <td class="mood mood--anxious">{{ e.mood }}</td> <!-- Estado de ánimo -->
+          <td>{{ e.description }}</td> <!-- Explicación de la emoción -->
+        </tr>
       </tbody>
     </table>
   </div>
