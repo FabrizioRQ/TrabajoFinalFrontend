@@ -1,32 +1,35 @@
+<!-- Contenedor principal de la vista de inicio de sesión -->
 <div class="login-container">
+  <!-- Encabezado con icono y nombre de la aplicación -->
   <div class="header">
-    <div class="icon"><span>🤖</span></div>
-    <h1 class="app-name">Monstruos Amigos</h1>
+    <div class="icon"><span>🤖</span></div> <!-- Icono representativo -->
+    <h1 class="app-name">Monstruos Amigos</h1> <!-- Nombre de la app -->
   </div>
-
+  <!-- Título de la sección -->
   <h2 class="title">Iniciar sesión</h2>
-
+  <!-- Formulario reactivo de Angular vinculado al FormGroup 'loginForm' -->
   <form [formGroup]="loginForm" (ngSubmit)="enviarDatos()">
+    <!-- Campo para el correo electrónico -->
     <div class="form-group">
       <label for="email">Correo electrónico</label>
       <input
         type="email"
         id="email"
-        formControlName="email"
+        formControlName="email"  <!-- Control vinculado al FormGroup -->
         required
       />
     </div>
-
+    <!-- Campo para la contraseña -->
     <div class="form-group">
       <label for="password">Contraseña</label>
       <input
         type="password"
         id="password"
-        formControlName="password"
+        formControlName="password"  <!-- Control vinculado al FormGroup -->
         required
       />
     </div>
-
+    <!-- Botón de envío; deshabilitado si el formulario es inválido -->
     <button
       type="submit"
       class="login-button"
@@ -35,16 +38,16 @@
       Iniciar sesión
     </button>
   </form>
+  <!-- Enlace para registrarse si el usuario no tiene cuenta -->
   <a [routerLink]="'/register'" class="forgot-password">
     Aun no tienes tu cuenta? REGISTRATE
   </a>
-  <a  [routerLink]="'/forgot-password'" class="forgot-password">
+  <!-- Enlace a la recuperación de contraseña -->
+  <a [routerLink]="'/forgot-password'" class="forgot-password">
     ¿Olvidaste tu contraseña?
   </a>
-  <!-- Mensaje de error -->
+  <!-- Mensaje de error mostrado cuando 'errorMessage' tiene contenido -->
   <p *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </p>
 </div>
-
-
