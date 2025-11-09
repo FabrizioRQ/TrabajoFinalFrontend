@@ -1,65 +1,50 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-// Definición de una interfaz para los datos del psicólogo
-interface PsicologoData {
-  userId: string;
-  nombre: string;
-  correo: string;
-  sexo: string;
-}
+import { FormsModule } from '@angular/forms';
+import {PsicologoService} from '../Services/psicologo-service';
+import {PsicologoDTO} from '../../model/psicologo-dto.model';
 
 @Component({
   selector: 'app-psicologo-component',
-  standalone: true, // Componente standalone
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './psicologo-component.html',
-  styleUrl: './psicologo-component.css',
+  styleUrls: ['./psicologo-component.css']
 })
 export class PsicologoComponent {
 
-  psicologo: PsicologoData = {
-    userId: '',
-    nombre: '',
-    correo: '',
-    sexo: ''
+  psicologo: PsicologoDTO = {
+    especialidad: '',
+    numeroColegiatura: '',
+    idUsuario: 0
   };
-
-
-  opcionesSexo: string[] = [
-    'Masculino',
-    'Femenino',
-    'No binario',
-    'Prefiero no decirlo'
-  ];
 
   mensaje: string = '';
   mensajeEsError: boolean = false;
 
-  constructor() { }
+  constructor(private psicologoService: PsicologoService) {}
 
-  async registrarPsicologo(): Promise<void> {
+  registrarPsicologo(): void {
     this.mensaje = 'Procesando registro...';
     this.mensajeEsError = false;
 
-    if (!this.psicologo.userId || !this.psicologo.nombre || !this.psicologo.correo || !this.psicologo.sexo) {
+    if (!this.psicologo.especialidad || !this.psicologo.numeroColegiatura || !this.psicologo.idUsuario) {
       this.mensaje = '⚠️ Todos los campos son obligatorios.';
       this.mensajeEsError = true;
       return;
     }
 
-    try {
-
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      this.mensaje = `✅ Psicólogo(a) ${this.psicologo.nombre} registrado(a) con éxito.`;
-      this.mensajeEsError = false;
-
-    } catch (error) {
-      console.error('Error al registrar:', error);
-      this.mensaje = '❌ Error al intentar registrar el psicólogo. Intente de nuevo.';
-      this.mensajeEsError = true;
-    }
+    this.psicologoService.registrarPsicologo(this.psicologo).subscribe({
+      next: (data) => {
+        this.mensaje = `✅ Psicólogo registrado con éxito (ID: ${data.id}).`;
+        this.mensajeEsError = false;
+        this.psicologo = { especialidad: '', numeroColegiatura: '', idUsuario: 0 };
+      },
+      error: (err) => {
+        console.error('Error al registrar:', err);
+        this.mensaje = '❌ Error al intentar registrar el psicólogo. Intente de nuevo.';
+        this.mensajeEsError = true;
+      }
+    });
   }
 }

@@ -10,61 +10,46 @@
     <form class="register-form" (ngSubmit)="registrarPsicologo()">
 
       <div class="form-group id-group">
-        <label for="userId">ID de usuario</label>
+        <label for="idUsuario">ID de usuario</label>
         <input
-          type="text"
-          id="userId"
-          name="userId"
-          [(ngModel)]="psicologo.userId"
-          placeholder="Ej: ABC-12345"
+          type="number"
+          id="idUsuario"
+          name="idUsuario"
+          [(ngModel)]="psicologo.idUsuario"
+          placeholder="Ej: 3"
           required
         >
       </div>
 
       <div class="additional-data-box">
-        <p class="subtitle">Datos adicionales</p>
+        <p class="subtitle">Datos profesionales</p>
 
         <div class="form-group">
-          <label for="nombre">Nombre</label>
+          <label for="especialidad">Especialidad</label>
           <input
             type="text"
-            id="nombre"
-            name="nombre"
-            [(ngModel)]="psicologo.nombre"
-            placeholder="Nombre completo"
+            id="especialidad"
+            name="especialidad"
+            [(ngModel)]="psicologo.especialidad"
+            placeholder="Ej: Psicología infantil"
             required
           >
         </div>
 
         <div class="form-group">
-          <label for="correo">Correo electrónico</label>
+          <label for="numeroColegiatura">Número de colegiatura</label>
           <input
-            type="email"
-            id="correo"
-            name="correo"
-            [(ngModel)]="psicologo.correo"
-            placeholder="micorreo@ejemplo.com"
+            type="text"
+            id="numeroColegiatura"
+            name="numeroColegiatura"
+            [(ngModel)]="psicologo.numeroColegiatura"
+            placeholder="Ej: 12345-CMP"
             required
           >
         </div>
-
-        <div class="form-group select-group">
-          <label for="sexo">Sexo</label>
-          <select
-            id="sexo"
-            name="sexo"
-            [(ngModel)]="psicologo.sexo"
-            required
-          >
-            <option value="" disabled selected>Seleccione</option>
-            <option *ngFor="let opcion of opcionesSexo" [value]="opcion">{{ opcion }}</option>
-          </select>
-          <button type="submit" class="save-button">
-            Guardar
-          </button>
-        </div>
-
       </div>
+
+      <button type="submit" class="save-button">Registrar</button>
 
       <div
         *ngIf="mensaje"
