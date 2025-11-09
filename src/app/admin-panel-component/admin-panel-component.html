@@ -9,12 +9,18 @@
       <a routerLink="psicologo" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-user-doctor"></i> <span>USUARIOS</span>
       </a>
-      <a routerLink="psicologo" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-user-doctor"></i> <span>PSICOLGOS</span>
-      </a>
-      <a routerLink="avatar" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-user-astronaut"></i> <span>AVATARES</span>
-      </a>
+
+      <!-- 🔽 Submenú PSICÓLOGOS -->
+      <div class="dropdown">
+        <div class="menu-item dropdown-toggle">
+          <i class="fa-solid fa-user-doctor"></i> <span>PSICÓLOGOS</span>
+        </div>
+        <div class="dropdown-menu">
+          <a routerLink="psicologo" routerLinkActive="active">Registrar</a>
+          <a routerLink="lista-psicologos" routerLinkActive="active">Listar</a>
+        </div>
+      </div>
+
       <a routerLink="padre" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-person"></i> <span>PADRES</span>
       </a>
