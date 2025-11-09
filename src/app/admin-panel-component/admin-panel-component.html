@@ -6,83 +6,78 @@
     </div>
 
     <nav class="sidebar-menu">
-      <a [routerLink]="'/psicologo'" routerLinkActive="active" class="menu-item">
+      <a routerLink="psicologo" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-user-doctor"></i> <span>Psicólogo</span>
       </a>
-      <a routerLink="/padre" routerLinkActive="active" class="menu-item">
+      <a routerLink="padre" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-person"></i> <span>Padre</span>
       </a>
-      <a routerLink="/nino" routerLinkActive="active" class="menu-item">
+      <a routerLink="nino" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-child"></i> <span>Niño</span>
       </a>
-      <a routerLink="/perfil" routerLinkActive="active" class="menu-item">
+      <a routerLink="perfil" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-id-card"></i> <span>Perfil</span>
       </a>
-      <a routerLink="/lista-ninos" routerLinkActive="active" class="menu-item">
+      <a routerLink="lista-ninos" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-list"></i> <span>Lista de Niños</span>
       </a>
-      <a routerLink="/lista-psicologos" routerLinkActive="active" class="menu-item">
+      <a routerLink="lista-psicologos" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-list-check"></i> <span>Lista de Psicólogos</span>
       </a>
-      <a routerLink="/avatar" routerLinkActive="active" class="menu-item">
+      <a routerLink="avatar" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-user-astronaut"></i> <span>Avatar</span>
       </a>
-      <a routerLink="/monitoreo-emocional" routerLinkActive="active" class="menu-item">
+      <a routerLink="monitoreo-emocional" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-heart-pulse"></i> <span>Monitoreo Emocional</span>
       </a>
-      <a routerLink="/recomendaciones-ia" routerLinkActive="active" class="menu-item">
+      <a routerLink="recomendaciones-ia" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-robot"></i> <span>Recomendaciones IA</span>
       </a>
-      <a routerLink="/registro-emociones" routerLinkActive="active" class="menu-item">
+      <a routerLink="registro-emociones" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-clipboard-list"></i> <span>Registro Emociones</span>
       </a>
-      <a routerLink="/seguimiento-emocional" routerLinkActive="active" class="menu-item">
+      <a routerLink="seguimiento-emocional" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-chart-line"></i> <span>Seguimiento Emocional</span>
       </a>
-      <a routerLink="/emociones-por-momento" routerLinkActive="active" class="menu-item">
+      <a routerLink="emociones-por-momento" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-clock"></i> <span>Emociones por Momento</span>
       </a>
-      <a routerLink="/emociones-por-evento" routerLinkActive="active" class="menu-item">
+      <a routerLink="emociones-por-evento" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-calendar-day"></i> <span>Emociones por Evento</span>
       </a>
-      <a routerLink="/diario-emocional" routerLinkActive="active" class="menu-item">
+      <a routerLink="diario-emocional" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-book-heart"></i> <span>Diario Emocional</span>
       </a>
-      <a routerLink="/planes-suscripcion" routerLinkActive="active" class="menu-item">
+      <a routerLink="planes-suscripcion" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-crown"></i> <span>Planes de Suscripción</span>
       </a>
-      <a routerLink="/metodos-pago" routerLinkActive="active" class="menu-item">
+      <a routerLink="metodos-pago" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-credit-card"></i> <span>Métodos de Pago</span>
       </a>
-      <a routerLink="/cancelar-suscripcion" routerLinkActive="active" class="menu-item">
+      <a routerLink="cancelar-suscripcion" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-ban"></i> <span>Cancelar Suscripción</span>
       </a>
-      <a routerLink="/historial-pagos" routerLinkActive="active" class="menu-item">
+      <a routerLink="historial-pagos" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-receipt"></i> <span>Historial de Pagos</span>
       </a>
-      <a routerLink="/pagos-recientes" routerLinkActive="active" class="menu-item">
+      <a routerLink="pagos-recientes" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-wallet"></i> <span>Pagos Recientes</span>
       </a>
-      <a routerLink="/actividades-juego" routerLinkActive="active" class="menu-item">
+      <a routerLink="actividades-juego" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-gamepad"></i> <span>Actividades de Juego</span>
       </a>
-      <a routerLink="/avatares-desbloqueados" routerLinkActive="active" class="menu-item">
+      <a routerLink="avatares-desbloqueados" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-unlock"></i> <span>Avatares Desbloqueados</span>
       </a>
     </nav>
   </aside>
 
+  <!-- Contenido principal -->
   <main class="main-content">
-    <header class="main-header">
-      <h1>Bienvenido, Admin 👋</h1>
-      <button class="logout-btn">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        Cerrar sesión
-      </button>
-    </header>
-
-    <section class="cards-grid">
-      <router-outlet></router-outlet>
+    <section class="content-area">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
     </section>
   </main>
 </div>
