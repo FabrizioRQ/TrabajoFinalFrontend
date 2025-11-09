@@ -1,1 +1,35 @@
-<p>user-panel-component works!</p>
+<div class="user-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Monstruos Amigos</h2>
+    </div>
+
+    <nav class="sidebar-menu">
+      <a routerLink="perfil" routerLinkActive="active" class="menu-item">
+        <i class="fa-solid fa-user"></i> <span>PERFIL</span>
+      </a>
+
+      <a routerLink="padre" routerLinkActive="active" class="menu-item">
+        <i class="fa-solid fa-person"></i> <span>PADRES</span>
+      </a>
+
+      <a routerLink="nino" routerLinkActive="active" class="menu-item">
+        <i class="fa-solid fa-child"></i> <span>NIÑOS</span>
+      </a>
+
+      <a (click)="logout()" class="menu-item logout">
+        <i class="fa-solid fa-right-from-bracket"></i> <span>CERRAR SESIÓN</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content">
+    <section class="content-area">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </section>
+  </main>
+</div>

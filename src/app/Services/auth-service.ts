@@ -10,6 +10,7 @@ interface JwtResponse {
   tipo: string;
   correoElectronico: string;
   tipoUsuario: string;
+  nombreCompleto: string; // 👈 añadimos esto
 }
 
 @Injectable({
@@ -27,7 +28,11 @@ export class AuthService {
         localStorage.setItem('token', response.token);
         localStorage.setItem('correoElectronico', response.correoElectronico);
         localStorage.setItem('tipoUsuario', response.tipoUsuario);
-        localStorage.setItem('user', JSON.stringify({ role: response.tipoUsuario }));
+        if (response.nombreCompleto) {
+          localStorage.setItem('nombreCompleto', response.nombreCompleto);
+        }
+        localStorage.setItem('user', JSON.stringify({ role: response.tipoUsuario,nombre: response.nombreCompleto,
+          correo: response.correoElectronico }));
       })
     );
   }
@@ -56,5 +61,13 @@ export class AuthService {
   // Dentro de AuthService
   registrar(registroData: RegistroRequestDTO) {
     return this.http.post<any>(`${this.apiURL}/registrar`, registroData);
+  }
+
+  getNombreUsuario(): string | null {
+    return localStorage.getItem('nombreCompleto');
+  }
+
+  getCorreoUsuario(): string | null {
+    return localStorage.getItem('correoElectronico');
   }
 }

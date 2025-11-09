@@ -38,7 +38,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'recuperacion', component: ForgotPasswordComponent },
 
-  // PANEL ADMINISTRADOR CON SUS RUTAS HIJAS (la parte blanca del panel)
+  // PANEL ADMINISTRADOR CON SUS RUTAS HIJAS
   {
     path: 'admin-panel',
     component: AdminPanelComponent,
@@ -70,12 +70,18 @@ export const routes: Routes = [
     ],
   },
 
-
+  // PANEL EL USER CON SUS RUTAS HIJAS
   {
     path: 'user-panel',
     component: UserPanelComponent,
     canActivate: [roleGuard],
     data: { role: 'USER' },
+    children: [
+      { path: 'padre', component: PadreComponent },
+      { path: 'nino', component: NinoComponent },
+      { path: '', redirectTo: 'perfil', pathMatch: 'full' },
+      { path: '', redirectTo: 'perfil', pathMatch: 'full' },
+    ],
   },
 
   { path: 'not-authorized', component: NotAuthorizedComponent },
