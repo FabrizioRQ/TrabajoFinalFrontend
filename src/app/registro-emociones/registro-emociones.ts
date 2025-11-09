@@ -89,4 +89,9 @@ export class RegistroEmociones implements OnInit {
     alert('Registro descartado. Vuelve a las 21:00 para la siguiente notificación.');
     // En un caso real, podrías navegar a la página principal.
   }
+
+  extraerDescripcion(opcion: string): string | null {
+    const match = opcion.match(/\((.*?)\)/);
+    return match ? match[1] : null;
+  }
 }

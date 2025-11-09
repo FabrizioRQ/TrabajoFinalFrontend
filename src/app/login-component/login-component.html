@@ -15,7 +15,7 @@
       <input
         type="email"
         id="email"
-        formControlName="email"  <!-- Control vinculado al FormGroup -->
+        formControlName="email"
         required
       />
     </div>
@@ -25,11 +25,10 @@
       <input
         type="password"
         id="password"
-        formControlName="password"  <!-- Control vinculado al FormGroup -->
+        formControlName="password"
         required
       />
     </div>
-    <!-- Botón de envío; deshabilitado si el formulario es inválido -->
     <button
       type="submit"
       class="login-button"
@@ -38,15 +37,12 @@
       Iniciar sesión
     </button>
   </form>
-  <!-- Enlace para registrarse si el usuario no tiene cuenta -->
   <a [routerLink]="'/register'" class="forgot-password">
     Aun no tienes tu cuenta? REGISTRATE
   </a>
-  <!-- Enlace a la recuperación de contraseña -->
   <a [routerLink]="'/forgot-password'" class="forgot-password">
     ¿Olvidaste tu contraseña?
   </a>
-  <!-- Mensaje de error mostrado cuando 'errorMessage' tiene contenido -->
   <p *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </p>

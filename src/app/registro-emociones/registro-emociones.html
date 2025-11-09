@@ -29,7 +29,7 @@
           <!-- Descripción opcional dentro de paréntesis (si existe en la opción) -->
           <!-- NOTA: Esta expresión debe corregirse, el match no funcionará así -->
           <span class="scale-description" *ngIf="opcion.includes('(')">
-            {{ opcion.match(/\((.*?)\)/)?.[1] }}
+            {{ extraerDescripcion(opcion) }}
           </span>
         </label>
       </div>
