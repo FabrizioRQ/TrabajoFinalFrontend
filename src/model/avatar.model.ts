@@ -1,5 +1,5 @@
 export interface Avatar{
-  id: number;
+  id?: number;
   nombreAvatar: string;
-  apellido: string;
+  apariencia: string;
 }
