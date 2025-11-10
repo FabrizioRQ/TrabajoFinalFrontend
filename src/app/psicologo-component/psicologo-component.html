@@ -10,15 +10,36 @@
     <form class="register-form" (ngSubmit)="registrarPsicologo()">
 
       <div class="form-group id-group">
-        <label for="idUsuario">ID de usuario</label>
-        <input
-          type="number"
-          id="idUsuario"
-          name="idUsuario"
+        <label for="usuario">Seleccionar Usuario</label>
+
+        <select
+          id="usuario"
+          name="usuario"
           [(ngModel)]="psicologo.idUsuario"
-          placeholder="Ej: 3"
           required
+          class="form-control"
+          [disabled]="cargando"
         >
+          <option value="" disabled selected>
+            {{ cargando ? 'Cargando usuarios...' : 'Selecciona un usuario' }}
+          </option>
+          <option
+            *ngFor="let usuario of usuarios"
+            [value]="usuario.id"
+          >
+            {{ usuario.nombreCompleto }} - {{ usuario.correoElectronico }}
+          </option>
+        </select>
+
+        <!-- Mensaje cuando no hay usuarios -->
+        <div *ngIf="!cargando && usuarios.length === 0" class="no-users-text">
+          No hay usuarios registrados en el sistema.
+        </div>
+
+        <!-- Mostrar usuario seleccionado -->
+        <div *ngIf="getNombreUsuarioSeleccionado()" class="selected-user">
+          <small>Usuario seleccionado: <strong>{{ getNombreUsuarioSeleccionado() }}</strong></small>
+        </div>
       </div>
 
       <div class="additional-data-box">
@@ -33,6 +54,7 @@
             [(ngModel)]="psicologo.especialidad"
             placeholder="Ej: Psicología infantil"
             required
+            [disabled]="cargando"
           >
         </div>
 
@@ -45,11 +67,18 @@
             [(ngModel)]="psicologo.numeroColegiatura"
             placeholder="Ej: 12345-CMP"
             required
+            [disabled]="cargando"
           >
         </div>
       </div>
 
-      <button type="submit" class="save-button">Registrar</button>
+      <button
+        type="submit"
+        class="save-button"
+        [disabled]="cargando || !psicologo.idUsuario || !psicologo.especialidad || !psicologo.numeroColegiatura"
+      >
+        {{ cargando ? 'Cargando...' : 'Registrar' }}
+      </button>
 
       <div
         *ngIf="mensaje"
