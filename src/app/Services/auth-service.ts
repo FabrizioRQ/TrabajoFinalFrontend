@@ -10,7 +10,8 @@ interface JwtResponse {
   tipo: string;
   correoElectronico: string;
   tipoUsuario: string;
-  nombreCompleto: string; // 👈 añadimos esto
+  nombreCompleto: string;
+  id: number;
 }
 
 @Injectable({
@@ -28,11 +29,10 @@ export class AuthService {
         localStorage.setItem('token', response.token);
         localStorage.setItem('correoElectronico', response.correoElectronico);
         localStorage.setItem('tipoUsuario', response.tipoUsuario);
-        if (response.nombreCompleto) {
-          localStorage.setItem('nombreCompleto', response.nombreCompleto);
-        }
+        localStorage.setItem('nombreCompleto', response.nombreCompleto);
+        localStorage.setItem('userId', response.id.toString()); // 👈 Guardar ID
         localStorage.setItem('user', JSON.stringify({ role: response.tipoUsuario,nombre: response.nombreCompleto,
-          correo: response.correoElectronico }));
+          correo: response.correoElectronico, id: response.id, }));
       })
     );
   }
@@ -57,6 +57,13 @@ export class AuthService {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+  // 👇 NUEVO MÉTODO PARA OBTENER EL ID DEL USUARIO LOGUEADO
+  getUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId) : null;
+  }
+
 
   // Dentro de AuthService
   registrar(registroData: RegistroRequestDTO) {

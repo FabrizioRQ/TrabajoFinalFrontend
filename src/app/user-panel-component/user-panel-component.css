@@ -54,3 +54,37 @@
 .content-area {
   padding: 20px;
 }
+
+/* user-panel-component.css */
+.user-info {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.user-info p {
+  margin: 0 0 5px 0;
+  color: white;
+}
+
+.user-info small {
+  color: #ccc;
+  font-size: 0.8em;
+}
+
+.debug-btn {
+  background: transparent;
+  border: 1px solid #fff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.7em;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.debug-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

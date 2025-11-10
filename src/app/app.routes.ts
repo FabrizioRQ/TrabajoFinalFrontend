@@ -30,6 +30,7 @@ import { HistorialPagos } from './historial-pagos/historial-pagos';
 import { PagosRecientes } from './pagos-recientes/pagos-recientes';
 import { ActividadesJuego } from './actividades-juego/actividades-juego';
 import { AvataresDesbloqueados } from './avatares-desbloqueados/avatares-desbloqueados';
+import {authGuard} from './guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -74,7 +75,7 @@ export const routes: Routes = [
   {
     path: 'user-panel',
     component: UserPanelComponent,
-    canActivate: [roleGuard],
+    canActivate: [authGuard,roleGuard],
     data: { role: 'USER' },
     children: [
       { path: 'padre', component: PadreComponent },

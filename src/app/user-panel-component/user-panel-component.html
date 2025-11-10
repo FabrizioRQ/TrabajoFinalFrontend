@@ -3,19 +3,24 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <h2>Monstruos Amigos</h2>
+      <!-- 👇 Agregar información del usuario -->
+      <div class="user-info" *ngIf="userName">
+        <p>Bienvenido, <strong>{{ userName }}</strong></p>
+        <small>ID: {{ userId }}</small>
+      </div>
     </div>
 
     <nav class="sidebar-menu">
       <a routerLink="perfil" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-user"></i> <span>PERFIL</span>
+        <i class="fa-solid fa-user"></i> <span>MI PERFIL</span>
       </a>
 
       <a routerLink="padre" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-person"></i> <span>PADRES</span>
+        <i class="fa-solid fa-person"></i> <span>MIS PADRES</span>
       </a>
 
       <a routerLink="nino" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-child"></i> <span>NIÑOS</span>
+        <i class="fa-solid fa-child"></i> <span>MIS NIÑOS</span>
       </a>
 
       <a (click)="logout()" class="menu-item logout">
