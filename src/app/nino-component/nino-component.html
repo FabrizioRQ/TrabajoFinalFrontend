@@ -2,7 +2,6 @@
   <div class="topbar-inner">
     <div class="brand">
       <div class="logo" aria-hidden="true">
-        <!-- Icono SVG simple -->
         <svg
           width="24"
           height="24"
@@ -34,40 +33,126 @@
     <div class="card-body">
       <h2 class="section-title">Registrar Nuevo Niño</h2>
 
+      <!-- Información del usuario -->
+      <div class="user-info-card" *ngIf="usuarioActual">
+        <div class="user-info">
+          <strong>Usuario:</strong> {{ usuarioActual.nombre }} ({{ usuarioActual.correo }})
+        </div>
+        <div class="user-note">
+          <small>⚠️ El niño será asociado automáticamente a tu usuario</small>
+        </div>
+      </div>
+
       <form [formGroup]="ninoForm" (ngSubmit)="onSubmit()" class="form" novalidate>
-        <!-- Nombre -->
+
+        <!-- Fecha de Nacimiento -->
         <div class="form-row">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input id="nombre" formControlName="nombre" class="form-input" type="text" placeholder="Ej. Juan Pérez" />
-          <p class="error" *ngIf="nombre.invalid && nombre.touched">Escribe al menos 6 letras</p>
+          <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento *</label>
+          <input
+            id="fechaNacimiento"
+            formControlName="fechaNacimiento"
+            class="form-input"
+            type="date"
+          />
+          <p class="error" *ngIf="ninoForm.get('fechaNacimiento')?.invalid && ninoForm.get('fechaNacimiento')?.touched">
+            La fecha de nacimiento es requerida
+          </p>
         </div>
 
-        <!-- Fecha -->
+        <!-- Avatar -->
         <div class="form-row">
-          <label for="fecha" class="form-label">Fecha de Nacimiento</label>
-          <input id="fecha" formControlName="fecha" class="form-input" type="date" />
-        </div>
-
-        <!-- Género -->
-        <div class="form-row">
-          <label for="genero" class="form-label">Género</label>
-          <select id="genero" formControlName="genero" class="form-input">
-            <option value="">Seleccionar</option>
-            <option value="masculino">Masculino</option>
-            <option value="femenino">Femenino</option>
-            <option value="otro">Otro</option>
+          <label for="idAvatar" class="form-label">Avatar *</label>
+          <select
+            id="idAvatar"
+            formControlName="idAvatar"
+            class="form-input"
+            [disabled]="cargando || avatares.length === 0"
+          >
+            <option value="">Seleccionar Avatar</option>
+            <option
+              *ngFor="let avatar of avatares"
+              [value]="avatar.id"
+            >
+              {{ avatar.nombreAvatar }}
+            </option>
           </select>
+          <p class="error" *ngIf="ninoForm.get('idAvatar')?.invalid && ninoForm.get('idAvatar')?.touched">
+            Debes seleccionar un avatar
+          </p>
+          <div *ngIf="cargando" class="loading-text">Cargando avatares...</div>
+          <div *ngIf="!cargando && avatares.length === 0" class="empty-text">
+            No hay avatares disponibles
+          </div>
         </div>
 
-        <!-- Notas -->
+        <!-- Psicólogo -->
         <div class="form-row">
-          <label for="notas" class="form-label">Notas</label>
-          <textarea id="notas" formControlName="notas" class="form-textarea" rows="4" placeholder="Información adicional (alergias, observaciones...)"></textarea>
+          <label for="idPsicologo" class="form-label">Psicólogo (Opcional)</label>
+          <select
+            id="idPsicologo"
+            formControlName="idPsicologo"
+            class="form-input"
+            [disabled]="cargando || psicologos.length === 0"
+          >
+            <option value="">Sin psicólogo asignado</option>
+            <option
+              *ngFor="let psicologo of psicologos"
+              [value]="psicologo.id"
+            >
+              {{ psicologo.especialidad }} - {{ psicologo.numeroColegiatura }}
+            </option>
+          </select>
+          <div *ngIf="cargando" class="loading-text">Cargando psicólogos...</div>
+          <div *ngIf="!cargando && psicologos.length === 0" class="empty-text">
+            No hay psicólogos disponibles
+          </div>
+        </div>
+
+        <!-- Padre -->
+        <div class="form-row">
+          <label for="idPadre" class="form-label">Padre/Tutor *</label>
+          <select
+            id="idPadre"
+            formControlName="idPadre"
+            class="form-input"
+            [disabled]="cargando || padres.length === 0"
+          >
+            <option value="">Seleccionar Padre/Tutor</option>
+            <option
+              *ngFor="let padre of padres"
+              [value]="padre.id"
+            >
+              {{ padre.nombre }} {{ padre.apellido }}
+            </option>
+          </select>
+          <p class="error" *ngIf="ninoForm.get('idPadre')?.invalid && ninoForm.get('idPadre')?.touched">
+            Debes seleccionar un padre/tutor
+          </p>
+          <div *ngIf="cargando" class="loading-text">Cargando padres...</div>
+          <div *ngIf="!cargando && padres.length === 0" class="empty-text">
+            No hay padres/tutores disponibles
+          </div>
+        </div>
+
+        <!-- Mensajes de estado -->
+        <div
+          *ngIf="mensaje"
+          class="message"
+          [class.message-error]="mensajeEsError"
+          [class.message-success]="!mensajeEsError"
+        >
+          {{ mensaje }}
         </div>
 
         <!-- Botón -->
         <div class="form-actions">
-          <button type="submit" class="btn-primary" [disabled]="ninoForm.invalid">Guardar</button>
+          <button
+            type="submit"
+            class="btn-primary"
+            [disabled]="ninoForm.invalid || cargando"
+          >
+            {{ cargando ? 'Registrando...' : 'Registrar Niño' }}
+          </button>
         </div>
       </form>
     </div>
