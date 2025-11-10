@@ -58,7 +58,7 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
-  // 👇 NUEVO MÉTODO PARA OBTENER EL ID DEL USUARIO LOGUEADO
+
   getUserId(): number | null {
     const userId = localStorage.getItem('userId');
     return userId ? parseInt(userId) : null;

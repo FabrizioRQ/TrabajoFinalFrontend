@@ -13,7 +13,6 @@
 <main class="main">
   <h2>Lista de Psicólogos</h2>
 
-  <!-- Filtro -->
   <section class="card">
     <form class="form" (ngSubmit)="buscar()">
       <div class="form-group full">
@@ -32,7 +31,6 @@
 
   <h3>Resultados:</h3>
 
-  <!-- Resultados -->
   <section class="card">
     <div class="table-wrap" *ngIf="psicologos.length > 0; else sinResultados">
       <table class="table">

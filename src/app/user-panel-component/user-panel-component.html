@@ -3,7 +3,6 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <h2>Monstruos Amigos</h2>
-      <!-- 👇 Agregar información del usuario -->
       <div class="user-info" *ngIf="userName">
         <p>Bienvenido, <strong>{{ userName }}</strong></p>
         <small>ID: {{ userId }}</small>
@@ -14,10 +13,16 @@
       <a routerLink="perfil" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-user"></i> <span>MI PERFIL</span>
       </a>
-
-      <a routerLink="padre" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-person"></i> <span>MIS PADRES</span>
-      </a>
+      <div class="dropdown">
+        <div class="menu-item dropdown-toggle">
+          <i class="fa-solid fa-user-doctor"></i> <span>APODERADOS</span>
+        </div>
+        <div class="dropdown-menu">
+        <a routerLink="padre" routerLinkActive="active" class="menu-item">
+          <i class="fa-solid fa-person"></i> <span>REGISTRO DE PADRES</span>
+        </a>
+        </div>
+      </div>
 
       <a routerLink="nino" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-child"></i> <span>MIS NIÑOS</span>

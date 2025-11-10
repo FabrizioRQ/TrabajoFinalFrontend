@@ -5,16 +5,49 @@
       <h1>Monstruos Amigos</h1>
     </div>
 
-    <h2>Registrar como Padre/Tutor</h2>
-    <p>Confirma que deseas registrar el papel de padre/tutor en la plataforma.</p>
+    <h2>Registrar como Padre</h2>
+    <p>Completa tus datos para registrarte como padre en la plataforma.</p>
 
     <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
-      <label for="relacion">Relación con el niño:</label>
-      <select id="relacion" formControlName="relacion">
-        <option value="padre">Padre</option>
-        <option value="tutor">Tutor</option>
-      </select>
-      <button type="submit">Guardar</button>
+
+      <label for="nombre">Nombre:</label>
+      <input
+        type="text"
+        id="nombre"
+        formControlName="nombre"
+        placeholder="Ingresa tu nombre"
+        autocomplete="given-name"
+      >
+      <small *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched"
+             class="error-text">
+        ⚠️ El nombre debe tener al menos 2 caracteres
+      </small>
+
+      <label for="apellido">Apellido:</label>
+      <input
+        type="text"
+        id="apellido"
+        formControlName="apellido"
+        placeholder="Ingresa tu apellido"
+        autocomplete="family-name"
+      >
+      <small *ngIf="registroForm.get('apellido')?.invalid && registroForm.get('apellido')?.touched"
+             class="error-text">
+        ⚠️ El apellido debe tener al menos 2 caracteres
+      </small>
+
+      <button type="submit" [disabled]="cargando || registroForm.invalid">
+        {{ cargando ? 'Registrando...' : 'Registrar como Padre' }}
+      </button>
     </form>
+
+    <div
+      *ngIf="mensaje"
+      class="message"
+      [class.success]="!mensajeEsError"
+      [class.error]="mensajeEsError"
+    >
+      {{ mensaje }}
+    </div>
   </div>
 </div>
