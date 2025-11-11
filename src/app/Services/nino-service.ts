@@ -32,4 +32,9 @@ export class NinoService {
   eliminarNino(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  obtenerNinoPorUsuarioId(usuarioId: number): Observable<NiñoDto> {
+    return this.http.get<NiñoDto>(`${this.apiUrl}/por-usuario/${usuarioId}`);
+  }
+
 }

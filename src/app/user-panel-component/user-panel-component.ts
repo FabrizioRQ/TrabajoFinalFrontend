@@ -15,6 +15,7 @@ import { AuthService } from '../Services/auth-service'; // 👈 Importar AuthSer
   templateUrl: './user-panel-component.html',
   styleUrls: ['./user-panel-component.css']
 })
+
 export class UserPanelComponent implements OnInit { // 👈 Implementar OnInit
 
   userName: string = '';

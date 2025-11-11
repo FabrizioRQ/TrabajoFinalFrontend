@@ -49,7 +49,14 @@ export class MonitoreoEmocional implements OnInit {
     }];
   }
 
+  userId: number | null = null;
+
+
   cargarNinoActual(): void {
+
+
+    this.userId = this.authService.getUserId();
+
     const userId = this.authService.getUserId();
 
     if (!userId) {
@@ -57,20 +64,18 @@ export class MonitoreoEmocional implements OnInit {
       return;
     }
 
-    this.ninoService.obtenerNinos().subscribe({
-      next: (ninos) => {
-        // Buscar el niño asociado al usuario actual
-        this.ninoActual = ninos.find(nino => nino.idUsuario === userId) || null;
-
-        if (!this.ninoActual) {
-          this.mostrarError('No se encontró un niño asociado a tu usuario');
-        } else {
-          console.log('Niño cargado:', this.ninoActual);
-        }
+    this.ninoService.obtenerNinoPorUsuarioId(userId).subscribe({
+      next: (nino) => {
+        this.ninoActual = nino;
+        console.log('👶 Niño cargado:', this.ninoActual);
       },
       error: (error) => {
-        console.error('Error cargando niño:', error);
-        this.mostrarError('Error al cargar la información del niño');
+        console.error('❌ Error cargando niño:', error);
+        if (error.status === 404) {
+          this.mostrarError('No se encontró un perfil de niño asociado a tu usuario');
+        } else {
+          this.mostrarError('Error al cargar la información del niño');
+        }
       }
     });
   }
