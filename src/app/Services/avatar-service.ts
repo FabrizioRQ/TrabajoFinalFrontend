@@ -17,7 +17,6 @@ export class AvatarService {
     return this.http.post<AvatarDto>(this.apiUrl, avatarDto);
   }
 
-  // 👇 Método para subir imagen (si tu backend lo soporta)
   subirImagenAvatar(archivo: File): Observable<{url: string}> {
     const formData = new FormData();
     formData.append('imagen', archivo);

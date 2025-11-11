@@ -22,7 +22,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // LOGIN
   login(loginData: LoginRequest): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(`${this.apiURL}/login`, loginData).pipe(
       tap(response => {
@@ -65,7 +64,6 @@ export class AuthService {
   }
 
 
-  // Dentro de AuthService
   registrar(registroData: RegistroRequestDTO) {
     return this.http.post<any>(`${this.apiURL}/registrar`, registroData);
   }

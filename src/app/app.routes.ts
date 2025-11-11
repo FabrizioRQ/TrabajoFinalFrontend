@@ -8,7 +8,6 @@ import { UserPanelComponent } from './user-panel-component/user-panel-component'
 import { NotAuthorizedComponent } from './not-authorized-component/not-authorized-component';
 import { roleGuard } from './guards/role-guard';
 
-// Importa los demás componentes...
 import { PsicologoComponent } from './psicologo-component/psicologo-component';
 import { AvatarComponent } from './avatar-component/avatar-component';
 import { PadreComponent } from './padre-component/padre-component';
@@ -55,17 +54,9 @@ export const routes: Routes = [
       { path: 'avatar', component: AvatarComponent },
       { path: 'monitoreo-emocional', component: MonitoreoEmocional },
       { path: 'recomendaciones-ia', component: RecomendacionesIa },
-      { path: 'registro-emociones', component: RegistroEmociones },
       { path: 'seguimiento-emocional', component: SeguimientoEmocional },
       { path: 'emociones-por-momento', component: EmocionesPorMomento },
       { path: 'emociones-por-evento', component: EmocionesPorEvento },
-      { path: 'diario-emocional', component: DiarioEmocional },
-      { path: 'planes-suscripcion', component: PlanesSuscripcion },
-      { path: 'metodos-pago', component: MetodosPago },
-      { path: 'cancelar-suscripcion', component: CancelarSuscripcion },
-      { path: 'historial-pagos', component: HistorialPagos },
-      { path: 'pagos-recientes', component: PagosRecientes },
-      { path: 'actividades-juego', component: ActividadesJuego },
       { path: 'avatares-desbloqueados', component: AvataresDesbloqueados },
       { path: '', redirectTo: 'perfil', pathMatch: 'full' },
     ],
@@ -81,11 +72,18 @@ export const routes: Routes = [
       { path: 'padre', component: PadreComponent },
       { path: 'nino', component: NinoComponent },
       { path: 'emociones-por-momento', component: EmocionesPorMomento },
-      { path: '', redirectTo: 'perfil', pathMatch: 'full' },
-      { path: '', redirectTo: 'perfil', pathMatch: 'full' },
       { path: 'seguimiento-emocional', component: SeguimientoEmocional },
       { path: 'recomendaciones-ia', component: RecomendacionesIa },
       { path: 'monitoreo-emocional', component: MonitoreoEmocional },
+      { path: 'planes-suscripcion', component: PlanesSuscripcion },
+      { path: 'metodos-pago', component: MetodosPago },
+      { path: 'cancelar-suscripcion', component: CancelarSuscripcion },
+      { path: 'historial-pagos', component: HistorialPagos },
+      { path: 'pagos-recientes', component: PagosRecientes },
+      { path: 'registro-emociones', component: RegistroEmociones },
+      { path: 'diario-emocional', component: DiarioEmocional },
+      { path: 'actividades-juego', component: ActividadesJuego },
+      { path: '', redirectTo: 'perfil', pathMatch: 'full' },
     ],
   },
 

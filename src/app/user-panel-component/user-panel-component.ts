@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../Services/auth-service'; // 👈 Importar AuthService
+import { AuthService } from '../Services/auth-service';
 
 @Component({
   selector: 'app-user-panel-component',
   standalone: true,
   imports: [
-    CommonModule, // 👈 Agregar CommonModule
+    CommonModule,
     RouterOutlet,
     RouterLink,
     RouterLinkActive
@@ -16,19 +16,18 @@ import { AuthService } from '../Services/auth-service'; // 👈 Importar AuthSer
   styleUrls: ['./user-panel-component.css']
 })
 
-export class UserPanelComponent implements OnInit { // 👈 Implementar OnInit
+export class UserPanelComponent implements OnInit {
 
   userName: string = '';
   userId: number | null = null;
 
   constructor(
     private router: Router,
-    private authService: AuthService // 👈 Inyectar AuthService
+    private authService: AuthService
   ) {
   }
 
   ngOnInit(): void {
-    // 👇 Verificar datos del usuario al cargar el panel
     this.verificarUsuario();
   }
 
@@ -45,7 +44,6 @@ export class UserPanelComponent implements OnInit { // 👈 Implementar OnInit
     console.log('Token existe:', !!this.authService.getToken());
     console.log('=========================================');
 
-    // Verificar si no hay usuario (no debería pasar si el guard funciona)
     if (!user || !this.userId) {
       console.warn('⚠️ No se encontraron datos del usuario. Redirigiendo...');
       this.logout();
