@@ -80,8 +80,12 @@ export const routes: Routes = [
     children: [
       { path: 'padre', component: PadreComponent },
       { path: 'nino', component: NinoComponent },
+      { path: 'emociones-por-momento', component: EmocionesPorMomento },
       { path: '', redirectTo: 'perfil', pathMatch: 'full' },
       { path: '', redirectTo: 'perfil', pathMatch: 'full' },
+      { path: 'seguimiento-emocional', component: SeguimientoEmocional },
+      { path: 'recomendaciones-ia', component: RecomendacionesIa },
+      { path: 'monitoreo-emocional', component: MonitoreoEmocional },
     ],
   },
 

@@ -1,5 +1,4 @@
 <div class="app-container">
-  <!-- Header / Logo y Nombre de la App -->
   <header class="app-header">
     <svg
       class="header-icon"
@@ -22,45 +21,90 @@
     Monitoreo emocional y ajuste de terapias con IA
   </h1>
 
+  <!-- Estado emocional -->
+  <div class="estado-emocional" [class.critico]="modoCritico">
+    <div class="emocion-indicador">
+      <span class="emocion-icono">{{ getIconoEmocion(emocionActual) }}</span>
+      <span class="emocion-texto">{{ emocionActual }}</span>
+      <span class="confianza" *ngIf="confianzaActual > 0">({{ confianzaActual }}% confianza)</span>
+    </div>
+    <div class="estado-alerta" *ngIf="modoCritico">
+      🚨 Estado Crítico - Se requiere atención inmediata
+    </div>
+  </div>
+
   <!-- Contenedor del Chat -->
-  <main class="chat-container">
-    <div class="message-wrapper-right">
-      <div class="chat-bubble bubble-right">
-        <p class="p-style">Hola, ¿cómo te sientes hoy?</p>
+  <main class="chat-container" #chatContainer>
+    <div
+      *ngFor="let mensaje of mensajes"
+      class="message-wrapper"
+      [class.message-wrapper-right]="!mensaje.esUsuario"
+      [class.message-wrapper-left]="mensaje.esUsuario"
+    >
+      <div
+        class="chat-bubble"
+        [class.bubble-right]="!mensaje.esUsuario"
+        [class.bubble-left]="mensaje.esUsuario"
+        [class]="getClaseEmocion(mensaje.emocion)"
+      >
+        <p class="p-style">{{ mensaje.texto }}</p>
+        <div class="mensaje-meta" *ngIf="mensaje.emocion && !mensaje.esUsuario">
+          <small class="emocion-tag">
+            {{ getIconoEmocion(mensaje.emocion) }} Detectado: {{ mensaje.emocion }}
+          </small>
+        </div>
+        <small class="timestamp">
+          {{ mensaje.timestamp | date:'HH:mm' }}
+        </small>
       </div>
     </div>
 
-    <div class="message-wrapper-left">
-      <div class="chat-bubble bubble-left">
-        <p class="p-style">Me siento un poco ansiosa últimamente</p>
-      </div>
-    </div>
-
-    <div class="message-wrapper-right">
+    <!-- Indicador de escritura -->
+    <div class="message-wrapper-right" *ngIf="enviando">
       <div class="chat-bubble bubble-right">
-        <p class="p-style">
-          Parece que estás sintiendo algo de estrés. ¿Te gustaría probar un
-          ejercicio de respiración?
-        </p>
-      </div>
-    </div>
-
-    <div class="message-wrapper-right">
-      <div class="chat-bubble bubble-right">
-        <p class="p-style">
-          Genial. ¿Quieres comenzar ahora mismo o prefieres que te lo recuerde
-          más tarde?
-        </p>
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
   </main>
 
-  <!-- Footer / Botón CTA -->
+  <!-- Área de entrada de mensajes -->
   <footer class="app-footer">
-    <div class="footer-content">
-      <button class="btn-primary">
-        <span class="btn-text">Sí, me gustaría</span>
+    <div class="input-container">
+      <input
+        type="text"
+        [(ngModel)]="mensajeActual"
+        (keyup.enter)="enviarMensaje()"
+        placeholder="Escribe cómo te sientes..."
+        [disabled]="enviando || !ninoActual"
+        class="mensaje-input"
+      >
+      <button
+        (click)="enviarMensaje()"
+        [disabled]="!mensajeActual.trim() || enviando || !ninoActual"
+        class="btn-send"
+      >
+        {{ enviando ? '⏳' : '📤' }}
       </button>
+    </div>
+
+    <!-- Botones de acción rápida -->
+    <div class="acciones-rapidas" *ngIf="emocionActual !== 'NEUTRAL' && !modoCritico">
+      <button class="btn-primary" (click)="aceptarTecnica()">
+        <span class="btn-text">Sí, probar técnica</span>
+      </button>
+      <button class="btn-secondary" (click)="rechazarTecnica()">
+        <span class="btn-text">Ahora no</span>
+      </button>
+    </div>
+
+    <!-- Mensaje si no hay niño asociado -->
+    <div class="alerta-info" *ngIf="!ninoActual && !enviando">
+      <p>⚠️ No se encontró un perfil de niño asociado a tu usuario.</p>
+      <p>Contacta al administrador para configurar tu perfil.</p>
     </div>
   </footer>
 </div>

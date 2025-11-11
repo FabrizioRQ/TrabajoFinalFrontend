@@ -193,3 +193,33 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+.alerta-info {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+  text-align: center;
+  color: #856404;
+}
+
+.alerta-info p {
+  margin: 4px 0;
+}
+
+/* El resto del CSS se mantiene igual */
+.estado-emocional {
+  background: #e7f3ff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #2D7FF9;
+  transition: all 0.3s ease;
+}
+
+.estado-emocional.critico {
+  background: #f8d7da;
+  border-left-color: #dc3545;
+  animation: pulse 2s infinite;
+}

@@ -33,7 +33,16 @@
           </a>
         </div>
       </div>
-
+      <div class="dropdown">
+        <div class="menu-item dropdown-toggle">
+          <i class="fa-solid fa-user-doctor"></i> <span>IA</span>
+        </div>
+        <div class="dropdown-menu">
+          <a routerLink="monitoreo-emocional" routerLinkActive="active" class="menu-item">
+            <i class="fa-solid fa-person"></i> <span>EMOCIONES</span>
+          </a>
+        </div>
+      </div>
       <a (click)="logout()" class="menu-item logout">
         <i class="fa-solid fa-right-from-bracket"></i> <span>CERRAR SESIÓN</span>
       </a>
