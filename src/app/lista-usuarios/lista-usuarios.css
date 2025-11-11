@@ -1,0 +1,73 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.error-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.error-message {
+  color: #f44336;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.badge.admin {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.badge.user {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+.badge.moderator {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+}

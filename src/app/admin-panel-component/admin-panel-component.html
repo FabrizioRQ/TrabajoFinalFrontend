@@ -6,10 +6,14 @@
     </div>
 
     <nav class="sidebar-menu">
-      <a routerLink="psicologo" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-user-doctor"></i> <span>USUARIOS</span>
-      </a>
-
+      <div class="dropdown">
+        <div class="menu-item dropdown-toggle">
+          <i class="fa-solid fa-user-doctor"></i> <span>USUARIOS</span>
+        </div>
+        <div class="dropdown-menu">
+          <a routerLink="lista-usuarios" routerLinkActive="active">LISTAR USUARIOS</a>
+        </div>
+      </div>
       <div class="dropdown">
         <div class="menu-item dropdown-toggle">
           <i class="fa-solid fa-user-doctor"></i> <span>PSICÓLOGOS</span>

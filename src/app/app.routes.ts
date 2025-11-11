@@ -30,6 +30,7 @@ import { PagosRecientes } from './pagos-recientes/pagos-recientes';
 import { ActividadesJuego } from './actividades-juego/actividades-juego';
 import { AvataresDesbloqueados } from './avatares-desbloqueados/avatares-desbloqueados';
 import {authGuard} from './guards/auth-guard';
+import {ListaUsuarios} from './lista-usuarios/lista-usuarios';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -57,6 +58,7 @@ export const routes: Routes = [
       { path: 'seguimiento-emocional', component: SeguimientoEmocional },
       { path: 'emociones-por-momento', component: EmocionesPorMomento },
       { path: 'emociones-por-evento', component: EmocionesPorEvento },
+      { path: 'lista-usuarios', component: ListaUsuarios },
       { path: 'avatares-desbloqueados', component: AvataresDesbloqueados },
       { path: '', redirectTo: 'perfil', pathMatch: 'full' },
     ],
