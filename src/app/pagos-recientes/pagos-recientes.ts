@@ -23,6 +23,5 @@ export class PagosRecientes {
 
   consultar() {
     console.log('Consultando pagos del padre/tutor con ID:', this.padreID);
-    // Aquí podrías llamar a un servicio que consulte pagos en la base de datos
   }
 }

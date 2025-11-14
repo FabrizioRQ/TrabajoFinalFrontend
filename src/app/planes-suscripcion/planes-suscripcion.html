@@ -2,30 +2,92 @@
   <div class="subscription-card-wrapper">
 
     <h1 class="title">Planes de Suscripción</h1>
+    <p class="subtitle">Hola {{ nombreUsuario }}, selecciona el plan que mejor se adapte a tus necesidades</p>
+
+    <div *ngIf="cargando" class="loading">
+      Cargando planes disponibles...
+    </div>
+
+    <!-- Debug info -->
+    <div *ngIf="metodosPago.length > 0" class="debug-info">
+      <p>🔍 Métodos de pago disponibles: {{ metodosPago.length }}</p>
+      <p>🔍 Método seleccionado: {{ metodoPagoSeleccionado }}</p>
+    </div>
 
     <div class="plans-grid">
       <div
         *ngFor="let plan of planes"
         class="plan-card"
         [ngClass]="{
-          'plan-standard': plan.id === 'standard',
-          'plan-vip': plan.id === 'vip',
-          'plan-gold': plan.id === 'gold',
-          'plan-platinum': plan.id === 'platinum',
-          'is-highlighted': plan.isDestacado
+          'plan-standard': plan.codigo === 'standard',
+          'plan-vip': plan.codigo === 'vip',
+          'plan-gold': plan.codigo === 'gold',
+          'plan-platinum': plan.codigo === 'platinum',
+          'plan-anonimo': plan.codigo === 'anonimo',
+          'is-highlighted': esPlanDestacado(plan)
         }"
-        (click)="seleccionarPlan(plan.id)"
+        (click)="seleccionarPlan(plan.codigo)"
       >
-        <h3 class="plan-name">{{ plan.nombre }}</h3>
+        <div class="plan-header">
+          <h3 class="plan-name">{{ plan.nombre }}</h3>
+          <div *ngIf="esPlanDestacado(plan)" class="plan-badge">POPULAR</div>
+        </div>
+
+        <p class="plan-description">{{ plan.descripcion }}</p>
+
         <ul class="features-list">
-          <li *ngFor="let feature of plan.caracteristicas">{{ feature }}</li>
+          <li *ngFor="let feature of obtenerCaracteristicasArray(plan.caracteristicas)">
+            {{ feature }}
+          </li>
         </ul>
-        <p class="plan-price">{{ plan.precio }}</p>
+
+        <div class="plan-price">{{ formatearPrecio(plan.precioMensual) }}</div>
+
+        <div class="plan-actions">
+          <button
+            class="select-button"
+            [disabled]="cargando"
+          >
+            {{ plan.codigo === 'anonimo' ? 'Continuar Gratis' : 'Seleccionar Plan' }}
+          </button>
+        </div>
       </div>
     </div>
 
-    <button class="omit-button" (click)="omitirSeleccion()">
-      Omitir
-    </button>
+    <!-- Selector de método de pago -->
+    <div *ngIf="metodosPago.length > 0" class="payment-section">
+      <h3>Método de Pago para Planes Premium</h3>
+      <div class="payment-method-selector">
+        <label for="metodoPago">Selecciona el método de pago:</label>
+        <select id="metodoPago" [(ngModel)]="metodoPagoSeleccionado" class="method-select">
+          <option *ngFor="let metodo of metodosPago" [value]="metodo.id">
+            {{ getTipoLegible(metodo.tipo) }} ({{ metodo.ultimosDigitos }})
+            <span *ngIf="metodo.predeterminado">- Predeterminado</span>
+          </option>
+        </select>
+        <button class="manage-methods-btn" (click)="gestionarMetodosPago()">
+          Gestionar Métodos
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="metodosPago.length === 0" class="no-payment-methods">
+      <p>💡 <strong>Para seleccionar planes premium</strong>, primero necesitas agregar un método de pago.</p>
+      <button class="add-method-btn" (click)="gestionarMetodosPago()">
+        Agregar Método de Pago
+      </button>
+    </div>
+
+    <div class="skip-section">
+      <button
+        class="omit-button"
+        (click)="omitirSeleccion()"
+        [disabled]="cargando"
+      >
+        {{ cargando ? 'Procesando...' : 'Continuar con Plan Gratis' }}
+      </button>
+      <p class="skip-note">Podrás cambiar tu plan en cualquier momento desde tu perfil</p>
+    </div>
+
   </div>
 </div>

@@ -1,47 +1,60 @@
 <div class="payment-container">
   <div class="payment-card">
 
-    <h1 class="title">Métodos de Pago</h1>
+    <h1 class="title">Mis Métodos de Pago</h1>
 
-    <button class="add-button" (click)="anadirMetodo()">
-      <span class="plus-icon">+</span> Añadir método de pago
+    <!-- Debug info -->
+    <div class="debug-info">
+      <p>🔍 Usuario ID: {{ usuarioId }}</p>
+      <p>🔍 Métodos cargados: {{ metodos.length }}</p>
+    </div>
+
+    <button class="add-button" (click)="abrirModal()" [disabled]="cargando">
+      <span class="plus-icon">+</span>
+      {{ cargando ? 'Cargando...' : 'Añadir método de pago' }}
     </button>
+
+    <div *ngIf="cargando" class="loading">
+      Cargando métodos de pago...
+    </div>
 
     <div class="method-list">
       <div
         *ngFor="let metodo of metodos"
         class="method-item"
-        [ngClass]="{'default-method': metodo.esPredeterminado}"
+        [ngClass]="{'default-method': metodo.predeterminado}"
       >
         <div class="method-info">
-          <span class="icon" [ngClass]="metodo.iconoClase">
-            <ng-container *ngIf="metodo.tipo === 'Billetera Digital'">👛</ng-container>
-            <ng-container *ngIf="metodo.tipo === 'Tarjeta'">💳</ng-container>
-            <ng-container *ngIf="metodo.tipo === 'Cuenta bancaria'">🏛️</ng-container>
+          <span class="icon">
+            {{ getIcono(metodo.tipo) }}
           </span>
 
           <div class="details">
-            <span class="type-name">{{ metodo.detalle }}</span>
+            <span class="type-name">{{ getTipoLegible(metodo.tipo) }}</span>
+            <span class="digitos">{{ metodo.ultimosDigitos }}</span>
+            <span class="estado" [ngClass]="{'activo': metodo.estado === 'ACTIVO', 'inactivo': metodo.estado !== 'ACTIVO'}">
+              {{ metodo.estado === 'ACTIVO' ? 'Activo' : 'Inactivo' }}
+            </span>
           </div>
         </div>
 
         <div class="method-actions">
-
           <button
-            *ngIf="!metodo.esPredeterminado"
+            *ngIf="!metodo.predeterminado"
             class="default-button"
             (click)="establecerPredeterminado(metodo.id)"
           >
-            Predeterminado
+            Hacer Predeterminado
           </button>
 
-          <span *ngIf="metodo.esPredeterminado" class="default-tag">
+          <span *ngIf="metodo.predeterminado" class="default-tag">
             Predeterminado
           </span>
 
           <button
             class="delete-button"
             (click)="eliminarMetodo(metodo.id)"
+            [disabled]="metodo.predeterminado"
           >
             Eliminar
           </button>
@@ -49,8 +62,53 @@
       </div>
     </div>
 
+    <div *ngIf="metodos.length === 0 && !cargando" class="no-methods">
+      <p>No tienes métodos de pago registrados.</p>
+      <p>Agrega un método de pago para realizar suscripciones premium.</p>
+    </div>
+
+    <!-- Modal para agregar método de pago -->
+    <div *ngIf="mostrandoModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Agregar Método de Pago</h2>
+
+        <div class="form-group">
+          <label for="tipoMetodo">Tipo de Método:</label>
+          <select id="tipoMetodo" [(ngModel)]="nuevoMetodo.tipo" class="form-select">
+            <option *ngFor="let tipo of tiposMetodoPago" [value]="tipo.value">
+              {{ tipo.icon }} {{ tipo.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Información del método:</label>
+          <div class="method-preview">
+            <p><strong>Tipo:</strong> {{ getTipoSeleccionadoLabel() }}</p>
+            <p><strong>Token simulado:</strong> {{ nuevoMetodo.tokenProveedor }}</p>
+          </div>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="nuevoMetodo.predeterminado" />
+            Establecer como método de pago predeterminado
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" (click)="cerrarModal()" [disabled]="cargando">
+            Cancelar
+          </button>
+          <button class="btn-primary" (click)="agregarMetodo()" [disabled]="cargando">
+            {{ cargando ? 'Agregando...' : 'Agregar Método' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
     <p class="security-note">
-      Los detalles de pago se procesarán de forma segura y privada
+      🔒 Los detalles de pago se procesarán de forma segura y privada
     </p>
 
   </div>
