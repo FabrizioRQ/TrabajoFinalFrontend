@@ -36,7 +36,6 @@ export class UserService {
   }
 
   busquedaAvanzada(params: {[key:string]: any}): Observable<UsuarioDTO[]> {
-    // Construimos HttpParams solo con valores no nulos/undefined
     let httpParams = new HttpParams();
     Object.keys(params).forEach(key => {
       const val = params[key];

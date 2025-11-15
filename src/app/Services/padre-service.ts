@@ -18,7 +18,6 @@ export class PadreService {
   ) {}
 
   crearPadre(padreDto: PadreDto): Observable<PadreDto> {
-    // Asignar automáticamente el ID del usuario logueado
     const userId = this.authService.getUserId();
     const data = {
       ...padreDto,

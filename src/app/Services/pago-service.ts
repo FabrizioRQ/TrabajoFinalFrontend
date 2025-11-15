@@ -39,7 +39,7 @@ export class PagoService {
     return userId;
   }
 
-  // Métodos para Pagos
+
   crearPago(pagoDTO: PagoCreateDTO): Observable<PagoDTO> {
     return this.http.post<PagoDTO>(this.apiUrl, pagoDTO, { headers: this.getHeaders() });
   }
@@ -64,7 +64,6 @@ export class PagoService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
-  // Métodos para Planes de Suscripción
   obtenerPlanesDisponibles(): Observable<PlanSuscripcionDTO[]> {
     return this.http.get<PlanSuscripcionDTO[]>(`${this.apiUrl}/planes`, { headers: this.getHeaders() });
   }
@@ -77,7 +76,6 @@ export class PagoService {
     return this.http.get<PlanSuscripcionDTO>(`${this.apiUrl}/plan-actual/${usuarioId}`, { headers: this.getHeaders() });
   }
 
-  // Métodos para Métodos de Pago
   obtenerMetodosPagoUsuario(usuarioId: number): Observable<MetodoPagoDTO[]> {
     return this.http.get<MetodoPagoDTO[]>(`${this.apiUrl}/metodos-pago/${usuarioId}`, { headers: this.getHeaders() });
   }
@@ -93,13 +91,11 @@ export class PagoService {
     );
   }
 
-  // Método para obtener métodos de pago del usuario actual
   obtenerMisMetodosPago(): Observable<MetodoPagoDTO[]> {
     const usuarioId = this.getUsuarioId();
     return this.obtenerMetodosPagoUsuario(usuarioId);
   }
 
-  // Método para obtener plan actual del usuario actual
   obtenerMiPlanActual(): Observable<PlanSuscripcionDTO> {
     const usuarioId = this.getUsuarioId();
     return this.obtenerPlanActual(usuarioId);
