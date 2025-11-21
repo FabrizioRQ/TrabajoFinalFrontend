@@ -6,19 +6,54 @@
     </div>
     <h2>Editar Perfil</h2>
 
-    <form class="profile-form">
+    <!-- Estado de carga -->
+    <div *ngIf="isLoading" class="loading">
+      Cargando perfil...
+    </div>
+
+    <!-- Formulario -->
+    <form class="profile-form" *ngIf="!isLoading">
       <div class="form-group">
         <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" name="nombre" [(ngModel)]="nombreCompleto" placeholder="Juan Pérez">
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          [(ngModel)]="nombreCompleto"
+          placeholder="Juan Pérez"
+          [disabled]="isSaving">
       </div>
 
       <div class="form-group">
         <label for="correo">Correo electrónico</label>
-        <input type="email" id="correo" name="correo" [(ngModel)]="correoElectronico" placeholder="juanperez@email.com">
+        <input
+          type="email"
+          id="correo"
+          name="correo"
+          [(ngModel)]="correoElectronico"
+          placeholder="juanperez@email.com"
+          disabled>
+        <small class="hint">El correo electrónico no se puede modificar</small>
       </div>
 
-      <button type="submit" class="save-button" (click)="guardarPerfil()">
-        Guardar
+      <div class="form-group" *ngIf="tipoUsuario">
+        <label for="tipo">Tipo de usuario</label>
+        <input
+          type="text"
+          id="tipo"
+          name="tipo"
+          [value]="tipoUsuario"
+          disabled>
+      </div>
+
+      <button
+        type="button"
+        class="save-button"
+        (click)="guardarPerfil()"
+        [disabled]="isSaving || !nombreCompleto.trim()">
+
+        <span *ngIf="!isSaving">Guardar</span>
+        <span *ngIf="isSaving">Guardando...</span>
       </button>
     </form>
   </div>

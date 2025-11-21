@@ -135,7 +135,7 @@ export class PlanesSuscripcion implements OnInit {
       tipo: 'tarjeta_credito',
       tokenProveedor: this.generarTokenSimulado(),
       usuarioId: this.usuarioId!,
-      predeterminado: true // Será el primer método
+      predeterminado: true
     };
 
     console.log('🔍 Plan seleccionado para suscripción:', this.planSeleccionado);
@@ -160,10 +160,8 @@ export class PlanesSuscripcion implements OnInit {
           console.log('✅ Método agregado exitosamente:', respuesta.metodoPago);
           this.cerrarModalPago();
 
-          // Guardar el ID del nuevo método para usarlo inmediatamente
           this.metodoPagoSeleccionado = respuesta.metodoPago.id.toString();
 
-          // Ahora procesar la suscripción al plan que estaba seleccionado
           this.procesarSeleccionPlan(this.planSeleccionado, this.metodoPagoSeleccionado);
 
         } else {

@@ -56,4 +56,9 @@ export class UserPanelComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  editProfile() {
+    this.router.navigate(['/user-panel/perfil']);
+  }
+
+
 }

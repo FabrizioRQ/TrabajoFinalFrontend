@@ -87,6 +87,7 @@ export const routes: Routes = [
       { path: 'registro-emociones', component: RegistroEmociones },
       { path: 'diario-emocional', component: DiarioEmocional },
       { path: 'actividades-juego', component: ActividadesJuego },
+      { path: 'perfil', component: Perfil },
       { path: '', redirectTo: 'perfil', pathMatch: 'full' },
     ],
   },

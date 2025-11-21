@@ -400,3 +400,108 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
+/* Opción 1: Botón junto al nombre */
+.user-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Opción 2: Botón en la sección de usuario */
+.user-info {
+  position: relative;
+  padding-right: 50px; /* Espacio para el botón */
+}
+
+.edit-profile-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #4a6cf7;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.edit-profile-btn:hover {
+  background-color: #3a5ce5;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.edit-profile-btn:active {
+  transform: scale(0.98);
+}
+
+
+/* Para la opción 2 */
+.user-info .edit-profile-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.user-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  position: relative;
+}
+
+.user-text {
+  flex: 1;
+}
+
+.edit-profile-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: 3px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  font-size: 16px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.edit-profile-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.edit-profile-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.edit-profile-btn:hover::before {
+  left: 100%;
+}
+
+.edit-profile-btn:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.edit-profile-btn i {
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+}

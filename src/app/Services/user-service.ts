@@ -45,4 +45,14 @@ export class UserService {
     });
     return this.http.get<UsuarioDTO[]>(`${this.apiUrl}/usuarios/busqueda-avanzada`, { params: httpParams });
   }
+
+
+  obtenerMiPerfil(): Observable<UsuarioDTO> {
+    return this.http.get<UsuarioDTO>(`${this.apiUrl}/usuarios/mi-perfil`);
+  }
+
+  actualizarMiPerfil(usuarioDTO: UsuarioDTO): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/usuarios/mi-perfil`, usuarioDTO);
+  }
+
 }

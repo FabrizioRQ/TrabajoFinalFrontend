@@ -4,8 +4,15 @@
     <div class="sidebar-header">
       <h2>Monstruos Amigos</h2>
       <div class="user-info" *ngIf="userName">
-        <p>Bienvenido, <strong>{{ userName }}</strong></p>
-        <small>ID: {{ userId }}</small>
+        <div class="user-header">
+          <div class="user-text">
+            <p>Bienvenido, <strong>{{ userName }}</strong></p>
+            <small>ID: {{ userId }}</small>
+          </div>
+          <button class="edit-profile-btn" (click)="editProfile()" title="Editar perfil">
+            <i class="fa-solid fa-user-pen"></i>
+          </button>
+        </div>
       </div>
     </div>
 
