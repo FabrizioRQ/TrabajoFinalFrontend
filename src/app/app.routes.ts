@@ -31,6 +31,7 @@ import { ActividadesJuego } from './actividades-juego/actividades-juego';
 import { AvataresDesbloqueados } from './avatares-desbloqueados/avatares-desbloqueados';
 import {authGuard} from './guards/auth-guard';
 import {ListaUsuarios} from './lista-usuarios/lista-usuarios';
+import {ListarPadres} from './listar-padres/listar-padres';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -52,6 +53,7 @@ export const routes: Routes = [
       { path: 'perfil', component: Perfil },
       { path: 'lista-ninos', component: ListaNinos },
       { path: 'lista-psicologos', component: ListaPsicologos },
+      { path: 'lista-padres', component: ListarPadres },
       { path: 'avatar', component: AvatarComponent },
       { path: 'monitoreo-emocional', component: MonitoreoEmocional },
       { path: 'recomendaciones-ia', component: RecomendacionesIa },

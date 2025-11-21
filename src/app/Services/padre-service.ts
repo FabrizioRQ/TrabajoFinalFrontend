@@ -48,4 +48,21 @@ export class PadreService {
     const userId = this.authService.getUserId();
     return this.http.get<PadreDto[]>(this.apiUrl);
   }
+
+  // 🔹 Nuevos métodos agregados
+  buscarPorNombre(nombre: string): Observable<PadreDto[]> {
+    return this.http.get<PadreDto[]>(`${this.apiUrl}/buscar/nombre/${nombre}`);
+  }
+
+  buscarPorApellidoPrefijo(prefijo: string): Observable<PadreDto[]> {
+    return this.http.get<PadreDto[]>(`${this.apiUrl}/buscar/apellido/${prefijo}`);
+  }
+
+  reporteCantidadHijos(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/reporte/cantidad-hijos`);
+  }
+
+  padresConNiñosMenores(): Observable<PadreDto[]> {
+    return this.http.get<PadreDto[]>(`${this.apiUrl}/reporte/con-ninos-menores`);
+  }
 }
