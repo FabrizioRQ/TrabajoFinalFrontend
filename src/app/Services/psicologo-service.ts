@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {PsicologoDTO} from '../../model/psicologo-dto.model';
 import {Observable} from 'rxjs';
 
@@ -17,5 +17,25 @@ export class PsicologoService {
 
   obtenerPsicologos(): Observable<PsicologoDTO[]> {
     return this.http.get<PsicologoDTO[]>(`${this.apiUrl}`);
+  }
+
+  obtenerPsicologoPorId(id: number): Observable<PsicologoDTO> {
+    return this.http.get<PsicologoDTO>(`${this.apiUrl}/${id}`);
+  }
+
+  buscarPorEspecialidad(especialidad: string): Observable<PsicologoDTO[]> {
+    return this.http.get<PsicologoDTO[]>(`${this.apiUrl}/especialidad/${especialidad}`);
+  }
+
+  buscarPorNumeroColegiatura(numero: string): Observable<PsicologoDTO> {
+    return this.http.get<PsicologoDTO>(`${this.apiUrl}/colegiatura/${numero}`);
+  }
+
+  buscarPorNombreYEspecialidad(nombre: string, especialidad?: string): Observable<PsicologoDTO[]> {
+    let params = new HttpParams().set('nombre', nombre);
+    if (especialidad) {
+      params = params.set('especialidad', especialidad);
+    }
+    return this.http.get<PsicologoDTO[]>(`${this.apiUrl}/buscar`, { params });
   }
 }

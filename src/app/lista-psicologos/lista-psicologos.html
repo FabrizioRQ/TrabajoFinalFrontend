@@ -13,12 +13,98 @@
 <main class="main">
   <h2>Lista de Psicólogos</h2>
 
+  <section class="card">
+    <h3>Filtrar Búsqueda</h3>
+    <div class="form">
+      <div class="form-group">
+        <label for="tipoBusqueda">Tipo de búsqueda:</label>
+        <select id="tipoBusqueda" [(ngModel)]="tipoBusqueda" name="tipoBusqueda" class="form-control">
+          <option value="todos">Todos los psicólogos</option>
+          <option value="id">Por ID</option>
+          <option value="especialidad">Por especialidad</option>
+          <option value="colegiatura">Por número de colegiatura</option>
+          <option value="nombre-especialidad">Por nombre y especialidad</option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="tipoBusqueda === 'id'">
+        <label for="idBusqueda">ID del psicólogo:</label>
+        <input
+          id="idBusqueda"
+          type="number"
+          [(ngModel)]="idBusqueda"
+          name="idBusqueda"
+          placeholder="Ej: 1, 2, 3..."
+          class="form-control">
+      </div>
+
+      <!-- Filtro por especialidad -->
+      <div class="form-group" *ngIf="tipoBusqueda === 'especialidad'">
+        <label for="especialidadBusqueda">Especialidad:</label>
+        <input
+          id="especialidadBusqueda"
+          type="text"
+          [(ngModel)]="especialidadBusqueda"
+          name="especialidadBusqueda"
+          placeholder="Ej: Psicología infantil, Terapia familiar..."
+          class="form-control">
+      </div>
+
+      <!-- Filtro por colegiatura -->
+      <div class="form-group" *ngIf="tipoBusqueda === 'colegiatura'">
+        <label for="colegiaturaBusqueda">Número de colegiatura:</label>
+        <input
+          id="colegiaturaBusqueda"
+          type="text"
+          [(ngModel)]="colegiaturaBusqueda"
+          name="colegiaturaBusqueda"
+          placeholder="Ej: CP-12345"
+          class="form-control">
+      </div>
+
+      <!-- Filtro por nombre y especialidad -->
+      <div class="form-group" *ngIf="tipoBusqueda === 'nombre-especialidad'">
+        <label for="nombreBusqueda">Nombre:</label>
+        <input
+          id="nombreBusqueda"
+          type="text"
+          [(ngModel)]="nombreBusqueda"
+          name="nombreBusqueda"
+          placeholder="Ej: Juan, María..."
+          class="form-control">
+      </div>
+
+      <div class="form-group" *ngIf="tipoBusqueda === 'nombre-especialidad'">
+        <label for="especialidadFiltroBusqueda">Especialidad:</label>
+        <input
+          id="especialidadFiltroBusqueda"
+          type="text"
+          [(ngModel)]="especialidadFiltroBusqueda"
+          name="especialidadFiltroBusqueda"
+          placeholder="Ej: Psicología clínica..."
+          class="form-control">
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-primary" (click)="buscar()" [disabled]="cargando">
+          {{ cargando ? 'Buscando...' : 'Buscar' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="limpiarFiltros()" [disabled]="cargando">
+          Limpiar
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- Mensaje de error -->
   <div *ngIf="error" class="error-message">
     {{ error }}
   </div>
 
+  <!-- Resultados -->
   <section class="card">
+    <h3>Resultados ({{ psicologos.length }})</h3>
+
     <!-- Estado de carga -->
     <div *ngIf="cargando" class="loading">
       Cargando psicólogos...
@@ -48,7 +134,7 @@
 
     <ng-template #sinResultados>
       <p class="table-note" *ngIf="!cargando">
-        No se encontraron psicólogos registrados.
+        {{ tipoBusqueda === 'todos' ? 'No hay psicólogos registrados.' : 'No se encontraron resultados para tu búsqueda.' }}
       </p>
     </ng-template>
   </section>
