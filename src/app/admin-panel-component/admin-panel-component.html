@@ -43,8 +43,17 @@
       <a routerLink="registro-emociones" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-clipboard-list"></i> <span>EMOCIONES</span>
       </a>
+
+      <!-- Botón de Cerrar Sesión -->
+      <div class="logout-section">
+        <button class="logout-btn" (click)="logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>CERRAR SESIÓN</span>
+        </button>
+      </div>
     </nav>
   </aside>
+
   <main class="main-content">
     <section class="content-area">
       <div class="content-wrapper">
