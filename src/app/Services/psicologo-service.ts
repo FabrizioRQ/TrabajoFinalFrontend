@@ -15,11 +15,7 @@ export class PsicologoService {
     return this.http.post<PsicologoDTO>(this.apiUrl, psicologo);
   }
 
-  obtenerPsicologoPorId(id: number): Observable<PsicologoDTO> {
-    return this.http.get<PsicologoDTO>(`${this.apiUrl}/${id}`);
-  }
-
-  listarPsicologos(): Observable<PsicologoDTO[]> {
-    return this.http.get<PsicologoDTO[]>(this.apiUrl);
+  obtenerPsicologos(): Observable<PsicologoDTO[]> {
+    return this.http.get<PsicologoDTO[]>(`${this.apiUrl}`);
   }
 }

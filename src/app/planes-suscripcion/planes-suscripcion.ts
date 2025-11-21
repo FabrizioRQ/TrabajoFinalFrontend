@@ -1,30 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgClass } from '@angular/common';
-import {PlanSuscripcionDTO} from '../../model/plan-suscripcion.dto';
-import {PagoService} from '../Services/pago-service';
-import {Router} from '@angular/router';
-import {SeleccionPlanDTO} from '../../model/selecionarPlan-dto.model';
-import {FormsModule} from '@angular/forms';
-import {AuthService} from '../Services/auth-service';
-import {MetodoPagoDTO} from '../../model/MetodoPagoDTO'; // NgFor y NgClass son útiles aquí
-
-interface PlanSuscripcion {
-  id: string;
-  nombre: string;
-  precio: string;
-  caracteristicas: string[];
-  isDestacado?: boolean;
-  colorClase?: string;
-}
+import { PlanSuscripcionDTO } from '../../model/plan-suscripcion.dto';
+import { PagoService } from '../Services/pago-service';
+import { Router } from '@angular/router';
+import { SeleccionPlanDTO } from '../../model/selecionarPlan-dto.model';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../Services/auth-service';
+import { MetodoPagoDTO } from '../../model/MetodoPagoDTO';
+import { CrearMetodoPagoDTO } from '../../model/crear-metodo-pago.dto';
 
 @Component({
   selector: 'app-planes-suscripcion',
   standalone: true,
-  imports: [CommonModule, NgFor, NgClass, FormsModule], // Incluimos NgFor para iterar y NgClass para estilos condicionales
+  imports: [CommonModule, NgFor, NgClass, FormsModule],
   templateUrl: './planes-suscripcion.html',
   styleUrl: './planes-suscripcion.css',
 })
-export class PlanesSuscripcion implements OnInit  {
+export class PlanesSuscripcion implements OnInit {
   planes: PlanSuscripcionDTO[] = [];
   metodosPago: MetodoPagoDTO[] = [];
   usuarioId: number | null = null;
@@ -32,6 +24,22 @@ export class PlanesSuscripcion implements OnInit  {
   metodoPagoSeleccionado: string = '';
   planSeleccionado: string = '';
   nombreUsuario: string = '';
+
+  mostrandoModalPago: boolean = false;
+  agregandoMetodo: boolean = false;
+
+  nuevoMetodo: CrearMetodoPagoDTO = {
+    tipo: 'tarjeta_credito',
+    tokenProveedor: '',
+    usuarioId: 0,
+    predeterminado: false
+  };
+
+  tiposMetodoPago = [
+    { value: 'tarjeta_credito', label: 'Tarjeta de Crédito', icon: '💳' },
+    { value: 'billetera_digital', label: 'Billetera Digital', icon: '👛' },
+    { value: 'transferencia', label: 'Transferencia Bancaria', icon: '🏛️' }
+  ];
 
   constructor(
     private pagoService: PagoService,
@@ -60,6 +68,8 @@ export class PlanesSuscripcion implements OnInit  {
       alert('Debe iniciar sesión para seleccionar un plan');
       return;
     }
+
+    this.nuevoMetodo.usuarioId = this.usuarioId;
   }
 
   cargarPlanesDisponibles(): void {
@@ -100,7 +110,6 @@ export class PlanesSuscripcion implements OnInit  {
     });
   }
 
-
   seleccionarPlan(codigoPlan: string): void {
     if (this.cargando) return;
 
@@ -112,12 +121,68 @@ export class PlanesSuscripcion implements OnInit  {
     }
 
     if (this.metodosPago.length === 0) {
-      alert('Necesitas agregar un método de pago antes de seleccionar un plan de pago');
-      this.router.navigate(['/metodos-pago']);
+      // Mostrar modal para agregar método de pago en lugar de redirigir
+      this.mostrarModalAgregarPago();
       return;
     }
 
     this.mostrarModalConfirmacion();
+  }
+
+  mostrarModalAgregarPago(): void {
+    this.mostrandoModalPago = true;
+    this.nuevoMetodo = {
+      tipo: 'tarjeta_credito',
+      tokenProveedor: this.generarTokenSimulado(),
+      usuarioId: this.usuarioId!,
+      predeterminado: true // Será el primer método
+    };
+
+    console.log('🔍 Plan seleccionado para suscripción:', this.planSeleccionado);
+  }
+
+  cerrarModalPago(): void {
+    this.mostrandoModalPago = false;
+  }
+
+  generarTokenSimulado(): string {
+    return 'tok_' + Math.random().toString(36).substr(2, 16) + '_' + Date.now();
+  }
+
+  agregarMetodoPago(): void {
+    if (!this.validarFormularioMetodoPago()) return;
+
+    this.agregandoMetodo = true;
+    this.pagoService.agregarMetodoPago(this.nuevoMetodo).subscribe({
+      next: (respuesta) => {
+        this.agregandoMetodo = false;
+        if (respuesta.exito) {
+          console.log('✅ Método agregado exitosamente:', respuesta.metodoPago);
+          this.cerrarModalPago();
+
+          // Guardar el ID del nuevo método para usarlo inmediatamente
+          this.metodoPagoSeleccionado = respuesta.metodoPago.id.toString();
+
+          // Ahora procesar la suscripción al plan que estaba seleccionado
+          this.procesarSeleccionPlan(this.planSeleccionado, this.metodoPagoSeleccionado);
+
+        } else {
+          alert('Error: ' + respuesta.mensaje);
+        }
+      },
+      error: (error) => {
+        this.agregandoMetodo = false;
+        console.error('❌ Error HTTP al agregar método:', error);
+        alert('Error al agregar método de pago: ' + error.message);
+      }
+    });
+  }
+  validarFormularioMetodoPago(): boolean {
+    if (!this.nuevoMetodo.tipo) {
+      alert('Por favor seleccione un tipo de método de pago');
+      return false;
+    }
+    return true;
   }
 
   mostrarModalConfirmacion(): void {
@@ -215,8 +280,14 @@ export class PlanesSuscripcion implements OnInit  {
     return tipos[tipo] || tipo;
   }
 
-  getMetodoSeleccionado(): MetodoPagoDTO | undefined {
-    return this.metodosPago.find(m => m.id.toString() === this.metodoPagoSeleccionado);
+  getTipoSeleccionadoLabel(): string {
+    const tipoEncontrado = this.tiposMetodoPago.find(t => t.value === this.nuevoMetodo.tipo);
+    return tipoEncontrado ? tipoEncontrado.label : '';
+  }
+
+  getIcono(tipo: string): string {
+    const tipoEncontrado = this.tiposMetodoPago.find(t => t.value === tipo);
+    return tipoEncontrado ? tipoEncontrado.icon : '💳';
   }
 
   gestionarMetodosPago(): void {

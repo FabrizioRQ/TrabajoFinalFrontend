@@ -13,46 +13,43 @@
 <main class="main">
   <h2>Lista de Psicólogos</h2>
 
-  <section class="card">
-    <form class="form" (ngSubmit)="buscar()">
-      <div class="form-group full">
-        <label for="uuid">ID del padre/tutor (UUID)</label>
-        <input
-          id="uuid"
-          type="text"
-          [(ngModel)]="uuid"
-          name="uuid"
-          placeholder="Ej: 6bff2e0b-92c7-4c0b-9b3d-...."
-          required>
-      </div>
-      <button type="submit" class="btn">Buscar</button>
-    </form>
-  </section>
-
-  <h3>Resultados:</h3>
+  <!-- Mensaje de error -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
 
   <section class="card">
-    <div class="table-wrap" *ngIf="psicologos.length > 0; else sinResultados">
+    <!-- Estado de carga -->
+    <div *ngIf="cargando" class="loading">
+      Cargando psicólogos...
+    </div>
+
+    <!-- Tabla de resultados -->
+    <div class="table-wrap" *ngIf="!cargando && psicologos.length > 0; else sinResultados">
       <table class="table">
         <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Edad</th>
-          <th>Estado</th>
+          <th>ID</th>
+          <th>Especialidad</th>
+          <th>N° Colegiatura</th>
+          <th>ID Usuario</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let psico of psicologos">
-          <td>{{ psico.nombre }}</td>
-          <td>{{ psico.edad }}</td>
-          <td>{{ psico.estado }}</td>
+          <td>{{ psico.id || 'N/A' }}</td>
+          <td>{{ psico.especialidad }}</td>
+          <td>{{ psico.numeroColegiatura }}</td>
+          <td>{{ psico.idUsuario }}</td>
         </tr>
         </tbody>
       </table>
     </div>
 
     <ng-template #sinResultados>
-      <p class="table-note">No se encontraron psicólogos registrados.</p>
+      <p class="table-note" *ngIf="!cargando">
+        No se encontraron psicólogos registrados.
+      </p>
     </ng-template>
   </section>
 </main>

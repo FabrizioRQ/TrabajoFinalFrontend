@@ -73,21 +73,49 @@
 
     <div *ngIf="metodosPago.length === 0" class="no-payment-methods">
       <p>💡 <strong>Para seleccionar planes premium</strong>, primero necesitas agregar un método de pago.</p>
-      <button class="add-method-btn" (click)="gestionarMetodosPago()">
+      <button class="add-method-btn" (click)="mostrarModalAgregarPago()">
         Agregar Método de Pago
       </button>
     </div>
 
-    <div class="skip-section">
-      <button
-        class="omit-button"
-        (click)="omitirSeleccion()"
-        [disabled]="cargando"
-      >
-        {{ cargando ? 'Procesando...' : 'Continuar con Plan Gratis' }}
-      </button>
-      <p class="skip-note">Podrás cambiar tu plan en cualquier momento desde tu perfil</p>
-    </div>
+    <!-- Modal para agregar método de pago -->
+    <div *ngIf="mostrandoModalPago" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Agregar Método de Pago</h2>
 
+        <div class="form-group">
+          <label for="tipoMetodo">Tipo de Método:</label>
+          <select id="tipoMetodo" [(ngModel)]="nuevoMetodo.tipo" class="form-select">
+            <option *ngFor="let tipo of tiposMetodoPago" [value]="tipo.value">
+              {{ tipo.icon }} {{ tipo.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Información del método:</label>
+          <div class="method-preview">
+            <p><strong>Tipo:</strong> {{ getTipoSeleccionadoLabel() }}</p>
+            <p><strong>Token simulado:</strong> {{ nuevoMetodo.tokenProveedor }}</p>
+          </div>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="nuevoMetodo.predeterminado" />
+            Establecer como método de pago predeterminado
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" (click)="cerrarModalPago()" [disabled]="agregandoMetodo">
+            Cancelar
+          </button>
+          <button class="btn-primary" (click)="agregarMetodoPago()" [disabled]="agregandoMetodo">
+            {{ agregandoMetodo ? 'Procesando...' : 'Agregar y Suscribirme' }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

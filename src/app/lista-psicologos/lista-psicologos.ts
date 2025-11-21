@@ -1,27 +1,45 @@
-import { Component } from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
+
+import { PsicologoDTO } from '../../model/psicologo-dto.model';
+import {PsicologoService} from '../Services/psicologo-service';
 
 @Component({
   selector: 'app-lista-psicologos',
   imports: [
     NgForOf,
-    NgIf,
-    FormsModule
+    NgIf
   ],
   templateUrl: './lista-psicologos.html',
   styleUrl: './lista-psicologos.css',
 })
-export class ListaPsicologos {
-  uuid: string = '';
+export class ListaPsicologos implements OnInit {
+  psicologos: PsicologoDTO[] = [];
+  cargando: boolean = false;
+  error: string = '';
 
-  psicologos = [
-    { nombre: 'Dr. Juan Pérez', edad: '45', estado: 'Disponible' },
-    { nombre: 'Lic. María Torres', edad: '39', estado: 'Ocupado' },
-    { nombre: 'Lic. Carlos Rivas', edad: '41', estado: 'De vacaciones' }
-  ];
+  constructor(private psicologoService: PsicologoService) {}
 
-  buscar() {
-    console.log('Buscando psicólogos para el UUID:', this.uuid);
+  ngOnInit() {
+    this.cargarPsicologos();
+  }
+
+  cargarPsicologos() {
+    this.cargando = true;
+    this.error = '';
+
+    this.psicologoService.obtenerPsicologos().subscribe({
+      next: (data: PsicologoDTO[]) => {
+        this.psicologos = data;
+        this.cargando = false;
+        console.log('Psicólogos encontrados:', data);
+      },
+      error: (error) => {
+        console.error('Error al obtener psicólogos:', error);
+        this.error = 'Error al cargar los psicólogos. Por favor, intente nuevamente.';
+        this.cargando = false;
+        this.psicologos = [];
+      }
+    });
   }
 }
