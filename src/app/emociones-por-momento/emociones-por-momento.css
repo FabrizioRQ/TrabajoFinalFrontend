@@ -1,62 +1,189 @@
-/* ==============================
-   Revisión de emociones por momento
-============================== */
+/* emociones-por-momento.css */
 .emotion-moment {
-  padding: 24px;
-  border-radius: var(--r-16);
-  box-shadow: var(--shadow-card);
-  background: var(--bg-white);
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .section-header {
-  margin-bottom: 16px;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .section-header h2 {
-  font-size: clamp(24px, 3vw, 32px);
-  color: var(--text-main);
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
 }
 
-.section-header .lead {
-  color: var(--text-secondary);
-  margin: 0;
+.lead {
+  color: #7f8c8d;
+  font-size: 1.1rem;
 }
 
-/* Tabla */
 .table-wrapper {
   overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
 }
 
 .emotion-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 12px;
-  text-align: left;
-}
-
-.emotion-table th,
-.emotion-table td {
-  border: 1px solid #E2E8F0;
-  padding: 12px 16px;
-  font-size: 16px;
+  background: white;
 }
 
 .emotion-table th {
-  background: #F1F5F9;
-  color: var(--text-main);
-  font-weight: 700;
-}
-
-.emotion-table tr:nth-child(even) td {
-  background: #F8FAFC;
-}
-
-/* Estado de ánimo */
-.mood {
+  background: #f8f9fa;
+  padding: 1rem;
+  text-align: left;
   font-weight: 600;
-  text-transform: capitalize;
+  color: #2c3e50;
+  border-bottom: 2px solid #e1e8ed;
+}
+
+.emotion-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.emotion-row:hover {
+  background: #f8f9fa;
+}
+
+.fecha {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.emocion-texto {
+  color: #5a6c7d;
+}
+
+.mood-cell {
+  text-align: center;
+}
+
+.mood {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.mood-icon {
+  font-size: 1.2rem;
+}
+
+/* Clases para diferentes estados de ánimo */
+.mood--happy {
+  background: #e8f5e8;
+  color: #27ae60;
+  border: 1px solid #a3e4a3;
+}
+
+.mood--sad {
+  background: #e8f4f8;
+  color: #2980b9;
+  border: 1px solid #a9cce3;
+}
+
+.mood--angry {
+  background: #fde8e8;
+  color: #e74c3c;
+  border: 1px solid #f5b7b1;
 }
 
 .mood--anxious {
-  color: var(--support); /* Morado amable (#7E57C2) */
+  background: #fef9e7;
+  color: #f39c12;
+  border: 1px solid #f9e79f;
+}
+
+.mood--stressed {
+  background: #f4ecf7;
+  color: #8e44ad;
+  border: 1px solid #d2b4de;
+}
+
+.mood--calm {
+  background: #e8f6f3;
+  color: #16a085;
+  border: 1px solid #a2d9ce;
+}
+
+.mood--neutral {
+  background: #f2f3f4;
+  color: #7f8c8d;
+  border: 1px solid #bdc3c7;
+}
+
+.mood--fear {
+  background: #f4ecf7;
+  color: #8e44ad;
+  border: 1px solid #d2b4de;
+}
+
+/* Estados de carga y error */
+.loading-state, .error-state, .empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-state {
+  color: #e74c3c;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+
+@media (max-width: 768px) {
+  .emotion-moment {
+    padding: 1rem;
+  }
+
+  .emotion-table {
+    font-size: 0.9rem;
+  }
+
+  .mood {
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+  }
 }

@@ -1,31 +1,51 @@
-<!-- Sección principal que muestra los momentos emocionales -->
+<!-- emociones-por-momento.html -->
 <section class="emotion-moment container card">
   <!-- Encabezado de la sección con título y subtítulo -->
   <header class="section-header">
-    <h2>{{ title }}</h2> <!-- Título dinámico -->
-    <p class="lead">{{ subtitle }}</p> <!-- Subtítulo dinámico -->
+    <h2>{{ title }}</h2>
+    <p class="lead">{{ subtitle }}</p>
   </header>
-  <!-- Contenedor para hacer la tabla desplazable si es necesario -->
-  <div class="table-wrapper">
+
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="loading-state">
+    <div class="spinner"></div>
+    <p>Cargando historial emocional...</p>
+  </div>
+
+  <!-- Estado de error -->
+  <div *ngIf="error && !cargando" class="error-state">
+    <p>⚠️ {{ error }}</p>
+    <button class="btn btn-primary" (click)="cargarEmociones()">Reintentar</button>
+  </div>
+
+  <!-- Tabla de emociones -->
+  <div *ngIf="!cargando && !error" class="table-wrapper">
     <table class="emotion-table">
-      <!-- Cabecera de la tabla -->
       <thead>
-        <tr>
-          <th>Momento</th> <!-- Hora o instante -->
-          <th>Cambio de ánimo</th> <!-- Tipo de emoción -->
-          <th>Explicación</th> <!-- Descripción del por qué -->
-        </tr>
+      <tr>
+        <th>Fecha</th>
+        <th>Emoción Registrada</th>
+        <th>Estado Emocional</th>
+      </tr>
       </thead>
-      <!-- Cuerpo de la tabla con datos iterados -->
       <tbody>
-        <!-- Iteración Angular: recorre cada emoción agrupada por momento -->
-        <tr *ngFor="let e of emotionsByMoment">
-          <td>{{ e.time }}</td> <!-- Momento registrado -->
-          <td class="mood mood--anxious">{{ e.mood }}</td> <!-- Estado de ánimo -->
-          <td>{{ e.description }}</td> <!-- Explicación de la emoción -->
-        </tr>
+      <tr *ngFor="let emocion of emociones" class="emotion-row">
+        <td class="fecha">{{ formatearFecha(emocion.fecha) }}</td>
+        <td class="emocion-texto">{{ emocion.emocionRegistrada }}</td>
+        <td class="mood-cell">
+            <span class="mood" [class]="getClaseEmocion(emocion.emocionRegistrada)">
+              <span class="mood-icon">{{ getIconoEmocion(emocion.emocionRegistrada) }}</span>
+              <span class="mood-text">{{ emocion.emocionRegistrada }}</span>
+            </span>
+        </td>
+      </tr>
       </tbody>
     </table>
+
+    <!-- Estado vacío -->
+    <div *ngIf="emociones.length === 0" class="empty-state">
+      <p>📝 Aún no has registrado emociones en tu diario.</p>
+      <p>Comienza a registrar tus emociones para ver tu historial aquí.</p>
+    </div>
   </div>
 </section>
-
