@@ -221,11 +221,11 @@ export class PlanesSuscripcion implements OnInit {
           alert(`¡Felicidades! Has activado el plan ${planNombre}\n\n${respuesta.mensaje}`);
 
           if (respuesta.redireccion === 'chat') {
-            this.router.navigate(['/chat']);
+            this.router.navigate(['/user-panel/confirmacion']);
           } else if (respuesta.redireccion === 'pago') {
             this.router.navigate(['/user-panel/metodos-pago']);
           } else {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/user-panel/dashboard']);
           }
         } else {
           alert('Error: ' + respuesta.mensaje);

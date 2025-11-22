@@ -32,6 +32,7 @@ import { AvataresDesbloqueados } from './avatares-desbloqueados/avatares-desbloq
 import {authGuard} from './guards/auth-guard';
 import {ListaUsuarios} from './lista-usuarios/lista-usuarios';
 import {ListarPadres} from './listar-padres/listar-padres';
+import {ConfirmacionPago} from './confirmacion-pago/confirmacion-pago';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -87,6 +88,7 @@ export const routes: Routes = [
       { path: 'registro-emociones', component: RegistroEmociones },
       { path: 'diario-emocional', component: DiarioEmocional },
       { path: 'actividades-juego', component: ActividadesJuego },
+      { path: 'confirmacion', component: ConfirmacionPago },
       { path: 'perfil', component: Perfil },
       { path: '', redirectTo: 'perfil', pathMatch: 'full' },
     ],
