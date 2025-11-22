@@ -1,97 +1,99 @@
+<!-- recomendaciones-ia.html -->
 <div class="app-container">
   <!-- Header / Logo y Nombre de la App -->
   <header class="app-header">
-    <svg
-      class="header-icon"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg">
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M12 11c0 3.774 4 5.766 4 7H8c0-1.234 4-3.226 4-7zm0 0V4m-2 4h4m-2-4a2 2 0 100 4 2 2 0 000-4z">
+    <svg class="header-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 11c0 3.774 4 5.766 4 7H8c0-1.234 4-3.226 4-7zm0 0V4m-2 4h4m-2-4a2 2 0 100 4 2 2 0 000-4z">
       </path>
     </svg>
     <h2 class="h2-style">Monstruos Amigos</h2>
   </header>
 
-  <!-- Título principal -->
-  <h1 class="h1-style content-flow">Contenido sugerido para ti</h1>
+  <!-- Título principal con información contextual -->
+  <div class="content-header">
+    <h1 class="h1-style content-flow">Contenido sugerido para ti</h1>
+    <div class="context-info" *ngIf="!cargando">
+      <span class="emocion-badge" [class]="'emocion-' + emocionPredominante">
+        Basado en tu estado: {{ emocionPredominante }}
+      </span>
+      <button class="btn-refresh" (click)="actualizarRecomendaciones()" title="Actualizar recomendaciones">
+        🔄
+      </button>
+    </div>
+    <p class="last-update" *ngIf="ultimaActualizacion">
+      Actualizado: {{ ultimaActualizacion }}
+    </p>
+  </div>
+
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="loading-state">
+    <div class="spinner"></div>
+    <p>Analizando tus emociones para recomendaciones personalizadas...</p>
+  </div>
 
   <!-- Lista de Recursos -->
-  <main class="resource-list">
-    <a href="#" class="resource-card" role="button" aria-label="Abrir Video de respiración">
-      <div class="card-icon-wrapper">
-        <svg
-          class="card-icon"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M14.752 11.168l-3.197 2.132A1 1 0 0110 13.844V8.156a1 1 0 011.555-.832l3.197 2.132a1 1 0 010 1.664z"></path>
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-      </div>
-      <div class="card-content">
-        <h3 class="h3-style">Vídeo de respiración</h3>
-        <p class="p-secondary">Prueba esta técnica para reducir la ansiedad</p>
-      </div>
-    </a>
+  <main class="resource-list" *ngIf="!cargando">
+    <div *ngFor="let recurso of recomendaciones; trackBy: trackByRecomendacion"
+         class="resource-card"
+         [class]="'tipo-' + recurso.tipo"
+         role="button"
+         [attr.aria-label]="'Abrir ' + recurso.titulo">
 
-    <a href="#" class="resource-card" role="button" aria-label="Leer Artículo motivacional">
       <div class="card-icon-wrapper">
-        <svg
-          class="card-icon"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-      </div>
-      <div class="card-content">
-        <h3 class="h3-style">Artículo motivacional</h3>
-        <p class="p-secondary">Consejos para sentirte más animado</p>
-      </div>
-    </a>
+        <div class="emoji-icon">{{ recurso.icono }}</div>
+        <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <!-- Iconos dinámicos según el tipo -->
+          <ng-container [ngSwitch]="recurso.tipo">
+            <!-- Icono para video -->
+            <path *ngSwitchCase="'video'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M14.752 11.168l-3.197 2.132A1 1 0 0110 13.844V8.156a1 1 0 011.555-.832l3.197 2.132a1 1 0 010 1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 
-    <a href="#" class="resource-card" role="button" aria-label="Completar Ejercicio de gratitud">
-      <div class="card-icon-wrapper">
-        <svg
-          class="card-icon"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            <!-- Icono para artículo -->
+            <path *ngSwitchCase="'articulo'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+
+            <!-- Icono para ejercicio -->
+            <path *ngSwitchCase="'ejercicio'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+
+            <!-- Icono para música -->
+            <path *ngSwitchCase="'musica'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+
+            <!-- Icono para juego -->
+            <path *ngSwitchDefault stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </ng-container>
         </svg>
       </div>
+
       <div class="card-content">
-        <h3 class="h3-style">Ejercicio de gratitud</h3>
-        <p class="p-secondary">Haz esta actividad para mejorar tu estado de ánimo</p>
+        <div class="card-header">
+          <h3 class="h3-style">{{ recurso.titulo }}</h3>
+          <span class="badge-tipo {{ recurso.tipo }}">{{ recurso.tipo }}</span>
+        </div>
+        <p class="p-secondary">{{ recurso.descripcion }}</p>
+        <div class="card-meta">
+          <span class="duracion">⏱️ {{ recurso.duracion }}</span>
+          <span class="categoria">📁 {{ recurso.categoria }}</span>
+        </div>
       </div>
-    </a>
+
+      <div class="card-action">
+        <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </div>
+    </div>
   </main>
 
+  <!-- Mensaje cuando no hay recomendaciones -->
+  <div *ngIf="!cargando && recomendaciones.length === 0" class="empty-state">
+    <p>🌟 Comienza registrando tus emociones para obtener recomendaciones personalizadas</p>
+  </div>
+
   <p class="footer-link p-secondary">
-    Explora más recursos en nuestra biblioteca
+    Las recomendaciones se actualizan según tu estado emocional
   </p>
 </div>
