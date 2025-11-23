@@ -1,1 +1,18 @@
-<p>not-authorized-component works!</p>
+<div class="container">
+  <h1 class="hacker-text">Acceso Denegado</h1>
+
+  <div class="warning-icon">⚠️</div>
+
+  <div class="access-denied">ERROR 403 - FORBIDDEN</div>
+
+  <div class="message">
+    <p>¡Alto ahí, tramposo! Has intentado acceder a una zona restringida sin los permisos adecuados.</p>
+    <p>Esta infracción ha sido registrada y notificada a las autoridades correspondientes.</p>
+  </div>
+
+  <button class="button" (click)="redirectToHome()">Volver a la seguridad</button>
+</div>
+
+<canvas class="matrix-bg" #matrixCanvas></canvas>
+<div class="binary-rain" #binaryRain></div>
+<div class="scan-line"></div>
