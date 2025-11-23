@@ -39,9 +39,14 @@
           <a routerLink="lista-padres" routerLinkActive="active">Listar Padres</a>
         </div>
       </div>
-      <a routerLink="nino" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-child"></i> <span>NIÑOS</span>
-      </a>
+      <div class="dropdown">
+        <div class="menu-item dropdown-toggle">
+          <i class="fa-solid fa-user-doctor"></i> <span>NIÑOS</span>
+        </div>
+        <div class="dropdown-menu">
+          <a routerLink="lista-ninos" routerLinkActive="active">Listar Niños</a>
+        </div>
+      </div>
       <a routerLink="planes-suscripcion" routerLinkActive="active" class="menu-item">
         <i class="fa-solid fa-crown"></i> <span>PLANES</span>
       </a>
