@@ -12,48 +12,274 @@
   </header>
 
   <main class="main">
-    <h2>Niños Asociados</h2>
+    <h2>Gestión de Niños</h2>
 
-    <section class="card">
-      <form class="form">
-        <div class="form-group">
-          <label for="uuid">ID del niño (UUID)</label>
-          <input type="text" id="uuid" name="uuid" placeholder="Ej: 123e4567-e89b..." required>
+    <!-- Navegación entre vistas -->
+    <nav class="nav-tabs">
+      <button
+        [class.active]="vistaActiva === 'lista'"
+        (click)="cambiarVista('lista')"
+        class="tab-btn">
+        Lista Completa
+      </button>
+      <button
+        [class.active]="vistaActiva === 'emociones'"
+        (click)="cambiarVista('emociones')"
+        class="tab-btn">
+        Reportes de Emociones
+      </button>
+      <button
+        [class.active]="vistaActiva === 'dashboard'"
+        (click)="cambiarVista('dashboard')"
+        class="tab-btn">
+        Dashboard
+      </button>
+    </nav>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading">
+      <p>Cargando información...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="error">
+      <p>{{ error }}</p>
+      <button (click)="cargarNinosCompletos()" class="btn btn-secondary">Reintentar</button>
+    </div>
+
+    <!-- VISTA: Lista Completa -->
+    <div *ngIf="vistaActiva === 'lista' && !loading && !error">
+
+      <!-- Filtros básicos -->
+      <section class="card">
+        <form class="form" (submit)="onSubmit($event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="uuid">Buscar por nombre o ID</label>
+              <input
+                type="text"
+                id="uuid"
+                name="uuid"
+                [(ngModel)]="filtroUUID"
+                placeholder="Ej: Juan Pérez o 123"
+                class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="idPsicologo">Filtrar por Psicólogo ID</label>
+              <input
+                type="number"
+                id="idPsicologo"
+                [(ngModel)]="idPsicologoFiltro"
+                (change)="cargarNinosPorPsicologo()"
+                placeholder="ID del psicólogo"
+                class="form-control"
+                name="idPsicologo">
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            <button type="button" (click)="limpiarFiltros()" class="btn btn-secondary">Limpiar</button>
+            <button type="button" (click)="cargarConteoRegistros()" class="btn btn-info"
+                    *ngIf="idPsicologoFiltro">
+              Ver Conteo de Registros
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Estadísticas -->
+      <div class="stats">
+        <p>Mostrando {{ ninosFiltrados.length }} de {{ ninos.length }} niños</p>
+      </div>
+
+      <!-- Tabla de resultados -->
+      <h3>Lista de Niños:</h3>
+      <section class="card">
+        <div *ngIf="ninosFiltrados.length === 0" class="no-results">
+          <p>No se encontraron niños que coincidan con los filtros.</p>
         </div>
 
-        <div class="form-group">
-          <label for="fecha">Fecha de inicio</label>
-          <input type="date" id="fecha" name="fecha" required>
-        </div>
+        <table class="table" *ngIf="ninosFiltrados.length > 0">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Fecha Nacimiento</th>
+            <th>Padre/Madre</th>
+            <th>Avatar</th>
+            <th>Psicólogo ID</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of ninosFiltrados">
+            <td>{{ item.nino.id }}</td>
+            <td><strong>{{ item.usuario?.nombreCompleto || 'N/A' }}</strong></td>
+            <td>{{ calcularEdad(item.nino.fechaNacimiento) }} años</td>
+            <td>{{ formatearFecha(item.nino.fechaNacimiento) }}</td>
+            <td>{{ item.padre?.nombre || 'N/A' }} {{ item.padre?.apellido || '' }}</td>
+            <td>{{ item.avatar?.nombreAvatar || 'N/A' }}</td>
+            <td>{{ item.nino.idPsicologo || 'No asignado' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
 
-        <button type="submit" class="btn">Consultar</button>
-      </form>
-    </section>
+      <!-- Tabla de conteo de registros -->
+      <section class="card" *ngIf="ninosConConteo.length > 0">
+        <h3>Conteo de Registros por Niño</h3>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID Niño</th>
+            <th>Nombre</th>
+            <th>Cantidad de Registros</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of ninosConConteo">
+            <td>{{ item.idNino }}</td>
+            <td>{{ item.nombreNino || 'N/A' }}</td>
+            <td>{{ item.cantidadRegistros }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
 
-    <h3>Resultados:</h3>
+    <!-- VISTA: Reportes de Emociones -->
+    <div *ngIf="vistaActiva === 'emociones' && !loading && !error">
+      <section class="card">
+        <h3>Reporte de Emociones por Rango de Fechas</h3>
+        <form class="form" (submit)="cargarNinosConEmociones(); $event.preventDefault()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fechaInicio">Fecha Inicio</label>
+              <input
+                type="date"
+                id="fechaInicio"
+                [(ngModel)]="filtroFechaInicio"
+                class="form-control"
+                name="fechaInicio"
+                required>
+            </div>
 
-    <section class="card">
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Emoción</th>
-          <th>Comentario</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>12/09/2025</td>
-          <td>Feliz</td>
-          <td>Hoy jugué con mis amigos</td>
-        </tr>
-        <tr>
-          <td>14/09/2025</td>
-          <td>Triste</td>
-          <td>No pude ver a mis papás</td>
-        </tr>
-        </tbody>
-      </table>
-    </section>
+            <div class="form-group">
+              <label for="fechaFin">Fecha Fin</label>
+              <input
+                type="date"
+                id="fechaFin"
+                [(ngModel)]="filtroFechaFin"
+                class="form-control"
+                name="fechaFin"
+                required>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Buscar Niños con Emociones</button>
+            <button type="button" (click)="cargarEstadisticasEmociones()" class="btn btn-info">
+              Ver Estadísticas Detalladas
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Resultados de niños con emociones -->
+      <section class="card" *ngIf="ninos.length > 0">
+        <h3>Niños con Emociones Registradas</h3>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Padre/Madre</th>
+            <th>Psicólogo ID</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of ninos">
+            <td>{{ item.usuario?.nombreCompleto || 'N/A' }}</td>
+            <td>{{ calcularEdad(item.nino.fechaNacimiento) }} años</td>
+            <td>{{ item.padre?.nombre || 'N/A' }} {{ item.padre?.apellido || '' }}</td>
+            <td>{{ item.nino.idPsicologo || 'No asignado' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Estadísticas de emociones -->
+      <section class="card" *ngIf="estadisticasEmociones.length > 0">
+        <h3>Estadísticas de Emociones</h3>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID Niño</th>
+            <th>Nombre Niño</th>
+            <th>Emoción</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let stat of estadisticasEmociones">
+            <td>{{ stat.idNino }}</td>
+            <td>{{ stat.nombreNino || 'N/A' }}</td>
+            <td>{{ stat.emotion }}</td>
+            <td>{{ stat.cantidad }}</td>
+            <td>{{ stat.porcentaje }}%</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <!-- VISTA: Dashboard -->
+    <div *ngIf="vistaActiva === 'dashboard' && !loading && !error">
+      <section class="card">
+        <h3>Dashboard de Niños por Psicólogo</h3>
+        <form class="form" (submit)="cargarDashboard(); $event.preventDefault()">
+          <div class="form-group">
+            <label for="idPsicologoDashboard">ID del Psicólogo</label>
+            <input
+              type="number"
+              id="idPsicologoDashboard"
+              [(ngModel)]="idPsicologoFiltro"
+              class="form-control"
+              name="idPsicologoDashboard"
+              placeholder="Ingrese el ID del psicólogo"
+              required>
+          </div>
+          <button type="submit" class="btn btn-primary">Cargar Dashboard</button>
+        </form>
+      </section>
+
+      <!-- Dashboard Data -->
+      <section class="card" *ngIf="dashboardData.length > 0">
+        <h3>Dashboard - Resumen</h3>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID Niño</th>
+            <th>Nombre</th>
+            <th>Total Registros</th>
+            <th>Última Emoción</th>
+            <th>Estado</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of dashboardData">
+            <td>{{ item.idNino }}</td>
+            <td>{{ item.nombreNino || 'N/A' }}</td>
+            <td>{{ item.totalRegistros }}</td>
+            <td>{{ item.ultimaEmocion || 'N/A' }}</td>
+            <td>{{ item.estado || 'N/A' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
   </main>
 </div>
