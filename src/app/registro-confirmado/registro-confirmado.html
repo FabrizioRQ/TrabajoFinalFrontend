@@ -1,0 +1,57 @@
+<!-- registro-confirmado.html -->
+<div class="confirmation-container">
+  <div class="confirmation-card">
+    <!-- Icono de éxito -->
+    <div class="success-icon">
+      <div class="checkmark">✓</div>
+    </div>
+
+    <!-- Mensaje principal -->
+    <h1 class="confirmation-title">¡Registro Completado!</h1>
+
+    <p class="confirmation-message">
+      Tu cuenta ha sido creada exitosamente. Bienvenido a nuestra comunidad de
+      <strong>Monstruos Amigos</strong>.
+    </p>
+
+    <!-- Detalles adicionales -->
+    <div class="confirmation-details">
+      <div class="detail-item">
+        <span class="detail-icon">📧</span>
+        <span>Hemos enviado un correo de confirmación</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-icon">🔐</span>
+        <span>Ya puedes iniciar sesión con tus credenciales</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-icon">⏱️</span>
+        <span>Serás redirigido automáticamente en {{ tiempoRestante }} segundos</span>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+      <button
+        class="btn-primary"
+        (click)="irALogin()"
+        aria-label="Ir al inicio de sesión"
+      >
+        🚀 Ir al Inicio de Sesión
+      </button>
+
+      <button
+        class="btn-secondary"
+        routerLink="/inicio"
+        aria-label="Explorar la aplicación"
+      >
+        🎮 Explorar la App
+      </button>
+    </div>
+
+    <div class="welcome-message">
+      <p>¡Estamos emocionados de tenerte con nosotros!</p>
+      <div class="monster-animation">👾🎉</div>
+    </div>
+  </div>
+</div>
