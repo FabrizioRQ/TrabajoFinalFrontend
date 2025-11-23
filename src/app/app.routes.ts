@@ -33,6 +33,7 @@ import {authGuard} from './guards/auth-guard';
 import {ListaUsuarios} from './lista-usuarios/lista-usuarios';
 import {ListarPadres} from './listar-padres/listar-padres';
 import {ConfirmacionPago} from './confirmacion-pago/confirmacion-pago';
+import {ResetPasswordComponent} from './reset-password-component/reset-password-component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -40,6 +41,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recuperacion', component: ForgotPasswordComponent },
+  { path: 'restablecer-contraseña', component: ResetPasswordComponent },
 
   // PANEL ADMINISTRADOR CON SUS RUTAS HIJAS
   {
@@ -63,6 +65,7 @@ export const routes: Routes = [
       { path: 'emociones-por-evento', component: EmocionesPorEvento },
       { path: 'lista-usuarios', component: ListaUsuarios },
       { path: 'avatares-desbloqueados', component: AvataresDesbloqueados },
+      { path: 'historial-pagos', component: HistorialPagos },
       { path: '', redirectTo: 'perfil', pathMatch: 'full' },
     ],
   },
@@ -83,7 +86,6 @@ export const routes: Routes = [
       { path: 'planes-suscripcion', component: PlanesSuscripcion },
       { path: 'metodos-pago', component: MetodosPago },
       { path: 'cancelar-suscripcion', component: CancelarSuscripcion },
-      { path: 'historial-pagos', component: HistorialPagos },
       { path: 'pagos-recientes', component: PagosRecientes },
       { path: 'registro-emociones', component: RegistroEmociones },
       { path: 'diario-emocional', component: DiarioEmocional },

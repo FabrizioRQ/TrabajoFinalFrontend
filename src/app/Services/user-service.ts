@@ -11,6 +11,20 @@ export interface UsuarioDTO {
   tipoUsuario: string;
 }
 
+export interface RecuperacionResponse {
+  message: string;
+  simulacion?: string;
+  simulacion_email?: string;
+  enlace_recuperacion?: string;
+  instrucciones?: string;
+}
+
+export interface RestablecerResponse {
+  success: boolean;
+  message: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -53,6 +67,23 @@ export class UserService {
 
   actualizarMiPerfil(usuarioDTO: UsuarioDTO): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/usuarios/mi-perfil`, usuarioDTO);
+  }
+
+  // Nuevos métodos para recuperación de contraseña
+  solicitarRecuperacion(correo: string): Observable<RecuperacionResponse> {
+    return this.http.post<RecuperacionResponse>(
+      `${this.apiUrl}/usuarios/recuperacion/${encodeURIComponent(correo)}`,
+      {}
+    );
+  }
+
+  restablecerContraseña(token: string, nuevaContraseña: string): Observable<RestablecerResponse> {
+    const params = new HttpParams().set('token', token);
+    return this.http.post<RestablecerResponse>(
+      `${this.apiUrl}/usuarios/restablecer-con-token`,
+      { nuevaContraseña },
+      { params }
+    );
   }
 
 }

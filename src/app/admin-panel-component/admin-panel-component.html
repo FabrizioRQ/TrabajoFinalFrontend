@@ -47,12 +47,22 @@
           <a routerLink="lista-ninos" routerLinkActive="active">Listar Niños</a>
         </div>
       </div>
-      <a routerLink="planes-suscripcion" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-crown"></i> <span>PLANES</span>
-      </a>
-      <a routerLink="registro-emociones" routerLinkActive="active" class="menu-item">
-        <i class="fa-solid fa-clipboard-list"></i> <span>EMOCIONES</span>
-      </a>
+      <div class="dropdown">
+        <div class="menu-item dropdown-toggle">
+          <i class="fa-solid fa-user-doctor"></i> <span>PAGOS</span>
+        </div>
+        <div class="dropdown-menu">
+          <a routerLink="historial-pagos" routerLinkActive="active">Historial de Pagos</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <div class="menu-item dropdown-toggle">
+          <i class="fa-solid fa-user-doctor"></i> <span>Diario Emocional</span>
+        </div>
+        <div class="dropdown-menu">
+          <a routerLink="historial-pagos" routerLinkActive="active">Lista de Emociones</a>
+        </div>
+      </div>
 
       <!-- Botón de Cerrar Sesión -->
       <div class="logout-section">
