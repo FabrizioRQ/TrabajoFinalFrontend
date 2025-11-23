@@ -44,6 +44,10 @@ export class LoginComponent implements OnInit {
           } else {
             this.router.navigate(['/user-panel']);
           }
+
+          if(res.tipoUsuario === 'PSICÓLOGO') {
+            this.router.navigate(['/psicologo-panel']);
+          }
         },
         error: (err) => {
           console.error('Error en login:', err);

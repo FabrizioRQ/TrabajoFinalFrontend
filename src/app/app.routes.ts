@@ -34,6 +34,8 @@ import {ListaUsuarios} from './lista-usuarios/lista-usuarios';
 import {ListarPadres} from './listar-padres/listar-padres';
 import {ConfirmacionPago} from './confirmacion-pago/confirmacion-pago';
 import {ResetPasswordComponent} from './reset-password-component/reset-password-component';
+import {RegistroConfirmado} from './registro-confirmado/registro-confirmado';
+import {PsicologoPanel} from './psicologo-panel/psicologo-panel';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -41,7 +43,9 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recuperacion', component: ForgotPasswordComponent },
+  { path: 'registro-confirmado', component: RegistroConfirmado },
   { path: 'restablecer-contraseña', component: ResetPasswordComponent },
+  { path: 'psicologo-panel', component: PsicologoPanel },
 
   // PANEL ADMINISTRADOR CON SUS RUTAS HIJAS
   {
