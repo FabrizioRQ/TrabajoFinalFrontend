@@ -201,6 +201,15 @@ export class PlanesSuscripcion implements OnInit {
     }
   }
 
+  getTipoLegible(tipo: string): string {
+    const tipos: { [key: string]: string } = {
+      'tarjeta_credito': 'Tarjeta de Crédito',
+      'billetera_digital': 'Billetera Digital',
+      'transferencia': 'Transferencia Bancaria'
+    };
+    return tipos[tipo] || tipo;
+  }
+
   procesarSeleccionPlan(codigoPlan: string, metodoPagoId: string): void {
     this.cargando = true;
 
@@ -269,14 +278,6 @@ export class PlanesSuscripcion implements OnInit {
     return plan.codigo === 'gold' || plan.codigo === 'platinum';
   }
 
-  getTipoLegible(tipo: string): string {
-    const tipos: { [key: string]: string } = {
-      'tarjeta_credito': 'Tarjeta de Crédito',
-      'billetera_digital': 'Billetera Digital',
-      'transferencia': 'Transferencia Bancaria'
-    };
-    return tipos[tipo] || tipo;
-  }
 
   getTipoSeleccionadoLabel(): string {
     const tipoEncontrado = this.tiposMetodoPago.find(t => t.value === this.nuevoMetodo.tipo);

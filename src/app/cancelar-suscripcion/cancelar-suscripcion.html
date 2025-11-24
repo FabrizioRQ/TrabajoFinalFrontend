@@ -3,6 +3,29 @@
 
     <h1 class="title">Gestión de Suscripción Premium</h1>
 
+    <!-- Estado actual de la suscripción -->
+    <div *ngIf="estadoSuscripcion" class="current-status">
+      <div class="status-info">
+        <h3>Estado Actual</h3>
+        <p><strong>Plan:</strong> {{ planActual }}</p>
+        <p><strong>Estado:</strong>
+          <span [ngClass]="{
+            'status-active': suscripcionActiva,
+            'status-paused': suscripcionPausada,
+            'status-inactive': !suscripcionActiva && !suscripcionPausada
+          }">
+            {{ suscripcionActiva ? 'Activa' : (suscripcionPausada ? 'Pausada' : 'Inactiva') }}
+          </span>
+        </p>
+        <p *ngIf="suscripcionActiva && estadoSuscripcion.fechaProximoPago">
+          <strong>Próximo pago:</strong> {{ formatearFecha(estadoSuscripcion.fechaProximoPago) }}
+        </p>
+        <p *ngIf="estadoSuscripcion.fechaCancelacion">
+          <strong>Última cancelación:</strong> {{ formatearFecha(estadoSuscripcion.fechaCancelacion) }}
+        </p>
+      </div>
+    </div>
+
     <div class="options-grid">
 
       <div class="option-box pause-box">
@@ -11,13 +34,15 @@
 
         <button
           class="action-button primary-button"
-          [disabled]="!suscripcionActiva"
+          [disabled]="!suscripcionActiva || cargando"
           (click)="iniciarPausa()"
         >
-          Desactivar Suscripción
+          {{ cargando ? 'Procesando...' : 'Desactivar Suscripción' }}
         </button>
 
-        <p class="note">Mantendrás acceso hasta el...</p>
+        <p class="note" *ngIf="suscripcionActiva">
+          Mantendrás acceso hasta {{ formatearFecha(estadoSuscripcion?.fechaProximoPago || null) }}
+        </p>
       </div>
 
       <div class="option-box cancel-box">
@@ -32,6 +57,7 @@
             id="motivo"
             name="motivo"
             [(ngModel)]="motivoSeleccionado"
+            [disabled]="cargando"
           >
             <option value="" disabled selected>Seleccione</option>
             <option *ngFor="let motivo of motivosCancelacion" [value]="motivo">{{ motivo }}</option>
@@ -40,21 +66,22 @@
 
         <button
           class="action-button alert-button"
-          [disabled]="!suscripcionActiva"
+          [disabled]="!suscripcionActiva || cargando"
           (click)="iniciarCancelacion()"
         >
-          Cancelar Suscripción
+          {{ cargando ? 'Procesando...' : 'Cancelar Suscripción' }}
         </button>
       </div>
 
     </div>
 
     <button
-      *ngIf="!suscripcionActiva"
+      *ngIf="suscripcionPausada && !suscripcionActiva"
       class="reactivate-button success-button"
+      [disabled]="cargando"
       (click)="reactivarSuscripcion()"
     >
-      Reactivar suscripción
+      {{ cargando ? 'Procesando...' : 'Reactivar suscripción' }}
     </button>
 
     <p class="privacy-note">
@@ -64,7 +91,7 @@
     </p>
 
     <div
-      *ngIf="!suscripcionActiva"
+      *ngIf="!suscripcionActiva && !suscripcionPausada"
       class="status-bar inactive-bar"
     >
       No tienes suscripción activa
@@ -72,45 +99,49 @@
 
   </div>
 
+  <!-- Modal de Pausa -->
   <div *ngIf="mostrarModalPausa" class="modal-overlay" (click)="cerrarModales()">
     <div class="modal-content" (click)="$event.stopPropagation()">
-      <h3 class="modal-title">Confirmar</h3>
+      <h3 class="modal-title">Confirmar Pausa Temporal</h3>
+      <p class="modal-body">¿Estás seguro de que deseas pausar tu suscripción?</p>
 
       <div class="checkbox-group">
-        <input type="checkbox" id="seguro" name="seguro" [(ngModel)]="estoySeguro">
-        <label for="seguro">Estoy seguro</label>
+        <input type="checkbox" id="seguro" name="seguro" [(ngModel)]="estoySeguro" [disabled]="cargando">
+        <label for="seguro">Estoy seguro de pausar mi suscripción</label>
       </div>
 
       <div class="checkbox-group">
-        <input type="checkbox" id="pausar" name="pausar" [(ngModel)]="pausarPagos">
-        <label for="pausar">Pausar los pagos</label>
+        <input type="checkbox" id="pausar" name="pausar" [(ngModel)]="pausarPagos" [disabled]="cargando">
+        <label for="pausar">Pausar los pagos automáticos</label>
       </div>
 
       <div class="modal-actions">
-        <button class="modal-cancel-button" (click)="cerrarModales()">Cancelar</button>
+        <button class="modal-cancel-button" [disabled]="cargando" (click)="cerrarModales()">Cancelar</button>
         <button
           class="modal-confirm-button"
-          [disabled]="!estoySeguro"
+          [disabled]="!estoySeguro || cargando"
           (click)="confirmarPausa()"
         >
-          Confirmar
+          {{ cargando ? 'Procesando...' : 'Confirmar Pausa' }}
         </button>
       </div>
     </div>
   </div>
 
+  <!-- Modal de Cancelación Permanente -->
   <div *ngIf="mostrarModalCancelacion" class="modal-overlay" (click)="cerrarModales()">
     <div class="modal-content" (click)="$event.stopPropagation()">
-      <h3 class="modal-title warning-title">Confirmar Cancelación</h3>
+      <h3 class="modal-title warning-title">Confirmar Cancelación Permanente</h3>
       <p class="modal-body">¿Estás completamente seguro de revocar el acceso Premium de forma permanente? Esta acción es irreversible.</p>
 
       <div class="modal-actions">
-        <button class="modal-cancel-button" (click)="cerrarModales()">Mantener Suscripción</button>
+        <button class="modal-cancel-button" [disabled]="cargando" (click)="cerrarModales()">Mantener Suscripción</button>
         <button
           class="modal-confirm-button alert-button"
+          [disabled]="cargando"
           (click)="confirmarCancelacion()"
         >
-          Cancelar Acceso
+          {{ cargando ? 'Procesando...' : 'Cancelar Permanentemente' }}
         </button>
       </div>
     </div>

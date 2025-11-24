@@ -1,16 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {PagoCreateDTO} from '../../model/pagocreate-dto.model';
-import {PagoDTO} from '../../model/pago-dto.model';
-import {PlanSuscripcionDTO} from '../../model/plan-suscripcion.dto';
-import {SeleccionPlanDTO} from '../../model/selecionarPlan-dto.model';
-import {MetodoPagoDTO} from '../../model/MetodoPagoDTO';
-import {CrearMetodoPagoDTO} from '../../model/crear-metodo-pago.dto';
-import {RespuestaMetodoPagoDTO} from '../../model/respuesta-metodo-pago.dto';
-import {RespuestaPlanDTO} from '../../model/RespuestaPlan-dto.model';
-import {AuthService} from './auth-service';
+import { PagoCreateDTO } from '../../model/pagocreate-dto.model';
+import { PagoDTO } from '../../model/pago-dto.model';
+import { PlanSuscripcionDTO } from '../../model/plan-suscripcion.dto';
+import { SeleccionPlanDTO } from '../../model/selecionarPlan-dto.model';
+import { MetodoPagoDTO } from '../../model/MetodoPagoDTO';
+import { CrearMetodoPagoDTO } from '../../model/crear-metodo-pago.dto';
+import { RespuestaMetodoPagoDTO } from '../../model/respuesta-metodo-pago.dto';
+import { RespuestaPlanDTO } from '../../model/RespuestaPlan-dto.model';
+import { AuthService } from './auth-service';
 
+// Interfaces para la gestión de suscripciones
+export interface CancelacionSuscripcionDTO {
+  usuarioId: number;
+  motivo: string;
+  pausarPagos: boolean;
+}
+
+export interface EstadoSuscripcionDTO {
+  activa: boolean;
+  planActual: string;
+  fechaProximoPago: string | null;
+  fechaCancelacion: string | null;
+  pausada: boolean;
+  motivoCancelacion: string | null;
+}
+
+export interface RespuestaSimpleDTO {
+  exito: boolean;
+  mensaje: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +59,7 @@ export class PagoService {
     return userId;
   }
 
-
+  // --- Métodos existentes de pagos ---
   crearPago(pagoDTO: PagoCreateDTO): Observable<PagoDTO> {
     return this.http.post<PagoDTO>(this.apiUrl, pagoDTO, { headers: this.getHeaders() });
   }
@@ -64,6 +84,7 @@ export class PagoService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
+  // --- Métodos existentes de planes y métodos de pago ---
   obtenerPlanesDisponibles(): Observable<PlanSuscripcionDTO[]> {
     return this.http.get<PlanSuscripcionDTO[]>(`${this.apiUrl}/planes`, { headers: this.getHeaders() });
   }
@@ -91,6 +112,7 @@ export class PagoService {
     );
   }
 
+  // --- Métodos conveniencia ---
   obtenerMisMetodosPago(): Observable<MetodoPagoDTO[]> {
     const usuarioId = this.getUsuarioId();
     return this.obtenerMetodosPagoUsuario(usuarioId);
@@ -99,5 +121,94 @@ export class PagoService {
   obtenerMiPlanActual(): Observable<PlanSuscripcionDTO> {
     const usuarioId = this.getUsuarioId();
     return this.obtenerPlanActual(usuarioId);
+  }
+
+  // --- NUEVOS MÉTODOS PARA GESTIÓN DE SUSCRIPCIONES ---
+
+  /**
+   * Obtiene el estado actual de la suscripción del usuario
+   */
+  obtenerEstadoSuscripcion(usuarioId: number): Observable<EstadoSuscripcionDTO> {
+    return this.http.get<EstadoSuscripcionDTO>(
+      `${this.apiUrl}/estado-suscripcion/${usuarioId}`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  /**
+   * Pausa temporalmente la suscripción
+   */
+  pausarSuscripcion(cancelacionDTO: CancelacionSuscripcionDTO): Observable<RespuestaSimpleDTO> {
+    return this.http.post<RespuestaSimpleDTO>(
+      `${this.apiUrl}/pausar-suscripcion`,
+      cancelacionDTO,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  /**
+   * Cancela permanentemente la suscripción
+   */
+  cancelarSuscripcion(cancelacionDTO: CancelacionSuscripcionDTO): Observable<RespuestaSimpleDTO> {
+    return this.http.post<RespuestaSimpleDTO>(
+      `${this.apiUrl}/cancelar-suscripcion`,
+      cancelacionDTO,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  /**
+   * Reactiva una suscripción previamente pausada
+   */
+  reactivarSuscripcion(usuarioId: number): Observable<RespuestaSimpleDTO> {
+    return this.http.post<RespuestaSimpleDTO>(
+      `${this.apiUrl}/reactivar-suscripcion/${usuarioId}`,
+      {},
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // --- Métodos conveniencia para gestión de suscripciones ---
+
+  /**
+   * Obtiene el estado de suscripción del usuario actual
+   */
+  obtenerMiEstadoSuscripcion(): Observable<EstadoSuscripcionDTO> {
+    const usuarioId = this.getUsuarioId();
+    return this.obtenerEstadoSuscripcion(usuarioId);
+  }
+
+  /**
+   * Pausa la suscripción del usuario actual
+   */
+  pausarMiSuscripcion(motivo: string, pausarPagos: boolean): Observable<RespuestaSimpleDTO> {
+    const usuarioId = this.getUsuarioId();
+    const cancelacionDTO: CancelacionSuscripcionDTO = {
+      usuarioId: usuarioId,
+      motivo: motivo,
+      pausarPagos: pausarPagos
+    };
+    return this.pausarSuscripcion(cancelacionDTO);
+  }
+
+  /**
+   * Cancela permanentemente la suscripción del usuario actual
+   */
+  cancelarMiSuscripcion(motivo: string): Observable<RespuestaSimpleDTO> {
+    const usuarioId = this.getUsuarioId();
+    const cancelacionDTO: CancelacionSuscripcionDTO = {
+      usuarioId: usuarioId,
+      motivo: motivo,
+      pausarPagos: false
+    };
+    return this.cancelarSuscripcion(cancelacionDTO);
+  }
+
+  /**
+   * Reactiva la suscripción del usuario actual
+   */
+  reactivarMiSuscripcion(): Observable<RespuestaSimpleDTO> {
+    const usuarioId = this.getUsuarioId();
+    return this.reactivarSuscripcion(usuarioId);
   }
 }
