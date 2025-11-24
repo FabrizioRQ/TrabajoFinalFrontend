@@ -192,7 +192,6 @@ export class ListaNinos implements OnInit {
     });
   }
 
-// Método para transformar los datos del backend al formato del frontend
   private transformarEstadisticas(datosBackend: any[]): any[] {
     if (!datosBackend || datosBackend.length === 0) {
       return [];
