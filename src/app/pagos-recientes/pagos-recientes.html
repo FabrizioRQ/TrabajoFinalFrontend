@@ -11,49 +11,50 @@
 </header>
 
 <main class="main">
-  <h2>Niños Asociados</h2>
+  <h2>Mis Pagos Recientes</h2>
 
-  <section class="card">
-    <form class="form" (ngSubmit)="consultar()">
-      <div class="form-group full">
-        <label for="padreID">ID del padre/tutor</label>
-        <input
-          type="text"
-          id="padreID"
-          [(ngModel)]="padreID"
-          name="padreID"
-          placeholder="Ej: 6bff2e0b-92c7-4c0b..."
-          required>
-      </div>
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="cargando">
+    <p>Cargando pagos...</p>
+  </div>
 
-      <button type="submit" class="btn">Consultar</button>
-    </form>
-  </section>
+  <!-- Mensaje de error -->
+  <div *ngIf="error && !cargando" class="error">
+    <p>{{ error }}</p>
+    <button class="btn btn-reintentar" (click)="cargarPagosDelUsuario()">
+      Reintentar
+    </button>
+  </div>
 
-  <h3>Resultados:</h3>
-
-  <section class="card">
+  <!-- Resultados -->
+  <section class="card" *ngIf="!cargando && !error">
     <table class="table" *ngIf="pagos.length > 0; else sinPagos">
       <thead>
       <tr>
         <th>Monto</th>
         <th>Fecha</th>
+        <th>Método de Pago</th>
         <th>Estado</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let pago of pagos">
-        <td>{{ pago.monto }}</td>
-        <td>{{ pago.fecha }}</td>
-        <td>{{ pago.estado }}</td>
+        <td>S/. {{ pago.monto }}.99</td>
+        <td>{{ formatearFecha(pago.fechaPago) }}</td>
+        <td>{{ pago.metodoPago }}</td>
+        <td>
+            <span [class]="'estado-' + pago.estado.toLowerCase()">
+              {{ traducirEstado(pago.estado) }}
+            </span>
+        </td>
       </tr>
       </tbody>
     </table>
 
     <ng-template #sinPagos>
-      <p style="text-align:center; padding:12px; color:#64748B;">
-        No se registraron pagos en el último mes.
-      </p>
+      <div class="sin-pagos">
+        <p>No se encontraron pagos registrados.</p>
+      </div>
     </ng-template>
   </section>
 </main>
