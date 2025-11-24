@@ -10,6 +10,7 @@ import {NinoService} from '../Services/nino-service';
 import {UserService} from '../Services/user-service';
 import {PadreService} from '../Services/padre-service';
 import {AvatarService} from '../Services/avatar-service';
+import {DashboardNino} from '../../model/DashboardNino';
 
 interface NinoCompleto {
   nino: NiñoDto;
@@ -31,11 +32,12 @@ export class ListaNinos implements OnInit {
   // Datos principales
   ninos: NinoCompleto[] = [];
   ninosFiltrados: NinoCompleto[] = [];
+  dashboardData: DashboardNino[] = [];
 
   // Estados
   loading: boolean = false;
   error: string = '';
-  vistaActiva: string = 'lista'; // 'lista', 'emociones', 'dashboard'
+  vistaActiva: string = 'lista';
 
   // Filtros
   filtroUUID: string = '';
@@ -45,7 +47,6 @@ export class ListaNinos implements OnInit {
 
   // Datos para reportes
   estadisticasEmociones: any[] = [];
-  dashboardData: any[] = [];
   ninosConConteo: any[] = [];
 
   constructor(
@@ -179,15 +180,60 @@ export class ListaNinos implements OnInit {
       this.filtroFechaFin
     ).subscribe({
       next: (data) => {
-        this.estadisticasEmociones = data;
+        // Transformar los datos del backend al formato que espera el frontend
+        this.estadisticasEmociones = this.transformarEstadisticas(data);
         this.loading = false;
       },
       error: (error) => {
         this.error = 'Error al cargar estadísticas de emociones';
         this.loading = false;
+        console.error('Error detallado:', error);
       }
     });
   }
+
+// Método para transformar los datos del backend al formato del frontend
+  private transformarEstadisticas(datosBackend: any[]): any[] {
+    if (!datosBackend || datosBackend.length === 0) {
+      return [];
+    }
+
+    // Calcular totales por niño para los porcentajes
+    const totalesPorNiño = this.calcularTotalesPorNiño(datosBackend);
+
+    return datosBackend.map(estadistica => {
+      const idNiño = estadistica.idNiño;
+      const totalNiño = totalesPorNiño[idNiño] || 1; // Evitar división por cero
+      const frecuencia = estadistica.frecuencia || 0;
+      const porcentaje = ((frecuencia / totalNiño) * 100).toFixed(1);
+
+      return {
+        idNino: idNiño,
+        nombreNino: estadistica.nombreCompleto,
+        emotion: estadistica.emocionRegistrada,
+        cantidad: frecuencia,
+        porcentaje: porcentaje
+      };
+    });
+  }
+
+// Calcular total de emociones por niño para los porcentajes
+  private calcularTotalesPorNiño(datos: any[]): { [key: number]: number } {
+    const totales: { [key: number]: number } = {};
+
+    datos.forEach(estadistica => {
+      const idNiño = estadistica.idNiño;
+      const frecuencia = estadistica.frecuencia || 0;
+
+      if (!totales[idNiño]) {
+        totales[idNiño] = 0;
+      }
+      totales[idNiño] += frecuencia;
+    });
+
+    return totales;
+  }
+
 
   cargarDashboard() {
     if (!this.idPsicologoFiltro) return;

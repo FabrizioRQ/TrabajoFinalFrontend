@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { NiñoDto } from '../../model/niño-dto.model';
+import {DashboardNino} from '../../model/DashboardNino';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +62,7 @@ export class NinoService {
     return this.http.get<any[]>(`${this.apiUrl}/reportes/estadisticas-emociones`, { params });
   }
 
-  obtenerDashboardNiños(idPsicologo: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/reportes/dashboard/${idPsicologo}`);
+  obtenerDashboardNiños(idPsicologo: number): Observable<DashboardNino[]> {
+    return this.http.get<DashboardNino[]>(`${this.apiUrl}/reportes/dashboard/${idPsicologo}`);
   }
 }

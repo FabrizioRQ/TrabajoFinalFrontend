@@ -257,25 +257,28 @@
       </section>
 
       <!-- Dashboard Data -->
+      <!-- Dashboard Data -->
       <section class="card" *ngIf="dashboardData.length > 0">
         <h3>Dashboard - Resumen</h3>
         <table class="table">
           <thead>
           <tr>
             <th>ID Niño</th>
-            <th>Nombre</th>
+            <th>Fecha Nacimiento</th>
+            <th>Avatar</th>
+            <th>Psicólogo</th>
             <th>Total Registros</th>
-            <th>Última Emoción</th>
-            <th>Estado</th>
+            <th>Último Registro</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let item of dashboardData">
-            <td>{{ item.idNino }}</td>
-            <td>{{ item.nombreNino || 'N/A' }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ formatearFecha(item.fechaNacimiento) }}</td>
+            <td>{{ item.nombreAvatar || 'N/A' }}</td>
+            <td>{{ item.nombrePsicologo || 'N/A' }}</td>
             <td>{{ item.totalRegistros }}</td>
-            <td>{{ item.ultimaEmocion || 'N/A' }}</td>
-            <td>{{ item.estado || 'N/A' }}</td>
+            <td>{{ item.ultimoRegistro ? formatearFecha(item.ultimoRegistro) : 'Sin registros' }}</td>
           </tr>
           </tbody>
         </table>
