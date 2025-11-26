@@ -36,6 +36,7 @@ import {ConfirmacionPago} from './confirmacion-pago/confirmacion-pago';
 import {ResetPasswordComponent} from './reset-password-component/reset-password-component';
 import {RegistroConfirmado} from './registro-confirmado/registro-confirmado';
 import {PsicologoPanel} from './psicologo-panel/psicologo-panel';
+import {ListarEmociones} from './listar-emociones/listar-emociones';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -61,6 +62,7 @@ export const routes: Routes = [
       { path: 'lista-ninos', component: ListaNinos },
       { path: 'lista-psicologos', component: ListaPsicologos },
       { path: 'lista-padres', component: ListarPadres },
+      { path: 'lista-emociones', component: ListarEmociones },
       { path: 'avatar', component: AvatarComponent },
       { path: 'monitoreo-emocional', component: MonitoreoEmocional },
       { path: 'recomendaciones-ia', component: RecomendacionesIa },

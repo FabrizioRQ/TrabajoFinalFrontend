@@ -1,66 +1,269 @@
-<div class="billing-container">
-  <div class="billing-card">
-
+<div class="dashboard-container">
+  <div class="dashboard-card">
+    <!-- Header -->
     <div class="app-header">
       <img src="logo.jpg" alt="Monstruo Amigo Icono" class="app-icon">
       <h1>Monstruos Amigos</h1>
     </div>
 
-    <h2 class="main-title">Facturación y Historial de Pagos</h2>
+    <h2 class="main-title">Dashboard de Pagos y Reportes</h2>
 
-    <button class="main-invoice-button" (click)="descargarFacturaGeneral()">
-      Descargar Factura
-    </button>
-
-    <h3 class="subtitle">Historial de Pagos</h3>
-
-    <div class="table-wrapper">
-      <table class="payment-table">
-        <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Monto</th>
-          <th>Estado</th>
-          <th>Acción</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let pago of historial">
-          <!-- Datos del pago -->
-          <td>{{ pago.fecha }}</td>
-          <td>€{{ pago.monto }}</td>
-
-          <!-- Estado con clase condicional -->
-          <td>
-              <span
-                class="status"
-                [ngClass]="{
-                  'status-completed': pago.estado === 'Completado',
-                  'status-rejected': pago.estado === 'Rechazado',
-                  'status-pending': pago.estado === 'Pendiente'
-                }"
-              >
-                {{ pago.estado }}
-              </span>
-          </td>
-
-          <!-- Acción condicional -->
-          <td>
-            <button
-              *ngIf="pago.estado === 'Completado'"
-              class="download-receipt-button"
-              (click)="descargarRecibo(pago.id)"
-            >
-              Descargar
-            </button>
-            <span *ngIf="pago.estado !== 'Completado'" class="no-action">
-                —
-              </span>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <!-- Navegación por pestañas -->
+    <div class="tabs-container">
+      <button
+        class="tab-button"
+        [class.active]="pestanaActiva === 'dashboard'"
+        (click)="cambiarPestana('dashboard')">
+        📊 Dashboard
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="pestanaActiva === 'historial'"
+        (click)="cambiarPestana('historial')">
+        📋 Historial
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="pestanaActiva === 'reportes'"
+        (click)="cambiarPestana('reportes')">
+        📈 Reportes
+      </button>
     </div>
 
+    <!-- Dashboard Principal -->
+    <div *ngIf="pestanaActiva === 'dashboard'" class="tab-content">
+      <!-- Tarjetas de Estadísticas -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-info">
+            <h3>Ingresos Totales</h3>
+            <p class="stat-number">{{ formatearDinero(estadisticas.totalIngresos) }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-info">
+            <h3>Pagos Completados</h3>
+            <p class="stat-number">{{ estadisticas.pagosCompletados }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-info">
+            <h3>Usuarios Activos</h3>
+            <p class="stat-number">{{ estadisticas.usuariosActivos }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-info">
+            <h3>Ingreso Promedio</h3>
+            <p class="stat-number">{{ formatearDinero(estadisticas.ingresoPromedio) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráficos y Reportes Rápidos -->
+      <div class="charts-grid">
+        <!-- Ingresos Mensuales -->
+        <div class="chart-card">
+          <h3>📈 Ingresos Mensuales</h3>
+          <div class="chart-container">
+            <div *ngFor="let ingreso of ingresosMensuales" class="bar-item">
+              <div class="bar-label">{{ ingreso.nombreMes }}</div>
+              <div class="bar-container">
+                <div
+                  class="bar-fill"
+                  [style.height]="(ingreso.totalIngresos / 100) + 'px'">
+                </div>
+              </div>
+              <div class="bar-value">{{ formatearDinero(ingreso.totalIngresos) }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Usuarios -->
+        <div class="chart-card">
+          <h3>🏆 Top Usuarios</h3>
+          <div class="top-users-list">
+            <div *ngFor="let usuario of topUsuarios.slice(0, 5)" class="user-item">
+              <span class="user-name">{{ usuario.nombreCompleto }}</span>
+              <span class="user-amount">{{ formatearDinero(usuario.totalPagado) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pestaña de Historial -->
+    <div *ngIf="pestanaActiva === 'historial'" class="tab-content">
+      <div class="section-header">
+        <h3>📋 Historial de Pagos</h3>
+        <button class="main-invoice-button" (click)="descargarFacturaGeneral()">
+          📥 Descargar Factura General
+        </button>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="payment-table">
+          <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th>Método</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let pago of historial">
+            <td>{{ pago.fechaPago }}</td>
+            <td>{{ formatearDinero(pago.monto) }}</td>
+            <td>{{ pago.metodoPago }}</td>
+            <td>
+                <span class="status" [ngClass]="getClaseEstado(pago.estado)">
+                  {{ pago.estado }}
+                </span>
+            </td>
+            <td>
+              <button
+                *ngIf="pago.estado === 'Completado' || pago.estado === 'COMPLETADO'"
+                class="download-receipt-button"
+                (click)="descargarRecibo(pago.id)">
+                📄 Descargar
+              </button>
+              <span *ngIf="pago.estado !== 'Completado' && pago.estado !== 'COMPLETADO'" class="no-action">
+                  —
+                </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="historial.length === 0" class="no-data">
+        No hay pagos registrados.
+      </div>
+    </div>
+
+    <!-- Pestaña de Reportes Detallados -->
+    <div *ngIf="pestanaActiva === 'reportes'" class="tab-content">
+      <!-- Filtro de Fechas -->
+      <div class="filters-section">
+        <h3>🔍 Filtros de Fecha</h3>
+        <div class="date-filters">
+          <div class="date-input">
+            <label>Desde:</label>
+            <input type="date" [(ngModel)]="fechaInicio" (change)="aplicarFiltroFecha()">
+          </div>
+          <div class="date-input">
+            <label>Hasta:</label>
+            <input type="date" [(ngModel)]="fechaFin" (change)="aplicarFiltroFecha()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Reporte 1: Total por Usuario -->
+      <div class="report-section">
+        <h3>👥 Total Pagado por Usuario</h3>
+        <div class="table-wrapper">
+          <table class="report-table">
+            <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Total Pagado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let usuario of totalesPorUsuario">
+              <td>{{ usuario.nombreCompleto }}</td>
+              <td class="amount">{{ formatearDinero(usuario.totalPagado) }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reporte 2: Conteo por Estado y Método -->
+      <div class="report-section">
+        <h3>📊 Pagos por Estado y Método</h3>
+        <div class="table-wrapper">
+          <table class="report-table">
+            <thead>
+            <tr>
+              <th>Estado</th>
+              <th>Método de Pago</th>
+              <th>Cantidad</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of conteoEstadoMetodo">
+              <td>
+                  <span class="status" [ngClass]="getClaseEstado(item.estado)">
+                    {{ item.estado }}
+                  </span>
+              </td>
+              <td>{{ item.metodoPago }}</td>
+              <td class="count">{{ item.cantidad }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reporte 3: Ingresos Mensuales -->
+      <div class="report-section">
+        <h3>📅 Ingresos Mensuales (Último Año)</h3>
+        <div class="table-wrapper">
+          <table class="report-table">
+            <thead>
+            <tr>
+              <th>Mes</th>
+              <th>Total Ingresos</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ingreso of ingresosMensuales">
+              <td>{{ ingreso.nombreMes }}</td>
+              <td class="amount">{{ formatearDinero(ingreso.totalIngresos) }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reporte 4: Top Usuarios -->
+      <div class="report-section">
+        <h3>🏅 Top Usuarios con Más Pagos</h3>
+        <div class="table-wrapper">
+          <table class="report-table">
+            <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Cantidad de Pagos</th>
+              <th>Total Pagado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let usuario of topUsuarios">
+              <td>{{ usuario.nombreCompleto }}</td>
+              <td class="count">{{ usuario.cantidadPagos }}</td>
+              <td class="amount">{{ formatearDinero(usuario.totalPagado) }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="cargando" class="loading">
+      <div class="spinner"></div>
+      <p>Cargando datos...</p>
+    </div>
   </div>
 </div>

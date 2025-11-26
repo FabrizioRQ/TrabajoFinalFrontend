@@ -1,6 +1,7 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'; // IMPORTANTE: Agregar este import
 import { PagoCreateDTO } from '../../model/pagocreate-dto.model';
 import { PagoDTO } from '../../model/pago-dto.model';
 import { PlanSuscripcionDTO } from '../../model/plan-suscripcion.dto';
@@ -10,6 +11,30 @@ import { CrearMetodoPagoDTO } from '../../model/crear-metodo-pago.dto';
 import { RespuestaMetodoPagoDTO } from '../../model/respuesta-metodo-pago.dto';
 import { RespuestaPlanDTO } from '../../model/RespuestaPlan-dto.model';
 import { AuthService } from './auth-service';
+
+// Interfaces para los reportes
+export interface ReporteTotalUsuario {
+  nombreCompleto: string;
+  totalPagado: number;
+}
+
+export interface ReporteEstadoMetodo {
+  estado: string;
+  metodoPago: string;
+  cantidad: number;
+}
+
+export interface ReporteIngresosMensuales {
+  mes: number;
+  totalIngresos: number;
+  nombreMes?: string;
+}
+
+export interface ReporteTopUsuarios {
+  nombreCompleto: string;
+  cantidadPagos: number;
+  totalPagado: number;
+}
 
 // Interfaces para la gestión de suscripciones
 export interface CancelacionSuscripcionDTO {
@@ -51,7 +76,7 @@ export class PagoService {
     });
   }
 
-  private getUsuarioId(): number {
+  getUsuarioId(): number {
     const userId = this.authService.getUserId();
     if (!userId) {
       throw new Error('Usuario no autenticado');
@@ -112,6 +137,81 @@ export class PagoService {
     );
   }
 
+  // --- NUEVOS MÉTODOS PARA REPORTES (CORREGIDOS) ---
+
+  /**
+   * 1) Total pagado por usuario en un rango de fechas
+   */
+  totalPorUsuarioEnRango(inicio: Date, fin: Date): Observable<ReporteTotalUsuario[]> {
+    const params = new HttpParams()
+      .set('inicio', inicio.toISOString())
+      .set('fin', fin.toISOString());
+
+    return this.http.get<any[]>(`${this.apiUrl}/total-rango`, {
+      headers: this.getHeaders(),
+      params
+    }).pipe(
+      map(data => data.map(item => ({
+        nombreCompleto: item[0],
+        totalPagado: item[1]
+      } as ReporteTotalUsuario)))
+    );
+  }
+
+  /**
+   * 2) Conteo de pagos por estado y método
+   */
+  countPagosPorEstadoYMetodo(): Observable<ReporteEstadoMetodo[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/count-estado-metodo`, {
+      headers: this.getHeaders()
+    }).pipe(
+      map(data => data.map(item => ({
+        estado: item[0],
+        metodoPago: item[1],
+        cantidad: item[2]
+      } as ReporteEstadoMetodo)))
+    );
+  }
+
+  /**
+   * 3) Reporte ingresos mensuales últimos 12 meses
+   */
+  ingresosMensualesUltimoAnio(): Observable<ReporteIngresosMensuales[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ingresos-mensuales`, {
+      headers: this.getHeaders()
+    }).pipe(
+      map(data => data.map(item => ({
+        mes: item[0],
+        totalIngresos: item[1],
+        nombreMes: this.obtenerNombreMes(item[0])
+      } as ReporteIngresosMensuales)))
+    );
+  }
+
+  /**
+   * 4) Top usuarios con más pagos
+   */
+  topUsuariosConMasPagos(): Observable<ReporteTopUsuarios[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/top-usuarios`, {
+      headers: this.getHeaders()
+    }).pipe(
+      map(data => data.map(item => ({
+        nombreCompleto: item[0],
+        cantidadPagos: item[1],
+        totalPagado: item[2]
+      } as ReporteTopUsuarios)))
+    );
+  }
+
+  // Método auxiliar para obtener nombre del mes
+  private obtenerNombreMes(mes: number): string {
+    const meses = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    return meses[mes - 1] || 'Desconocido';
+  }
+
   // --- Métodos conveniencia ---
   obtenerMisMetodosPago(): Observable<MetodoPagoDTO[]> {
     const usuarioId = this.getUsuarioId();
@@ -123,11 +223,7 @@ export class PagoService {
     return this.obtenerPlanActual(usuarioId);
   }
 
-  // --- NUEVOS MÉTODOS PARA GESTIÓN DE SUSCRIPCIONES ---
-
-  /**
-   * Obtiene el estado actual de la suscripción del usuario
-   */
+  // --- Métodos para gestión de suscripciones ---
   obtenerEstadoSuscripcion(usuarioId: number): Observable<EstadoSuscripcionDTO> {
     return this.http.get<EstadoSuscripcionDTO>(
       `${this.apiUrl}/estado-suscripcion/${usuarioId}`,
@@ -135,9 +231,6 @@ export class PagoService {
     );
   }
 
-  /**
-   * Pausa temporalmente la suscripción
-   */
   pausarSuscripcion(cancelacionDTO: CancelacionSuscripcionDTO): Observable<RespuestaSimpleDTO> {
     return this.http.post<RespuestaSimpleDTO>(
       `${this.apiUrl}/pausar-suscripcion`,
@@ -146,9 +239,6 @@ export class PagoService {
     );
   }
 
-  /**
-   * Cancela permanentemente la suscripción
-   */
   cancelarSuscripcion(cancelacionDTO: CancelacionSuscripcionDTO): Observable<RespuestaSimpleDTO> {
     return this.http.post<RespuestaSimpleDTO>(
       `${this.apiUrl}/cancelar-suscripcion`,
@@ -157,9 +247,6 @@ export class PagoService {
     );
   }
 
-  /**
-   * Reactiva una suscripción previamente pausada
-   */
   reactivarSuscripcion(usuarioId: number): Observable<RespuestaSimpleDTO> {
     return this.http.post<RespuestaSimpleDTO>(
       `${this.apiUrl}/reactivar-suscripcion/${usuarioId}`,
@@ -169,18 +256,11 @@ export class PagoService {
   }
 
   // --- Métodos conveniencia para gestión de suscripciones ---
-
-  /**
-   * Obtiene el estado de suscripción del usuario actual
-   */
   obtenerMiEstadoSuscripcion(): Observable<EstadoSuscripcionDTO> {
     const usuarioId = this.getUsuarioId();
     return this.obtenerEstadoSuscripcion(usuarioId);
   }
 
-  /**
-   * Pausa la suscripción del usuario actual
-   */
   pausarMiSuscripcion(motivo: string, pausarPagos: boolean): Observable<RespuestaSimpleDTO> {
     const usuarioId = this.getUsuarioId();
     const cancelacionDTO: CancelacionSuscripcionDTO = {
@@ -191,9 +271,6 @@ export class PagoService {
     return this.pausarSuscripcion(cancelacionDTO);
   }
 
-  /**
-   * Cancela permanentemente la suscripción del usuario actual
-   */
   cancelarMiSuscripcion(motivo: string): Observable<RespuestaSimpleDTO> {
     const usuarioId = this.getUsuarioId();
     const cancelacionDTO: CancelacionSuscripcionDTO = {
@@ -204,9 +281,6 @@ export class PagoService {
     return this.cancelarSuscripcion(cancelacionDTO);
   }
 
-  /**
-   * Reactiva la suscripción del usuario actual
-   */
   reactivarMiSuscripcion(): Observable<RespuestaSimpleDTO> {
     const usuarioId = this.getUsuarioId();
     return this.reactivarSuscripcion(usuarioId);
