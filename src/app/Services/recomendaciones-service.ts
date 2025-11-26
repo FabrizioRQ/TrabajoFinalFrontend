@@ -25,7 +25,6 @@ interface RecomendacionesPorEmocion {
 })
 export class RecomendacionesService {
 
-  // Base de datos local de recomendaciones por emoción
   private recomendacionesBase: RecomendacionesPorEmocion = {
     TRISTE: [
       {

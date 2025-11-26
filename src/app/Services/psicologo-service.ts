@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {PsicologoDTO} from '../../model/psicologo-dto.model';
 import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PsicologoService {
-  private apiUrl = 'http://localhost:8080/api/psicologos';
+
+  private apiUrl = `${environment.apiURL}/psicologos`;
+
 
   constructor(private http: HttpClient) {}
 

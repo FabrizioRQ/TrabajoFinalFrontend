@@ -11,6 +11,7 @@ import { CrearMetodoPagoDTO } from '../../model/crear-metodo-pago.dto';
 import { RespuestaMetodoPagoDTO } from '../../model/respuesta-metodo-pago.dto';
 import { RespuestaPlanDTO } from '../../model/RespuestaPlan-dto.model';
 import { AuthService } from './auth-service';
+import {environment} from '../../environments/environment';
 
 // Interfaces para los reportes
 export interface ReporteTotalUsuario {
@@ -61,7 +62,7 @@ export interface RespuestaSimpleDTO {
   providedIn: 'root'
 })
 export class PagoService {
-  private apiUrl = 'http://localhost:8080/api/pagos';
+  private apiUrl = `${environment.apiURL}/pagos`;
 
   constructor(
     private http: HttpClient,
