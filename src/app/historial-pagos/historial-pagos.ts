@@ -68,16 +68,49 @@ export class HistorialPagos implements OnInit {
     this.cargando = true;
     const usuarioId = this.pagoService.getUsuarioId();
 
-    this.pagoService.listarPagosPorUsuario(usuarioId).subscribe({
+    console.log('🔄 Cargando historial para usuario ID:', usuarioId);
+
+    this.pagoService.listarPagos().subscribe({
       next: (pagos: PagoDTO[]) => {
-        this.historial = pagos.map(pago => ({
+        console.log('📦 Todos los pagos recibidos del backend:', pagos);
+
+        // DEPURACIÓN: Mostrar estructura del primer pago
+        if (pagos.length > 0) {
+          console.log('🔍 Estructura del primer pago:', Object.keys(pagos[0]));
+          console.log('👤 Campos de usuario disponibles:');
+          console.log('   - idUsuario:', pagos[0].idUsuario);
+          console.log('   - usuarioId:', (pagos[0] as any).usuarioId);
+          console.log('   - userId:', (pagos[0] as any).userId);
+          console.log('   - idUser:', (pagos[0] as any).idUser);
+          console.log('   - usuario:', (pagos[0] as any).usuario);
+        }
+
+        // FILTRAR por usuario - prueba diferentes campos
+        const historialFiltrado = pagos.filter(pago => {
+          // Prueba todos los posibles nombres de campo
+          const idDelUsuario = pago.idUsuario ||
+            (pago as any).usuarioId ||
+            (pago as any).userId ||
+            (pago as any).idUser ||
+            (pago as any).usuario?.id;
+
+          console.log(`🔎 Pago ID ${pago.id}: ID Usuario = ${idDelUsuario}, ¿Coincide con ${usuarioId}? ${idDelUsuario == usuarioId}`);
+
+          return idDelUsuario == usuarioId; // Usar == para comparar diferentes tipos
+        });
+
+        console.log('✅ Historial filtrado:', historialFiltrado);
+
+        this.historial = historialFiltrado.map(pago => ({
           ...pago,
           fechaPago: this.formatearFecha(pago.fechaPago)
         }));
+
         this.cargando = false;
       },
       error: (error: any) => {
-        console.error('Error al cargar el historial:', error);
+        console.error('❌ Error al cargar el historial:', error);
+        // Datos de ejemplo como fallback
         this.historial = this.getDatosEjemplo();
         this.cargando = false;
       }

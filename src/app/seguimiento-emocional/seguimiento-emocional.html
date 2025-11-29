@@ -2,25 +2,126 @@
 <section class="emotion-review">
   <!-- Encabezado de la sección de revisión -->
   <header class="emotion-header">
-    <h1>Monstruos Amigos</h1> <!-- Nombre de la aplicación -->
-    <h2>Revisión de Emociones según Eventos del Día</h2> <!-- Subtítulo descriptivo -->
+    <h1>Monstruos Amigos</h1>
+    <h2>Revisión de Emociones según Eventos del Día</h2>
   </header>
-  <!-- Tarjeta que muestra la respuesta a la primera pregunta -->
-  <article class="emotion-card">
-    <p class="question">¿Cómo te sentiste hoy?</p> <!-- Pregunta mostrada al usuario -->
-    <p class="answer">Me sentí bastante bien.</p> <!-- Respuesta del usuario -->
-    <span class="chip success">Feliz</span> <!-- Etiqueta visual que representa la emoción -->
-  </article>
-  <!-- Segunda tarjeta: describe la causa de la emoción -->
-  <article class="emotion-card">
-    <p class="question">¿Qué te hizo sentir así?</p>
-    <p class="answer">Pasé tiempo con mis amigos.</p>
-    <span class="chip support">Ansioso</span> <!-- Chip con estilo diferente según tipo de emoción -->
-  </article>
-  <!-- Tercera tarjeta: muestra una emoción relacionada con un evento específico -->
-  <article class="emotion-card">
-    <p class="question">¿Cómo te sentiste después de la reunión?</p>
-    <p class="answer">Algo nervioso.</p>
-    <span class="chip support">Ansioso</span>
-  </article>
+
+  <!-- Formulario de preguntas emocionales -->
+  <div *ngIf="mostrarFormulario && !cargando" class="emotion-form">
+    <div class="form-header">
+      <h3>📝 Tu Diario Emocional de Hoy</h3>
+      <p>Comparte cómo te sientes para que podamos ayudarte mejor</p>
+    </div>
+
+    <div *ngFor="let pregunta of preguntasDelDia" class="question-card">
+      <div class="question-header">
+        <h4>{{pregunta.pregunta}}</h4>
+        <span class="question-type">{{pregunta.tipo}}</span>
+      </div>
+
+      <!-- Selector de emociones para preguntas de tipo emoción -->
+      <div *ngIf="pregunta.tipo === 'emocion'" class="emotion-selector">
+        <div class="emotion-options">
+          <button
+            *ngFor="let emocion of ['muy-feliz', 'feliz', 'neutral', 'triste', 'ansioso']"
+            type="button"
+            class="emotion-option"
+            [class.selected]="emocionesUsuario[pregunta.id || 0] === emocion"
+            (click)="emocionesUsuario[pregunta.id || 0] = emocion">
+            <span class="emotion-emoji">
+              {{ emocion === 'muy-feliz' ? '😄' :
+              emocion === 'feliz' ? '😊' :
+                emocion === 'neutral' ? '😐' :
+                  emocion === 'triste' ? '😔' : '😰' }}
+            </span>
+            <span class="emotion-label">{{formatearEmocion(emocion)}}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Campo de texto para respuestas abiertas -->
+      <div *ngIf="pregunta.tipo === 'texto'" class="text-response">
+        <textarea
+          [(ngModel)]="respuestasUsuario[pregunta.id || 0]"
+          placeholder="Escribe tu respuesta aquí..."
+          rows="3"
+          class="response-textarea">
+        </textarea>
+      </div>
+
+      <!-- Selector de emociones para preguntas de texto también -->
+      <div *ngIf="pregunta.tipo === 'texto'" class="emotion-selector">
+        <label>¿Qué emoción describes?</label>
+        <div class="emotion-options">
+          <button
+            *ngFor="let emocion of ['feliz', 'neutral', 'triste', 'ansioso', 'emocionado', 'relajado']"
+            type="button"
+            class="emotion-option"
+            [class.selected]="emocionesUsuario[pregunta.id || 0] === emocion"
+            (click)="emocionesUsuario[pregunta.id || 0] = emocion">
+            <span class="emotion-emoji">
+              {{ emocion === 'feliz' ? '😊' :
+              emocion === 'neutral' ? '😐' :
+                emocion === 'triste' ? '😔' :
+                  emocion === 'ansioso' ? '😰' :
+                    emocion === 'emocionado' ? '🎉' : '😌' }}
+            </span>
+            <span class="emotion-label">{{formatearEmocion(emocion)}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón de envío -->
+    <div class="form-actions">
+      <button
+        type="button"
+        class="submit-button"
+        (click)="enviarRespuestas()"
+        [disabled]="enviandoRespuestas">
+        {{ enviandoRespuestas ? 'Enviando...' : '📤 Enviar Mis Respuestas' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="loading-state">
+    <div class="spinner"></div>
+    <p>Cargando tus preguntas del día...</p>
+  </div>
+
+  <!-- Resultados procesados -->
+  <div *ngIf="!mostrarFormulario && !cargando" class="results-section">
+    <div class="results-header">
+      <h3>🎯 Análisis de Tus Emociones</h3>
+      <button class="new-entry-button" (click)="reiniciarFormulario()">
+        ✏️ Nueva Entrada
+      </button>
+    </div>
+
+    <!-- Mensaje de resultado -->
+    <div *ngIf="resultadoProcesado"
+         class="result-message"
+         [class.success]="resultadoProcesado.exito"
+         [class.error]="!resultadoProcesado.exito">
+      <h4>{{resultadoProcesado.exito ? '✅ ' : '⚠️ '}}{{resultadoProcesado.mensaje}}</h4>
+      <div *ngIf="resultadoProcesado.emocionDetectada" class="emotion-detected">
+        <strong>Emoción detectada:</strong>
+        <span class="detected-emotion">{{resultadoProcesado.emocionDetectada}}</span>
+      </div>
+      <div *ngIf="resultadoProcesado.recomendacion" class="recommendation">
+        <strong>Recomendación:</strong> {{resultadoProcesado.recomendacion}}
+      </div>
+      <div *ngIf="resultadoProcesado.esCritico" class="critical-warning">
+        ⚠️ Esta emoción requiere atención especial
+      </div>
+    </div>
+
+    <!-- Tarjetas de emociones registradas -->
+    <article *ngFor="let emocion of emociones" class="emotion-card">
+      <p class="question">{{emocion.question}}</p>
+      <p class="answer">{{emocion.answer}}</p>
+      <span class="chip" [ngClass]="emocion.tag">{{emocion.label}}</span>
+    </article>
+  </div>
 </section>
