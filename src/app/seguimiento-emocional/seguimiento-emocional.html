@@ -84,13 +84,13 @@
     </div>
   </div>
 
-  <!-- Estado de carga -->
+
   <div *ngIf="cargando" class="loading-state">
     <div class="spinner"></div>
     <p>Cargando tus preguntas del día...</p>
   </div>
 
-  <!-- Resultados procesados -->
+
   <div *ngIf="!mostrarFormulario && !cargando" class="results-section">
     <div class="results-header">
       <h3>🎯 Análisis de Tus Emociones</h3>
@@ -99,7 +99,7 @@
       </button>
     </div>
 
-    <!-- Mensaje de resultado -->
+
     <div *ngIf="resultadoProcesado"
          class="result-message"
          [class.success]="resultadoProcesado.exito"

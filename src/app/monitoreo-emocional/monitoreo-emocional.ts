@@ -21,6 +21,18 @@ export class MonitoreoEmocional implements OnInit {
   mensajeActual: string = '';
   enviando: boolean = false;
 
+  tecnicasPorEmocion: any = {
+    'ESTRES': 'Respira profundo 4 segundos, sostén 4, y suelta 6. Repite 5 veces. Es como reiniciar tu cerebro pero sin romper nada.',
+    'ANSIEDAD': 'Cuenta 5 cosas que ves, 4 que puedes tocar, 3 que puedes escuchar, 2 que puedes oler y 1 que puedes saborear. Técnica 5-4-3-2-1.',
+    'TRISTEZA': 'Abraza un peluche o almohada durante 20 segundos. Tu cuerpo libera oxitocina aunque el peluche no te abrace de vuelta.',
+    'ENOJO': 'Aprieta tus manos fuerte 5 segundos y suelta. Repite 3 veces. Es como exprimir un limón… pero emocional.',
+    'MIEDO': 'Imagina una luz protectora alrededor tuyo. Literalmente eres un Gokú emocional.',
+    'FELICIDAD': 'Guarda este momento pensando en: “¿Qué lo causó?”. Así fortaleces recuerdos positivos.',
+    'CALMA': 'Respiración lenta mientras mueves los hombros suavemente. Una mini siesta para tus músculos.',
+    'NEUTRAL': 'Haz 3 respiraciones profundas para equilibrarte.',
+    'CRITICO': 'Coloca tu mano en el pecho, respira profundo y busca un adulto de confianza. No tienes que manejar esto solo.'
+  };
+
   // Datos del nino - automático
   ninoActual: NiñoDto | null = null;
   usuarioActual: any = null;
@@ -29,6 +41,7 @@ export class MonitoreoEmocional implements OnInit {
   emocionActual: string = 'NEUTRAL';
   confianzaActual: number = 0;
   modoCritico: boolean = false;
+  ultimaTecnica: string = '';
 
   constructor(
     private terapiaService: TerapiaService,
@@ -116,6 +129,7 @@ export class MonitoreoEmocional implements OnInit {
     this.confianzaActual = analisis.confianza;
     this.modoCritico = analisis.critico;
 
+
     if (analisis.critico) {
       this.agregarMensajeCritico(analisis);
     } else if (analisis.mensaje) {
@@ -178,11 +192,15 @@ export class MonitoreoEmocional implements OnInit {
     this.agregarMensaje('Sí, me gustaría probar la técnica', true);
 
     setTimeout(() => {
+      const tecnica = this.tecnicasPorEmocion[this.emocionActual]
+        || 'Vamos a respirar juntos un momento. Inhala… exhala… tú puedes.';
+
       this.agregarMensaje(
-        '¡Excelente! Comencemos con la técnica. Encuentra un lugar tranquilo y sigue las instrucciones...',
-        false
+        `✨ Aquí tienes una técnica que puede ayudarte:\n\n${tecnica}\n\nCuando estés listo/a, puedes contarme cómo te fue 💛`,
+        false,
+        this.emocionActual
       );
-    }, 1000);
+    }, 900);
   }
 
   rechazarTecnica(): void {

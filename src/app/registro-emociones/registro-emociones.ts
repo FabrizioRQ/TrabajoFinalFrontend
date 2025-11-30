@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgIf, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// Definición de las preguntas posibles
+
 interface Pregunta {
   id: number;
   texto: string;
